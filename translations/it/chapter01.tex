@@ -1,0 +1,987 @@
+\chapter{Introduzione}
+
+La programmazione competitiva\footnote{Nel testo originale inglese viene spesso utilizzato il termine "competitive programming", che qui viene tradotto come "programmazione competitiva": in Italia il termine non è molto utilizzato nemmeno in ambito  informatico, ma mi è sembrata l'alternativa migliore.(N.d.T.)}  è composta da due aspetti:
+(1) la progettazione di algoritmi e (2) l'implementazione di algoritmi.
+
+Il \key{progetto di algoritmi} richiede capacità di problem solving
+e utilizzo del pensiero logico-matematico.
+Sono richieste capacità di analizzare problemi e di 
+risolverli in maniera creativa.
+L'algoritmo risolutivo di un problema
+deve essere sia corretto che efficiente,
+e l'aspetto principale del problema è spesso
+quello di inventare un algoritmo efficiente.
+
+La conoscenza teorica degli algoritmi è
+importante per dei programmatori che affrontano gare:
+tipicamente la soluzione di un problema è ottenuta 
+combinando tecniche ben conosciute con nuove intuizioni.
+Le tecniche utilizzate nella programmazione competitiva
+sono anche alla base della ricerca scientifica sugli
+algoritmi.
+
+L'\key{implementazione di algoritmi} richiede buone
+capacità di programmazione.
+Nella programmazione competitiva, le soluzioni sono valutate
+attraverso una serie di casi di test applicati all'algoritmo 
+che è stato implementato.
+Quindi, non solo l'idea risolutiva deve essere corretta,
+ma lo deve essere anche l'implementazione.
+
+Un stile di programmazione adatto alle gare
+deve essere diretto e conciso.
+I programmi dovono essere scritti velocemente,
+perchè il tempo disponibile è limitato.
+A differenza dell'ingegneria del software tradizionale,
+i programmi sono corti (tipicamente sono lunghi qualche
+centinaio di linee al massimo) e non hanno bisogno
+di manutenzione una volta che sia finita la gara.
+
+\section{Linguaggi di programmazione}
+
+\index{linguaggio di programmazione}
+
+Al momento, i linguaggi di programmazione più utilizzati 
+nelle gare sono C++, Python e Java.
+Per esempio, in Google Code Jam 2017,
+tra i migliori 3000 partecipanti,
+79 \% hanno usato C++,
+16 \% hanno usato Python e
+8 \% hanno usato Java \cite{goo17}.
+Sono stati utilizzati inoltre anche altri linguaggi, 
+ma questi tre sono decisamente i più popolari
+
+Molte persone pensano che il C++ sia la scelta migliore
+per le gare di programmazione e 
+il C++ è disponibile in praticamente qualsiasi 
+gara di programmazione.
+I vantaggi nell'usare il C++ sono che è molto
+efficiente e la sua libreria contiene un'enorme
+collezione di strutture dati e algoritmi.
+
+D'altro canto, è una cosa buona saper utilizzare
+più di un linguaggio e conoscerne i suoi punti di forza.
+Per esempio, se nel problema fosse necessario poter
+gestire interi enormi, oltre il ristretto range di quelli
+gestiti nativamente dal C++, Python potrebbe essere una
+buona scelta, perchè è in grado di gestire operazioni
+con interi di lunghezza arbitraria.
+Inoltre la maggior parte dei problemi delle gare di programmazione
+sono pensati per non avvantaggiare nessun particolare
+linguaggio.
+
+Tutti gli esempi in questo libro sono scritti in C++,
+e vengono spesso usati algortimi e strutture dati 
+presenti nella Libreria Standard.
+I programmi sono scritti in modo da seguire lo standard C++11, 
+che attualmente può essere utilizzato nella maggior parte delle gare.
+Se ancora non si è in grado di programmare in C++,
+questo è un buon momento per iniziare.
+
+\subsubsection{Un modello di programma C++}
+
+Un tipico modello di programma in C++ che può essere adattato per molte gare
+è il seguente:
+
+\begin{lstlisting}
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main() {
+    // solution comes here
+}
+\end{lstlisting}
+
+La scritta \texttt{\#include} all'inizio del codice
+è un'istruzione che istruisce il compilatore \texttt{g++}
+a includere l'intera libreria standard.
+In questo modo non è più necessario includere separatamente librerie come
+\texttt{iostream},\texttt{vector} e \texttt{algorithm},
+ma queste saranno automaticamente disponibili.
+
+L'istruzione \texttt{using} dichiara che le classi
+e le funzioni della Libreria Standard possono
+essere usate direttamente nel codice.
+Senza la \texttt{using} sarebbe necessario 
+scrivere, per esempio, \texttt{std::cout} per ogni istruzione di output,
+mentre in questo modo è sufficiente scrivere \texttt{cout}.
+
+Il codice può essere compilato utilizzando il seguente comando:
+
+\begin{lstlisting}
+g++ -std=c++11 -O2 -Wall test.cpp -o test
+\end{lstlisting}
+
+Questo comando produce il file binario \texttt{test}
+partendo dal codice sorgente \texttt{test.cpp}.
+Il compilatore seguirà lo standard C++11 (\texttt{-std=c++11}),
+ottimizzerà il codice (\texttt{-O2})
+e mostrerà degli warnings che riguardano possibili problemi (\texttt{-Wall}).
+
+\section{Input e output}
+
+\index{input e output}
+
+Nella maggior parte delle gare vengono usati gli stream standard
+per le operazioni di lettura/scrittura.
+In C++ gli stream standard sono 
+\texttt{cin} perl'input e \texttt{cout} per l'ouput.
+Inoltre possono essere anche usate le funzioni
+\texttt{scanf} e \texttt{printf} ereditate dal C.
+
+Tipicamente l'input del programma consiste di numeri 
+e stringhe separati da spazi e a capo.
+Questi possono essere letti dallo stream \texttt{cin}
+nel modo seguente:
+
+\begin{lstlisting}
+int a, b;
+string x;
+cin >> a >> b >> x;
+\end{lstlisting}
+
+Questo tipo di codice funziona sempre
+se si assume che ci sia almeno uno spazio o un a capo
+che separa ogni elemento in input.
+Ad esempio, il codice appena scritto è in grado 
+di leggere ambedue i seguenti input:
+
+\begin{lstlisting}
+123 456 monkey
+\end{lstlisting}
+\begin{lstlisting}
+123    456
+monkey
+\end{lstlisting}
+
+Lo stream \texttt{cout} viene usato per scrivere
+in output nel seguente modo: 
+
+\begin{lstlisting}
+int a = 123, b = 456;
+string x = "monkey";
+cout << a << " " << b << " " << x << "\n";
+\end{lstlisting}
+
+A volte l'input e l'output possono essere dei 
+colli di bottiglia per il programma: le seguenti 
+linee all'inizio del codice possono rendere 
+le operazioni di input e output più efficienti:
+
+\begin{lstlisting}
+ios::sync_with_stdio(0);
+cin.tie(0);
+\end{lstlisting}
+
+Da notare che andare a capo con \texttt{"\textbackslash n"}
+è molto più veloce che utilizzando \texttt{endl},
+perchè \texttt{endl} produce sempre 
+un'operazione di flush del buffer di output.
+
+Le funzioni C \texttt{scanf}
+e \texttt{printf} sono un'alternativa ai flussi standard
+del C++.
+Di solito sono un po' più veloci,
+ma sono anche più difficili da usare.
+Il codice seguente legge due interi in input:
+
+\begin{lstlisting}
+int a, b;
+scanf("%d %d", &a, &b);
+\end{lstlisting}
+
+Invece il codice seguente stampa due interi:
+
+\begin{lstlisting}
+int a = 123, b = 456;
+printf("%d %d\n", a, b);
+\end{lstlisting}
+
+Può anche succedere che il programma debba leggere un'intera linea
+in input, eventualmente contenente spazi.
+Per far questo si può utilizzare la funzione \texttt{getline}:
+
+\begin{lstlisting}
+string s;
+getline(cin, s);
+\end{lstlisting}
+
+Se la quantità di dati da leggere fosse sconosciuta,
+è utile usare il seguente loop:
+
+\begin{lstlisting}
+while (cin >> x) {
+    // code
+}
+\end{lstlisting}
+Questo ciclo legge gli elementi dall'input 
+uno dopo l'altro, fino a che non rimane niente
+da leggere.
+
+In alcune gare, vengono usati i file per
+l'input e l'output.
+Una semplice soluzione per utilizzarli è
+quella di scrivere il codice come se 
+si trattasse dei soliti stream di I/O,
+premettendo le seguenti linee all'inizio del codice:
+\begin{lstlisting}
+freopen("input.txt", "r", stdin);
+freopen("output.txt", "w", stdout);
+\end{lstlisting}
+Fatto questo, il programma leggerà l'input dal file ''input.txt''
+e scriverà l'output sul file ''output.txt''.
+
+\section{Working with numbers}
+
+\index{integer}
+
+\subsubsection{Integers}
+
+The most used integer type in competitive programming
+is \texttt{int}, which is a 32-bit type with
+a value range of $-2^{31} \ldots 2^{31}-1$
+or about $-2 \cdot 10^9 \ldots 2 \cdot 10^9$.
+If the type \texttt{int} is not enough,
+the 64-bit type \texttt{long long} can be used.
+It has a value range of $-2^{63} \ldots 2^{63}-1$
+or about $-9 \cdot 10^{18} \ldots 9 \cdot 10^{18}$.
+
+The following code defines a
+\texttt{long long} variable:
+\begin{lstlisting}
+long long x = 123456789123456789LL;
+\end{lstlisting}
+The suffix \texttt{LL} means that the
+type of the number is \texttt{long long}.
+
+A common mistake when using the type \texttt{long long}
+is that the type \texttt{int} is still used somewhere
+in the code.
+For example, the following code contains
+a subtle error:
+
+\begin{lstlisting}
+int a = 123456789;
+long long b = a*a;
+cout << b << "\n"; // -1757895751
+\end{lstlisting}
+
+Even though the variable \texttt{b} is of type \texttt{long long},
+both numbers in the expression \texttt{a*a}
+are of type \texttt{int} and the result is
+also of type \texttt{int}.
+Because of this, the variable \texttt{b} will
+contain a wrong result.
+The problem can be solved by changing the type
+of \texttt{a} to \texttt{long long} or
+by changing the expression to \texttt{(long long)a*a}.
+
+Usually contest problems are set so that the
+type \texttt{long long} is enough.
+Still, it is good to know that
+the \texttt{g++} compiler also provides
+a 128-bit type \texttt{\_\_int128\_t}
+with a value range of
+$-2^{127} \ldots 2^{127}-1$ or about $-10^{38} \ldots 10^{38}$.
+However, this type is not available in all contest systems.
+
+\subsubsection{Modular arithmetic}
+
+\index{remainder}
+\index{modular arithmetic}
+
+We denote by $x \bmod m$ the remainder
+when $x$ is divided by $m$.
+For example, $17 \bmod 5 = 2$,
+because $17 = 3 \cdot 5 + 2$.
+
+Sometimes, the answer to a problem is a
+very large number but it is enough to
+output it ''modulo $m$'', i.e.,
+the remainder when the answer is divided by $m$
+(for example, ''modulo $10^9+7$'').
+The idea is that even if the actual answer
+is very large,
+it suffices to use the types
+\texttt{int} and \texttt{long long}.
+
+An important property of the remainder is that
+in addition, subtraction and multiplication,
+the remainder can be taken before the operation:
+
+\[
+\begin{array}{rcr}
+(a+b) \bmod m & = & (a \bmod m + b \bmod m) \bmod m \\
+(a-b) \bmod m & = & (a \bmod m - b \bmod m) \bmod m \\
+(a \cdot b) \bmod m & = & (a \bmod m \cdot b \bmod m) \bmod m
+\end{array}
+\]
+
+Thus, we can take the remainder after every operation
+and the numbers will never become too large.
+
+For example, the following code calculates $n!$,
+the factorial of $n$, modulo $m$:
+\begin{lstlisting}
+long long x = 1;
+for (int i = 2; i <= n i++) {
+    x = (x*i)%m;
+}
+cout << x%m << "\n";
+\end{lstlisting}
+
+Usually we want the remainder to always
+be between $0\ldots m-1$.
+However, in C++ and other languages,
+the remainder of a negative number
+is either zero or negative.
+An easy way to make sure there
+are no negative remainders is to first calculate
+the remainder as usual and then add $m$
+if the result is negative:
+\begin{lstlisting}
+x = x%m;
+if (x < 0) x += m;
+\end{lstlisting}
+However, this is only needed when there
+are subtractions in the code and the
+remainder may become negative.
+
+\subsubsection{Floating point numbers}
+
+\index{floating point number}
+
+The usual floating point types in
+competitive programming are
+the 64-bit \texttt{double}
+and, as an extension in the \texttt{g++} compiler,
+the 80-bit \texttt{long double}.
+In most cases, \texttt{double} is enough,
+but \texttt{long double} is more accurate.
+
+The required precision of the answer
+is usually given in the problem statement.
+An easy way to output the answer is to use
+the \texttt{printf} function
+and give the number of decimal places
+in the formatting string.
+For example, the following code prints
+the value of $x$ with 9 decimal places:
+
+\begin{lstlisting}
+printf("%.9f\n", x);
+\end{lstlisting}
+
+A difficulty when using floating point numbers
+is that some numbers cannot be represented
+accurately as floating point numbers,
+and there will be rounding errors.
+For example, the result of the following code
+is surprising:
+
+\begin{lstlisting}
+double x = 0.3*3+0.1;
+printf("%.20f\n", x); // 0.99999999999999988898
+\end{lstlisting}
+
+Due to a rounding error,
+the value of \texttt{x} is a bit smaller than 1,
+while the correct value would be 1.
+
+It is risky to compare floating point numbers
+with the \texttt{==} operator,
+because it is possible that the values should be
+equal but they are not because of precision errors.
+A better way to compare floating point numbers
+is to assume that two numbers are equal
+if the difference between them is less than $\varepsilon$,
+where $\varepsilon$ is a small number.
+
+In practice, the numbers can be compared
+as follows ($\varepsilon=10^{-9}$):
+
+\begin{lstlisting}
+if (abs(a-b) < 1e-9) {
+    // a and b are equal
+}
+\end{lstlisting}
+
+Note that while floating point numbers are inaccurate,
+integers up to a certain limit can still be
+represented accurately.
+For example, using \texttt{double},
+it is possible to accurately represent all
+integers whose absolute value is at most $2^{53}$.
+
+\section{Shortening code}
+
+Short code is ideal in competitive programming,
+because programs should be written
+as fast as possible.
+Because of this, competitive programmers often define
+shorter names for datatypes and other parts of code.
+
+\subsubsection{Type names}
+\index{tuppdef@\texttt{typedef}}
+Using the command \texttt{typedef}
+it is possible to give a shorter name
+to a datatype.
+For example, the name \texttt{long long} is long,
+so we can define a shorter name \texttt{ll}:
+\begin{lstlisting}
+typedef long long ll;
+\end{lstlisting}
+After this, the code
+\begin{lstlisting}
+long long a = 123456789;
+long long b = 987654321;
+cout << a*b << "\n";
+\end{lstlisting}
+can be shortened as follows:
+\begin{lstlisting}
+ll a = 123456789;
+ll b = 987654321;
+cout << a*b << "\n";
+\end{lstlisting}
+
+The command \texttt{typedef}
+can also be used with more complex types.
+For example, the following code gives
+the name \texttt{vi} for a vector of integers
+and the name \texttt{pi} for a pair
+that contains two integers.
+\begin{lstlisting}
+typedef vector<int> vi;
+typedef pair<int,int> pi;
+\end{lstlisting}
+
+\subsubsection{Macros}
+\index{macro}
+Another way to shorten code is to define
+\key{macros}.
+A macro means that certain strings in
+the code will be changed before the compilation.
+In C++, macros are defined using the
+\texttt{\#define} keyword.
+
+For example, we can define the following macros:
+\begin{lstlisting}
+#define F first
+#define S second
+#define PB push_back
+#define MP make_pair
+\end{lstlisting}
+After this, the code
+\begin{lstlisting}
+v.push_back(make_pair(y1,x1));
+v.push_back(make_pair(y2,x2));
+int d = v[i].first+v[i].second;
+\end{lstlisting}
+can be shortened as follows:
+\begin{lstlisting}
+v.PB(MP(y1,x1));
+v.PB(MP(y2,x2));
+int d = v[i].F+v[i].S;
+\end{lstlisting}
+
+A macro can also have parameters
+which makes it possible to shorten loops and other
+structures.
+For example, we can define the following macro:
+\begin{lstlisting}
+#define REP(i,a,b) for (int i = a; i <= b; i++)
+\end{lstlisting}
+After this, the code
+\begin{lstlisting}
+for (int i = 1; i <= n; i++) {
+    search(i);
+}
+\end{lstlisting}
+can be shortened as follows:
+\begin{lstlisting}
+REP(i,1,n) {
+    search(i);
+}
+\end{lstlisting}
+
+Sometimes macros cause bugs that may be difficult
+to detect. For example, consider the following macro
+that calculates the square of a number:
+\begin{lstlisting}
+#define SQ(a) a*a
+\end{lstlisting}
+This macro \emph{does not} always work as expected.
+For example, the code
+\begin{lstlisting}
+cout << SQ(3+3) << "\n";
+\end{lstlisting}
+corresponds to the code
+\begin{lstlisting}
+cout << 3+3*3+3 << "\n"; // 15
+\end{lstlisting}
+
+A better version of the macro is as follows:
+\begin{lstlisting}
+#define SQ(a) (a)*(a)
+\end{lstlisting}
+Now the code
+\begin{lstlisting}
+cout << SQ(3+3) << "\n";
+\end{lstlisting}
+corresponds to the code
+\begin{lstlisting}
+cout << (3+3)*(3+3) << "\n"; // 36
+\end{lstlisting}
+
+
+\section{Mathematics}
+
+Mathematics plays an important role in competitive
+programming, and it is not possible to become
+a successful competitive programmer without
+having good mathematical skills.
+This section discusses some important
+mathematical concepts and formulas that
+are needed later in the book.
+
+\subsubsection{Sum formulas}
+
+Each sum of the form
+\[\sum_{x=1}^n x^k = 1^k+2^k+3^k+\ldots+n^k,\]
+where $k$ is a positive integer,
+has a closed-form formula that is a
+polynomial of degree $k+1$.
+For example\footnote{\index{Faulhaber's formula}
+There is even a general formula for such sums, called \key{Faulhaber's formula},
+but it is too complex to be presented here.},
+\[\sum_{x=1}^n x = 1+2+3+\ldots+n = \frac{n(n+1)}{2}\]
+and
+\[\sum_{x=1}^n x^2 = 1^2+2^2+3^2+\ldots+n^2 = \frac{n(n+1)(2n+1)}{6}.\]
+
+An \key{arithmetic progression} is a \index{arithmetic progression}
+sequence of numbers
+where the difference between any two consecutive
+numbers is constant.
+For example,
+\[3, 7, 11, 15\]
+is an arithmetic progression with constant 4.
+The sum of an arithmetic progression can be calculated
+using the formula
+\[\underbrace{a + \cdots + b}_{n \,\, \textrm{numbers}} = \frac{n(a+b)}{2}\]
+where $a$ is the first number,
+$b$ is the last number and
+$n$ is the amount of numbers.
+For example,
+\[3+7+11+15=\frac{4 \cdot (3+15)}{2} = 36.\]
+The formula is based on the fact
+that the sum consists of $n$ numbers and
+the value of each number is $(a+b)/2$ on average.
+
+\index{geometric progression}
+A \key{geometric progression} is a sequence
+of numbers
+where the ratio between any two consecutive
+numbers is constant.
+For example,
+\[3,6,12,24\]
+is a geometric progression with constant 2.
+The sum of a geometric progression can be calculated
+using the formula
+\[a + ak + ak^2 + \cdots + b = \frac{bk-a}{k-1}\]
+where $a$ is the first number,
+$b$ is the last number and the
+ratio between consecutive numbers is $k$.
+For example,
+\[3+6+12+24=\frac{24 \cdot 2 - 3}{2-1} = 45.\]
+
+This formula can be derived as follows. Let
+\[ S = a + ak + ak^2 + \cdots + b .\]
+By multiplying both sides by $k$, we get
+\[ kS = ak + ak^2 + ak^3 + \cdots + bk,\]
+and solving the equation
+\[ kS-S = bk-a\]
+yields the formula.
+
+A special case of a sum of a geometric progression is the formula
+\[1+2+4+8+\ldots+2^{n-1}=2^n-1.\]
+
+\index{harmonic sum}
+
+A \key{harmonic sum} is a sum of the form
+\[ \sum_{x=1}^n \frac{1}{x} = 1+\frac{1}{2}+\frac{1}{3}+\ldots+\frac{1}{n}.\]
+
+An upper bound for a harmonic sum is $\log_2(n)+1$.
+Namely, we can
+modify each term $1/k$ so that $k$ becomes
+the nearest power of two that does not exceed $k$.
+For example, when $n=6$, we can estimate
+the sum as follows:
+\[ 1+\frac{1}{2}+\frac{1}{3}+\frac{1}{4}+\frac{1}{5}+\frac{1}{6} \le
+1+\frac{1}{2}+\frac{1}{2}+\frac{1}{4}+\frac{1}{4}+\frac{1}{4}.\]
+This upper bound consists of $\log_2(n)+1$ parts
+($1$, $2 \cdot 1/2$, $4 \cdot 1/4$, etc.),
+and the value of each part is at most 1.
+
+\subsubsection{Set theory}
+
+\index{set theory}
+\index{set}
+\index{intersection}
+\index{union}
+\index{difference}
+\index{subset}
+\index{universal set}
+\index{complement}
+
+A \key{set} is a collection of elements.
+For example, the set
+\[X=\{2,4,7\}\]
+contains elements 2, 4 and 7.
+The symbol $\emptyset$ denotes an empty set,
+and $|S|$ denotes the size of a set $S$,
+i.e., the number of elements in the set.
+For example, in the above set, $|X|=3$.
+
+If a set $S$ contains an element $x$,
+we write $x \in S$,
+and otherwise we write $x \notin S$.
+For example, in the above set
+\[4 \in X \hspace{10px}\textrm{and}\hspace{10px} 5 \notin X.\]
+
+\begin{samepage}
+New sets can be constructed using set operations:
+\begin{itemize}
+\item The \key{intersection} $A \cap B$ consists of elements
+that are in both $A$ and $B$.
+For example, if $A=\{1,2,5\}$ and $B=\{2,4\}$,
+then $A \cap B = \{2\}$.
+\item The \key{union} $A \cup B$ consists of elements
+that are in $A$ or $B$ or both.
+For example, if $A=\{3,7\}$ and $B=\{2,3,8\}$,
+then $A \cup B = \{2,3,7,8\}$.
+\item The \key{complement} $\bar A$ consists of elements
+that are not in $A$.
+The interpretation of a complement depends on
+the \key{universal set}, which contains all possible elements.
+For example, if $A=\{1,2,5,7\}$ and the universal set is
+$\{1,2,\ldots,10\}$, then $\bar A = \{3,4,6,8,9,10\}$.
+\item The \key{difference} $A \setminus B = A \cap \bar B$
+consists of elements that are in $A$ but not in $B$.
+Note that $B$ can contain elements that are not in $A$.
+For example, if $A=\{2,3,7,8\}$ and $B=\{3,5,8\}$,
+then $A \setminus B = \{2,7\}$.
+\end{itemize}
+\end{samepage}
+
+If each element of $A$ also belongs to $S$,
+we say that $A$ is a \key{subset} of $S$,
+denoted by $A \subset S$.
+A set $S$ always has $2^{|S|}$ subsets,
+including the empty set.
+For example, the subsets of the set $\{2,4,7\}$ are
+\begin{center}
+$\emptyset$,
+$\{2\}$, $\{4\}$, $\{7\}$, $\{2,4\}$, $\{2,7\}$, $\{4,7\}$ and $\{2,4,7\}$.
+\end{center}
+
+Some often used sets are
+$\mathbb{N}$ (natural numbers),
+$\mathbb{Z}$ (integers),
+$\mathbb{Q}$ (rational numbers) and
+$\mathbb{R}$ (real numbers).
+The set $\mathbb{N}$
+can be defined in two ways, depending
+on the situation:
+either $\mathbb{N}=\{0,1,2,\ldots\}$
+or $\mathbb{N}=\{1,2,3,...\}$.
+
+We can also construct a set using a rule of the form
+\[\{f(n) : n \in S\},\]
+where $f(n)$ is some function.
+This set contains all elements of the form $f(n)$,
+where $n$ is an element in $S$.
+For example, the set
+\[X=\{2n : n \in \mathbb{Z}\}\]
+contains all even integers.
+
+\subsubsection{Logic}
+
+\index{logic}
+\index{negation}
+\index{conjuction}
+\index{disjunction}
+\index{implication}
+\index{equivalence}
+
+The value of a logical expression is either
+\key{true} (1) or \key{false} (0).
+The most important logical operators are
+$\lnot$ (\key{negation}),
+$\land$ (\key{conjunction}),
+$\lor$ (\key{disjunction}),
+$\Rightarrow$ (\key{implication}) and
+$\Leftrightarrow$ (\key{equivalence}).
+The following table shows the meanings of these operators:
+
+\begin{center}
+\begin{tabular}{rr|rrrrrrr}
+$A$ & $B$ & $\lnot A$ & $\lnot B$ & $A \land B$ & $A \lor B$ & $A \Rightarrow B$ & $A \Leftrightarrow B$ \\
+\hline
+0 & 0 & 1 & 1 & 0 & 0 & 1 & 1 \\
+0 & 1 & 1 & 0 & 0 & 1 & 1 & 0 \\
+1 & 0 & 0 & 1 & 0 & 1 & 0 & 0 \\
+1 & 1 & 0 & 0 & 1 & 1 & 1 & 1 \\
+\end{tabular}
+\end{center}
+
+The expression $\lnot A$ has the opposite value of $A$.
+The expression $A \land B$ is true if both $A$ and $B$
+are true,
+and the expression $A \lor B$ is true if $A$ or $B$ or both
+are true.
+The expression $A \Rightarrow B$ is true
+if whenever $A$ is true, also $B$ is true.
+The expression $A \Leftrightarrow B$ is true
+if $A$ and $B$ are both true or both false.
+
+\index{predicate}
+
+A \key{predicate} is an expression that is true or false
+depending on its parameters.
+Predicates are usually denoted by capital letters.
+For example, we can define a predicate $P(x)$
+that is true exactly when $x$ is a prime number.
+Using this definition, $P(7)$ is true but $P(8)$ is false.
+
+\index{quantifier}
+
+A \key{quantifier} connects a logical expression
+to the elements of a set.
+The most important quantifiers are
+$\forall$ (\key{for all}) and $\exists$ (\key{there is}).
+For example,
+\[\forall x (\exists y (y < x))\]
+means that for each element $x$ in the set,
+there is an element $y$ in the set
+such that $y$ is smaller than $x$.
+This is true in the set of integers,
+but false in the set of natural numbers.
+
+Using the notation described above,
+we can express many kinds of logical propositions.
+For example,
+\[\forall x ((x>1 \land \lnot P(x)) \Rightarrow (\exists a (\exists b (a > 1 \land b > 1 \land x = ab))))\]
+means that if a number $x$ is larger than 1
+and not a prime number,
+then there are numbers $a$ and $b$
+that are larger than $1$ and whose product is $x$.
+This proposition is true in the set of integers.
+
+\subsubsection{Functions}
+
+The function $\lfloor x \rfloor$ rounds the number $x$
+down to an integer, and the function
+$\lceil x \rceil$ rounds the number $x$
+up to an integer. For example,
+\[ \lfloor 3/2 \rfloor = 1 \hspace{10px} \textrm{and} \hspace{10px} \lceil 3/2 \rceil = 2.\]
+
+The functions $\min(x_1,x_2,\ldots,x_n)$
+and $\max(x_1,x_2,\ldots,x_n)$
+give the smallest and largest of values
+$x_1,x_2,\ldots,x_n$.
+For example,
+\[ \min(1,2,3)=1 \hspace{10px} \textrm{and} \hspace{10px} \max(1,2,3)=3.\]
+
+\index{factorial}
+
+The \key{factorial} $n!$ can be defined
+\[\prod_{x=1}^n x = 1 \cdot 2 \cdot 3 \cdot \ldots \cdot n\]
+or recursively
+\[
+\begin{array}{lcl}
+0! & = & 1 \\
+n! & = & n \cdot (n-1)! \\
+\end{array}
+\]
+
+\index{Fibonacci number}
+
+The \key{Fibonacci numbers}
+%\footnote{Fibonacci (c. 1175--1250) was an Italian mathematician.}
+arise in many situations.
+They can be defined recursively as follows:
+\[
+\begin{array}{lcl}
+f(0) & = & 0 \\
+f(1) & = & 1 \\
+f(n) & = & f(n-1)+f(n-2) \\
+\end{array}
+\]
+The first Fibonacci numbers are
+\[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, \ldots\]
+There is also a closed-form formula
+for calculating Fibonacci numbers, which is sometimes called
+\index{Binet's formula} \key{Binet's formula}:
+\[f(n)=\frac{(1 + \sqrt{5})^n - (1-\sqrt{5})^n}{2^n \sqrt{5}}.\]
+
+\subsubsection{Logarithms}
+
+\index{logarithm}
+
+The \key{logarithm} of a number $x$
+is denoted $\log_k(x)$, where $k$ is the base
+of the logarithm.
+According to the definition,
+$\log_k(x)=a$ exactly when $k^a=x$.
+
+A useful property of logarithms is
+that $\log_k(x)$ equals the number of times
+we have to divide $x$ by $k$ before we reach 
+the number 1.
+For example, $\log_2(32)=5$
+because 5 divisions by 2 are needed:
+
+\[32 \rightarrow 16 \rightarrow 8 \rightarrow 4 \rightarrow 2 \rightarrow 1 \]
+
+Logarithms are often used in the analysis of
+algorithms, because many efficient algorithms
+halve something at each step.
+Hence, we can estimate the efficiency of such algorithms
+using logarithms.
+
+The logarithm of a product is
+\[\log_k(ab) = \log_k(a)+\log_k(b),\]
+and consequently,
+\[\log_k(x^n) = n \cdot \log_k(x).\]
+In addition, the logarithm of a quotient is
+\[\log_k\Big(\frac{a}{b}\Big) = \log_k(a)-\log_k(b).\]
+Another useful formula is
+\[\log_u(x) = \frac{\log_k(x)}{\log_k(u)},\]
+and using this, it is possible to calculate
+logarithms to any base if there is a way to
+calculate logarithms to some fixed base.
+
+\index{natural logarithm}
+
+The \key{natural logarithm} $\ln(x)$ of a number $x$
+is a logarithm whose base is $e \approx 2.71828$.
+Another property of logarithms is that
+the number of digits of an integer $x$ in base $b$ is
+$\lfloor \log_b(x)+1 \rfloor$.
+For example, the representation of
+$123$ in base $2$ is 1111011 and
+$\lfloor \log_2(123)+1 \rfloor = 7$.
+
+\section{Contests and resources}
+
+\subsubsection{IOI}
+
+The International Olympiad in Informatics (IOI)
+is an annual programming contest for
+secondary school students.
+Each country is allowed to send a team of
+four students to the contest.
+There are usually about 300 participants
+from 80 countries.
+
+The IOI consists of two five-hour long contests.
+In both contests, the participants are asked to
+solve three algorithm tasks of various difficulty.
+The tasks are divided into subtasks,
+each of which has an assigned score.
+Even if the contestants are divided into teams,
+they compete as individuals.
+
+The IOI syllabus \cite{iois} regulates the topics
+that may appear in IOI tasks.
+Almost all the topics in the IOI syllabus
+are covered by this book.
+
+Participants for the IOI are selected through
+national contests.
+Before the IOI, many regional contests are organized,
+such as the Baltic Olympiad in Informatics (BOI),
+the Central European Olympiad in Informatics (CEOI)
+and the Asia-Pacific Informatics Olympiad (APIO).
+
+Some countries organize online practice contests
+for future IOI participants,
+such as the Croatian Open Competition in Informatics \cite{coci}
+and the USA Computing Olympiad \cite{usaco}.
+In addition, a large collection of problems from Polish contests
+is available online \cite{main}.
+
+\subsubsection{ICPC}
+
+The International Collegiate Programming Contest (ICPC)
+is an annual programming contest for university students.
+Each team in the contest consists of three students,
+and unlike in the IOI, the students work together;
+there is only one computer available for each team.
+
+The ICPC consists of several stages, and finally the
+best teams are invited to the World Finals.
+While there are tens of thousands of participants
+in the contest, there are only a small number\footnote{The exact number of final
+slots varies from year to year; in 2017, there were 133 final slots.} of final slots available,
+so even advancing to the finals
+is a great achievement in some regions.
+
+In each ICPC contest, the teams have five hours of time to
+solve about ten algorithm problems.
+A solution to a problem is accepted only if it solves
+all test cases efficiently.
+During the contest, competitors may view the results of other teams,
+but for the last hour the scoreboard is frozen and it
+is not possible to see the results of the last submissions.
+
+The topics that may appear at the ICPC are not so well
+specified as those at the IOI.
+In any case, it is clear that more knowledge is needed
+at the ICPC, especially more mathematical skills.
+
+\subsubsection{Online contests}
+
+There are also many online contests that are open for everybody.
+At the moment, the most active contest site is Codeforces,
+which organizes contests about weekly.
+In Codeforces, participants are divided into two divisions:
+beginners compete in Div2 and more experienced programmers in Div1.
+Other contest sites include AtCoder, CS Academy, HackerRank and Topcoder.
+
+Some companies organize online contests with onsite finals.
+Examples of such contests are Facebook Hacker Cup,
+Google Code Jam and Yandex.Algorithm.
+Of course, companies also use those contests for recruiting:
+performing well in a contest is a good way to prove one's skills.
+
+\subsubsection{Books}
+
+There are already some books (besides this book) that
+focus on competitive programming and algorithmic problem solving:
+
+\begin{itemize}
+\item S. S. Skiena and M. A. Revilla:
+\emph{Programming Challenges: The Programming Contest Training Manual} \cite{ski03}
+\item S. Halim and F. Halim:
+\emph{Competitive Programming 3: The New Lower Bound of Programming Contests} \cite{hal13}
+\item K. Diks et al.: \emph{Looking for a Challenge? The Ultimate Problem Set from
+the University of Warsaw Programming Competitions} \cite{dik12}
+\end{itemize}
+
+The first two books are intended for beginners,
+whereas the last book contains advanced material.
+
+Of course, general algorithm books are also suitable for
+competitive programmers.
+Some popular books are:
+
+\begin{itemize}
+\item T. H. Cormen, C. E. Leiserson, R. L. Rivest and C. Stein:
+\emph{Introduction to Algorithms} \cite{cor09}
+\item J. Kleinberg and É. Tardos:
+\emph{Algorithm Design} \cite{kle05}
+\item S. S. Skiena:
+\emph{The Algorithm Design Manual} \cite{ski08}
+\end{itemize}
