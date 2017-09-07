@@ -410,122 +410,126 @@ Per esempio, usando il tipo \texttt{double},
 è possibile rappresentare accuratamente tutti gli interi il cui valore
 assoluto sia minore o uguale a $2^{53}$.
 
-\section{Shortening code}
+\section{Scrivere codice conciso}
 
-Short code is ideal in competitive programming,
-because programs should be written
-as fast as possible.
-Because of this, competitive programmers often define
-shorter names for datatypes and other parts of code.
+Nelle gare di programmazione è essenziale scrivere codice breve,
+poichè i programmi dovrebbero essere scritti nel minor tempo possibile.
+Per questo i programmatori usano spesso nomi brevi per
+i tipi di dati e altre parti del codice.
 
-\subsubsection{Type names}
+\subsubsection{Abbreviare le dichiarazioni}
 \index{tuppdef@\texttt{typedef}}
-Using the command \texttt{typedef}
-it is possible to give a shorter name
-to a datatype.
-For example, the name \texttt{long long} is long,
-so we can define a shorter name \texttt{ll}:
+In C++ è possibile definire un nuovo nome più corto
+a un tipo di dato già esistente
+utilizzando la parola chiave \texttt{typedef}
+
+Ad esempio, dato che il nome \texttt{long long} è lungo,
+può essere ridefinito per brevità come \texttt{ll} nel seguente modo:
+
 \begin{lstlisting}
 typedef long long ll;
 \end{lstlisting}
-After this, the code
+Dopo questa definizione, il codice:
 \begin{lstlisting}
 long long a = 123456789;
 long long b = 987654321;
 cout << a*b << "\n";
 \end{lstlisting}
-can be shortened as follows:
+potrà essere riscritto come:
 \begin{lstlisting}
 ll a = 123456789;
 ll b = 987654321;
 cout << a*b << "\n";
 \end{lstlisting}
 
-The command \texttt{typedef}
-can also be used with more complex types.
-For example, the following code gives
-the name \texttt{vi} for a vector of integers
-and the name \texttt{pi} for a pair
-that contains two integers.
+Il comando \texttt{typedef} può essere usato
+anche per definire tipi di dati complessi.
+Per esempio, il seguente codice assegna il nome \texttt{vi}
+a un vettore di interi e il nome \texttt{pi} a un paio che contiene
+una coppia di interi.
+
 \begin{lstlisting}
 typedef vector<int> vi;
 typedef pair<int,int> pi;
 \end{lstlisting}
 
-\subsubsection{Macros}
+\subsubsection{Macro}
 \index{macro}
-Another way to shorten code is to define
-\key{macros}.
-A macro means that certain strings in
-the code will be changed before the compilation.
-In C++, macros are defined using the
-\texttt{\#define} keyword.
+Un altro modo per scrivere codice più corto
+è quello di definire delle \key{macro}.
+Una macro indica che una certa stringa di codice
+sarà sostituita con un'altra prima della compilazione.
+In C++ le macro vengono definite usando la parola
+chiave \texttt{\#define}.
 
-For example, we can define the following macros:
+Se ad esempio vengono definite queste macro:
 \begin{lstlisting}
 #define F first
 #define S second
 #define PB push_back
 #define MP make_pair
 \end{lstlisting}
-After this, the code
+allora il codice:
 \begin{lstlisting}
 v.push_back(make_pair(y1,x1));
 v.push_back(make_pair(y2,x2));
 int d = v[i].first+v[i].second;
 \end{lstlisting}
-can be shortened as follows:
+potrà essere accorciato nel modo seguente:
 \begin{lstlisting}
 v.PB(MP(y1,x1));
 v.PB(MP(y2,x2));
 int d = v[i].F+v[i].S;
 \end{lstlisting}
 
-A macro can also have parameters
-which makes it possible to shorten loops and other
-structures.
-For example, we can define the following macro:
+Una macro può anche avere dei parametri, 
+il che rende possibile la scrittura di loop
+più corti e di altre strutture.
+Definendo ad esempio la seguente macro:
 \begin{lstlisting}
 #define REP(i,a,b) for (int i = a; i <= b; i++)
 \end{lstlisting}
-After this, the code
+il codice:
 \begin{lstlisting}
 for (int i = 1; i <= n; i++) {
     search(i);
 }
 \end{lstlisting}
-can be shortened as follows:
+risulterà così abbreviato:
 \begin{lstlisting}
 REP(i,1,n) {
     search(i);
 }
 \end{lstlisting}
 
-Sometimes macros cause bugs that may be difficult
-to detect. For example, consider the following macro
-that calculates the square of a number:
+A volte le macro possono creare degli errori
+difficili da individuare.
+Si prenda ad esempio la macro che calcola 
+il quadrato di un numero: 
+
 \begin{lstlisting}
 #define SQ(a) a*a
 \end{lstlisting}
-This macro \emph{does not} always work as expected.
-For example, the code
+Questa macro \emph{non} sempre si comporta come ci si aspetterebbe:
+ad esempio il codice
+
 \begin{lstlisting}
 cout << SQ(3+3) << "\n";
 \end{lstlisting}
-corresponds to the code
+corrisponde al codice
 \begin{lstlisting}
 cout << 3+3*3+3 << "\n"; // 15
 \end{lstlisting}
 
-A better version of the macro is as follows:
+Quella che segue è una versione corretta della stessa macro:
 \begin{lstlisting}
 #define SQ(a) (a)*(a)
 \end{lstlisting}
-Now the code
+Ora il codice
 \begin{lstlisting}
 cout << SQ(3+3) << "\n";
 \end{lstlisting}
-corresponds to the code
+corrisponderà al codice
 \begin{lstlisting}
 cout << (3+3)*(3+3) << "\n"; // 36
 \end{lstlisting}
