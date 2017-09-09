@@ -535,175 +535,173 @@ cout << (3+3)*(3+3) << "\n"; // 36
 \end{lstlisting}
 
 
-\section{Mathematics}
+\section{Matematica}
 
-Mathematics plays an important role in competitive
-programming, and it is not possible to become
-a successful competitive programmer without
-having good mathematical skills.
-This section discusses some important
-mathematical concepts and formulas that
-are needed later in the book.
+La matematica gioca un ruolo importante 
+nelle gare di programmazione e non è possibile 
+diventare un ottenere dei buoni risultati
+senza avere delle buone capacità matematiche.
+In questa sezione verranno discussi alcuni 
+importanti concetti matematiche e alcune formule 
+che saranno necessarie nel proseguio del testo.
 
-\subsubsection{Sum formulas}
+\subsubsection{Formule per le sommatorie}
 
-Each sum of the form
+Ogni somma della forma
 \[\sum_{x=1}^n x^k = 1^k+2^k+3^k+\ldots+n^k,\]
-where $k$ is a positive integer,
-has a closed-form formula that is a
-polynomial of degree $k+1$.
-For example\footnote{\index{Faulhaber's formula}
-There is even a general formula for such sums, called \key{Faulhaber's formula},
-but it is too complex to be presented here.},
+dove $k$ è un intero positivo, ha una soluzione in forma chiusa
+che è un polinomio di grado $k+1$.
+Per esempio\footnote{\index{Faulhaber's formula}
+C'è anche una formula generale per questo tipo di sommatorie, chiamata \key{formula di Faulhaber},
+ma è troppo complessa per essere presentata qui,},
 \[\sum_{x=1}^n x = 1+2+3+\ldots+n = \frac{n(n+1)}{2}\]
-and
+e
 \[\sum_{x=1}^n x^2 = 1^2+2^2+3^2+\ldots+n^2 = \frac{n(n+1)(2n+1)}{6}.\]
 
-An \key{arithmetic progression} is a \index{arithmetic progression}
-sequence of numbers
-where the difference between any two consecutive
-numbers is constant.
-For example,
+Una \key{progressione aritmetica} è una \index{progressione aritmetica}
+sequenza di numeri
+dove la differenza tra due qualsiasi numeri consecutivi è costante.
+Per esempio,
 \[3, 7, 11, 15\]
-is an arithmetic progression with constant 4.
-The sum of an arithmetic progression can be calculated
-using the formula
+è una progressione aritmetica con costante 4.
+La somma di una progressione aritmetica può essere calcolata
+usando la formula
 \[\underbrace{a + \cdots + b}_{n \,\, \textrm{numbers}} = \frac{n(a+b)}{2}\]
-where $a$ is the first number,
-$b$ is the last number and
-$n$ is the amount of numbers.
-For example,
+dove $a$ è il primo numero,
+$b$ è l'ultimo numero e 
+$n$ è la quantità di numeri.
+Per esempio
 \[3+7+11+15=\frac{4 \cdot (3+15)}{2} = 36.\]
-The formula is based on the fact
-that the sum consists of $n$ numbers and
-the value of each number is $(a+b)/2$ on average.
+La formula è basata sul fatto che 
+la somma consiste di $n$ numeri e il valore di
+ogni elemento in media è $(a+b)/2$
 
-\index{geometric progression}
-A \key{geometric progression} is a sequence
-of numbers
-where the ratio between any two consecutive
-numbers is constant.
-For example,
+\index{progressione geometrica}
+Una \key{progressione geometrica} è una sequenza di numeri
+dove il rapporto tra due qualsiasi termini consecutivi 
+è costante.
+Per esempio,
 \[3,6,12,24\]
-is a geometric progression with constant 2.
-The sum of a geometric progression can be calculated
-using the formula
+è una progressione geometrica con costante 2.
+La somma si una progressione geometrica può essere calcolata
+usando la seguente formula:
 \[a + ak + ak^2 + \cdots + b = \frac{bk-a}{k-1}\]
-where $a$ is the first number,
-$b$ is the last number and the
-ratio between consecutive numbers is $k$.
-For example,
+dove $a$ è il primo numero,
+$b$ è l'ultimo numero e il rapporto
+tra due numeri consecutivi è $k$.
+Per esempio,
+
 \[3+6+12+24=\frac{24 \cdot 2 - 3}{2-1} = 45.\]
 
-This formula can be derived as follows. Let
+Questa formula si ottiene nel seguente modo. 
+Sia
 \[ S = a + ak + ak^2 + \cdots + b .\]
-By multiplying both sides by $k$, we get
+Moltiplicando entrambi i lati per $k$ si ottiene
 \[ kS = ak + ak^2 + ak^3 + \cdots + bk,\]
-and solving the equation
+e risolvendo l'equazione
 \[ kS-S = bk-a\]
-yields the formula.
+si arriva alla formula vista in precedenza.
 
-A special case of a sum of a geometric progression is the formula
+Un caso speciale della somma di una progressione geometrica 
+è la formula
 \[1+2+4+8+\ldots+2^{n-1}=2^n-1.\]
 
-\index{harmonic sum}
+\index{somma armonica}
 
-A \key{harmonic sum} is a sum of the form
+Una \key{somma armonica} è una somma della forma
 \[ \sum_{x=1}^n \frac{1}{x} = 1+\frac{1}{2}+\frac{1}{3}+\ldots+\frac{1}{n}.\]
 
-An upper bound for a harmonic sum is $\log_2(n)+1$.
-Namely, we can
-modify each term $1/k$ so that $k$ becomes
-the nearest power of two that does not exceed $k$.
-For example, when $n=6$, we can estimate
-the sum as follows:
+Il limite superiore di una somma armonica è $\log_2(n)+1$.
+che si ottiene modificando ogni termine $1/k$  in modo che
+$k$ diventi la più grande potenza del 2 che non sia maggiore di $k$.
+Per esempio,se $n=6$, una stima della formula porta a: 
 \[ 1+\frac{1}{2}+\frac{1}{3}+\frac{1}{4}+\frac{1}{5}+\frac{1}{6} \le
 1+\frac{1}{2}+\frac{1}{2}+\frac{1}{4}+\frac{1}{4}+\frac{1}{4}.\]
-This upper bound consists of $\log_2(n)+1$ parts
-($1$, $2 \cdot 1/2$, $4 \cdot 1/4$, etc.),
-and the value of each part is at most 1.
+Questo limite superiore consiste di $\log_2(n)+1$ parti
+($1$, $2 \cdot 1/2$, $4 \cdot 1/4$, ecc.),
+e il valore di ognuno di questi termini è al massimo 1.
 
-\subsubsection{Set theory}
+\subsubsection{Teoria degli insiemi}
 
-\index{set theory}
-\index{set}
-\index{intersection}
-\index{union}
-\index{difference}
-\index{subset}
-\index{universal set}
-\index{complement}
+\index{teoria degli insiemi}
+\index{insieme}
+\index{intersezione}
+\index{unione}
+\index{differenza}
+\index{sottoinsieme}
+\index{insieme universale}
+\index{complemento}
 
-A \key{set} is a collection of elements.
-For example, the set
+Un \key{insieme} (\key{set} in inglese) è una collezione di elementi.
+Per esempio, l'insieme
 \[X=\{2,4,7\}\]
-contains elements 2, 4 and 7.
-The symbol $\emptyset$ denotes an empty set,
-and $|S|$ denotes the size of a set $S$,
-i.e., the number of elements in the set.
-For example, in the above set, $|X|=3$.
+contiene gli elementi 2, 4 e 7.
+Il simbolo $\emptyset$ denota l'insieme vuoto,
+e $|S|$ rappresenta la dimensione dell'insieme $S$,
+cioè il numero di elementi dell'insieme.
+Per esempio, nell'insieme definito prima,
+$|X|=3$. 
 
-If a set $S$ contains an element $x$,
-we write $x \in S$,
-and otherwise we write $x \notin S$.
-For example, in the above set
+Se un insieme $S$ contiene l'elemento $x$, 
+allora si scrive $x \in S$, 
+altrimenti si scrive $x \notin S$.
+Sempre con riferimento all'insieme definito prima
 \[4 \in X \hspace{10px}\textrm{and}\hspace{10px} 5 \notin X.\]
 
 \begin{samepage}
-New sets can be constructed using set operations:
+Nuovi insiemi possono essere definiti attraverso le seguenti operazioni:
 \begin{itemize}
-\item The \key{intersection} $A \cap B$ consists of elements
-that are in both $A$ and $B$.
-For example, if $A=\{1,2,5\}$ and $B=\{2,4\}$,
-then $A \cap B = \{2\}$.
-\item The \key{union} $A \cup B$ consists of elements
-that are in $A$ or $B$ or both.
-For example, if $A=\{3,7\}$ and $B=\{2,3,8\}$,
-then $A \cup B = \{2,3,7,8\}$.
-\item The \key{complement} $\bar A$ consists of elements
-that are not in $A$.
-The interpretation of a complement depends on
-the \key{universal set}, which contains all possible elements.
-For example, if $A=\{1,2,5,7\}$ and the universal set is
-$\{1,2,\ldots,10\}$, then $\bar A = \{3,4,6,8,9,10\}$.
-\item The \key{difference} $A \setminus B = A \cap \bar B$
-consists of elements that are in $A$ but not in $B$.
-Note that $B$ can contain elements that are not in $A$.
-For example, if $A=\{2,3,7,8\}$ and $B=\{3,5,8\}$,
-then $A \setminus B = \{2,7\}$.
+\item L'\key{intersezione} $A \cap B$ è formata dagli elementi
+presenti sia in $A$ che in $B$.
+Per esempio, se $A=\{1,2,5\}$ e $B=\{2,4\}$,
+allora $A \cap B = \{2\}$.
+\item L'\key{unione} $A \cup B$ è formata dagli elementi che
+si trovano in $A$ o in $B$ o in entrambi.
+Per esempio, se $A=\{3,7\}$ e $B=\{2,3,8\}$,
+allora $A \cup B = \{2,3,7,8\}$.
+\item L'\key{insieme complementare} di A, $\bar A$,  consiste degli elementi
+che non sono in $A$.
+L'interpretazione di cosa sia il complemento di un insieme dipende
+dallla definizione che viene data all'\key{insieme universo}, che contiene tutti i possibili elementi.
+Per esempio, se $A=\{1,2,5,7\}$ e l'insieme universo è
+$\{1,2,\ldots,10\}$, allora $\bar A = \{3,4,6,8,9,10\}$.
+\item La \key{differenza} $A \setminus B = A \cap \bar B$
+è formata dagli elementi che appartengono ad $A$ ma non a $B$.
+Va notato che $B$ può contenere elementi che non sono contenuti in $A$.
+Per esempio, se $A=\{2,3,7,8\}$ e $B=\{3,5,8\}$,
+allora $A \setminus B = \{2,7\}$.
 \end{itemize}
 \end{samepage}
 
-If each element of $A$ also belongs to $S$,
-we say that $A$ is a \key{subset} of $S$,
-denoted by $A \subset S$.
-A set $S$ always has $2^{|S|}$ subsets,
-including the empty set.
-For example, the subsets of the set $\{2,4,7\}$ are
+Se ogni elemento di $A$ appartiene anche a $S$,
+si dice che $A$ è un \key{sottoinsieme} di $S$
+e si scrive $A \subset S$.
+Un insieme $S$ ha $2^{|S|}$ sottoinsiemi,
+incluso l'insieme vuoto.
+Per esempio, i sottoinsiemi dell'insieme $\{2,4,7\}$ sono
 \begin{center}
 $\emptyset$,
-$\{2\}$, $\{4\}$, $\{7\}$, $\{2,4\}$, $\{2,7\}$, $\{4,7\}$ and $\{2,4,7\}$.
+$\{2\}$, $\{4\}$, $\{7\}$, $\{2,4\}$, $\{2,7\}$, $\{4,7\}$ e $\{2,4,7\}$.
 \end{center}
 
-Some often used sets are
-$\mathbb{N}$ (natural numbers),
-$\mathbb{Z}$ (integers),
-$\mathbb{Q}$ (rational numbers) and
-$\mathbb{R}$ (real numbers).
-The set $\mathbb{N}$
-can be defined in two ways, depending
-on the situation:
-either $\mathbb{N}=\{0,1,2,\ldots\}$
-or $\mathbb{N}=\{1,2,3,...\}$.
+Gli insieme che vengono usati più frequentemente sono
+$\mathbb{N}$ (numeri naturali),
+$\mathbb{Z}$ (interi),
+$\mathbb{Q}$ (numeri razionali) e
+$\mathbb{R}$ (numeri reali).
+L'insieme $\mathbb{N}$
+può essere definito in due modi, a seconda del contesto:
+o come $\mathbb{N}=\{0,1,2,\ldots\}$
+oppure $\mathbb{N}=\{1,2,3,...\}$.
 
-We can also construct a set using a rule of the form
+Un insieme può anche essere definito utilizzando una regola in questo modo: 
 \[\{f(n) : n \in S\},\]
-where $f(n)$ is some function.
-This set contains all elements of the form $f(n)$,
-where $n$ is an element in $S$.
-For example, the set
+dove $f(n)$ è una qualche funzione.
+Questo insieme contiene tutti gli elementi della forma $f(n)$,
+dove $n$ è un elemento in $S$.
+Per esempio l'insieme
 \[X=\{2n : n \in \mathbb{Z}\}\]
-contains all even integers.
+contiene tutti gli interi pari.
 
 \subsubsection{Logic}
 
