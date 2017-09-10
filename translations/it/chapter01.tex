@@ -822,52 +822,52 @@ There is also a closed-form formula
 \index{formula di Binet} \key{formula di Binet}:
 \[f(n)=\frac{(1 + \sqrt{5})^n - (1-\sqrt{5})^n}{2^n \sqrt{5}}.\]
 
-\subsubsection{Logarithms}
+\subsubsection{Logaritmi}
 
-\index{logarithm}
+\index{logaritmi}
 
-The \key{logarithm} of a number $x$
-is denoted $\log_k(x)$, where $k$ is the base
-of the logarithm.
-According to the definition,
-$\log_k(x)=a$ exactly when $k^a=x$.
+Il \key{logaritmo} di un numero $x$
+è indicato con $\log_k(x)$, dove $k$ è la base
+del logaritmo.
+La definizione prevede che se
+$\log_k(x)=a$ allora $k^a=x$.
 
-A useful property of logarithms is
-that $\log_k(x)$ equals the number of times
-we have to divide $x$ by $k$ before we reach 
-the number 1.
-For example, $\log_2(32)=5$
-because 5 divisions by 2 are needed:
+Un'utile proprietà dei logaritmi
+è che il $\log_k(x)$ è uguale al numero di volte
+che $x$ deve essere diviso per $k$ prima che il risultato 
+diventi 1.
+Per esempio,in $\log_2(32)=5$
+occorrono 5 divisioni per due prima di ottenere 1:
 
 \[32 \rightarrow 16 \rightarrow 8 \rightarrow 4 \rightarrow 2 \rightarrow 1 \]
 
-Logarithms are often used in the analysis of
-algorithms, because many efficient algorithms
-halve something at each step.
-Hence, we can estimate the efficiency of such algorithms
-using logarithms.
+I logaritmi sono spesso usati nell'analisi
+degli algoritmi, perchè molti algoritmi efficienti
+dimezzano un qualche insieme a ogni passo.
+Quindi è possibile stimare l'efficienza di questi algoritmi
+usando i logaritmi.
 
-The logarithm of a product is
+Il logaritmo di un prodotto è
 \[\log_k(ab) = \log_k(a)+\log_k(b),\]
-and consequently,
+e di conseguenza,
 \[\log_k(x^n) = n \cdot \log_k(x).\]
-In addition, the logarithm of a quotient is
+Inoltre il logaritmo di un quoziente è
 \[\log_k\Big(\frac{a}{b}\Big) = \log_k(a)-\log_k(b).\]
-Another useful formula is
+Un'altra formula utile è
 \[\log_u(x) = \frac{\log_k(x)}{\log_k(u)},\]
-and using this, it is possible to calculate
-logarithms to any base if there is a way to
-calculate logarithms to some fixed base.
+e usandola è possibile calcolare
+logaritmi con ogni base se si è in grado
+di calcolare i logaritmi in una qualche base fissata.
 
-\index{natural logarithm}
+\index{logaritmo naturale}
 
-The \key{natural logarithm} $\ln(x)$ of a number $x$
-is a logarithm whose base is $e \approx 2.71828$.
-Another property of logarithms is that
-the number of digits of an integer $x$ in base $b$ is
+Il \key{logaritmo naturale} $\ln(x)$ di un numero $x$
+è il logaritmo la cui base è $e \approx 2.71828$.
+Un'altra proprietà del logaritmo è che il numero di cifre
+di un intero $x$ in base $b$ è
 $\lfloor \log_b(x)+1 \rfloor$.
-For example, the representation of
-$123$ in base $2$ is 1111011 and
+Ad esempio, la rappresentazione di
+$123$ in base $2$ è 1111011 e
 $\lfloor \log_2(123)+1 \rfloor = 7$.
 
 \section{Contests and resources}
