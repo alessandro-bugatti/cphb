@@ -774,26 +774,26 @@ esistono sempre due numeri $a$ e $b$ maggiori di 1 tali che
 il loro prodotto sia uguale a $x$.
 Questa proposizione è vera per l'insieme dei numeri interi.
 
-\subsubsection{Functions}
-
-The function $\lfloor x \rfloor$ rounds the number $x$
-down to an integer, and the function
-$\lceil x \rceil$ rounds the number $x$
-up to an integer. For example,
+\subsubsection{Funzioni}
+La funzione $\lfloor x \rfloor$ arrotonda il numero $x$
+all'intero inferiore e la funzione
+$\lceil x \rceil$ arrotonda il numero $x$
+all'intero superiore. 
+Per esempio,
 \[ \lfloor 3/2 \rfloor = 1 \hspace{10px} \textrm{and} \hspace{10px} \lceil 3/2 \rceil = 2.\]
 
-The functions $\min(x_1,x_2,\ldots,x_n)$
-and $\max(x_1,x_2,\ldots,x_n)$
-give the smallest and largest of values
+Le funzioni $\min(x_1,x_2,\ldots,x_n)$
+e $\max(x_1,x_2,\ldots,x_n)$
+restituiscono il minimo e il massimo dei valori in
 $x_1,x_2,\ldots,x_n$.
-For example,
+Per esempio,
 \[ \min(1,2,3)=1 \hspace{10px} \textrm{and} \hspace{10px} \max(1,2,3)=3.\]
 
-\index{factorial}
+\index{fattoriale}
 
-The \key{factorial} $n!$ can be defined
+Il \key{fattoriale} $n!$ può essere definito come
 \[\prod_{x=1}^n x = 1 \cdot 2 \cdot 3 \cdot \ldots \cdot n\]
-or recursively
+oppure ricorsivamente come
 \[
 \begin{array}{lcl}
 0! & = & 1 \\
@@ -801,12 +801,12 @@ n! & = & n \cdot (n-1)! \\
 \end{array}
 \]
 
-\index{Fibonacci number}
+\index{numero di Fibonacci}
 
-The \key{Fibonacci numbers}
-%\footnote{Fibonacci (c. 1175--1250) was an Italian mathematician.}
-arise in many situations.
-They can be defined recursively as follows:
+I \key{numeri di Fibonacci}
+%\footnote{Fibonacci (c. 1175--1250) era un matematico italiano.}
+possono essere trovati in molte situazioni.
+Possono essere definiti in maniera ricorsiva nel seguente modo:
 \[
 \begin{array}{lcl}
 f(0) & = & 0 \\
@@ -814,11 +814,12 @@ f(1) & = & 1 \\
 f(n) & = & f(n-1)+f(n-2) \\
 \end{array}
 \]
-The first Fibonacci numbers are
+I primi numeri di Fibonacci sono
 \[0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, \ldots\]
+C'è anche una formula chiusa per il calcolo 
+dell'n-esimo numero di Fibonacci, che viene chiamata
 There is also a closed-form formula
-for calculating Fibonacci numbers, which is sometimes called
-\index{Binet's formula} \key{Binet's formula}:
+\index{formula di Binet} \key{formula di Binet}:
 \[f(n)=\frac{(1 + \sqrt{5})^n - (1-\sqrt{5})^n}{2^n \sqrt{5}}.\]
 
 \subsubsection{Logarithms}
