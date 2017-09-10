@@ -703,24 +703,24 @@ Per esempio l'insieme
 \[X=\{2n : n \in \mathbb{Z}\}\]
 contiene tutti gli interi pari.
 
-\subsubsection{Logic}
+\subsubsection{Logica}
 
-\index{logic}
-\index{negation}
-\index{conjuction}
-\index{disjunction}
-\index{implication}
-\index{equivalence}
+\index{logica}
+\index{negazione}
+\index{congiunzione}
+\index{disgiunzione}
+\index{implicazione}
+\index{equivalenza}
 
-The value of a logical expression is either
-\key{true} (1) or \key{false} (0).
-The most important logical operators are
-$\lnot$ (\key{negation}),
-$\land$ (\key{conjunction}),
-$\lor$ (\key{disjunction}),
-$\Rightarrow$ (\key{implication}) and
-$\Leftrightarrow$ (\key{equivalence}).
-The following table shows the meanings of these operators:
+Il valore di un'espressione logica può essere solo
+\key{true} (1 - vero) o \key{false} (0 - falso).
+Gli operatori logici più importanti sono i seguenti: 
+$\lnot$ (\key{negazione}), 
+$\land$ (\key{congiunzione}), 
+$\lor$ (\key{disgiunzine}), 
+$\Rightarrow$ (\key{implicazione}) e
+$\Leftrightarrow$ (\key{equivalenza}).
+La tabella mostra il significato di questi operatori:
 
 \begin{center}
 \begin{tabular}{rr|rrrrrrr}
@@ -733,48 +733,46 @@ $A$ & $B$ & $\lnot A$ & $\lnot B$ & $A \land B$ & $A \lor B$ & $A \Rightarrow B$
 \end{tabular}
 \end{center}
 
-The expression $\lnot A$ has the opposite value of $A$.
-The expression $A \land B$ is true if both $A$ and $B$
-are true,
-and the expression $A \lor B$ is true if $A$ or $B$ or both
-are true.
-The expression $A \Rightarrow B$ is true
-if whenever $A$ is true, also $B$ is true.
-The expression $A \Leftrightarrow B$ is true
-if $A$ and $B$ are both true or both false.
+L'espressione $\lnot A$ ha il valore opposto di $A$.
+L'espressione $A \land B$ è vera solo se sia $A$ che $B$ sono veri,
+mentre l'espressione $A \lor B$ è vera se è vero $A$ o è vero $B$ o sono veri entrambi.
+Se l'espressione $A \Rightarrow B$ è vera
+allora ogni volta che $A$ è vera, anche $B$ deve essere vera.
+Infine l'espressione $A \Leftrightarrow B$ è vera
+se $A$ e $B$ sono entrambe vere o entrambe false.
 
-\index{predicate}
+\index{predicato}
 
-A \key{predicate} is an expression that is true or false
-depending on its parameters.
-Predicates are usually denoted by capital letters.
-For example, we can define a predicate $P(x)$
-that is true exactly when $x$ is a prime number.
-Using this definition, $P(7)$ is true but $P(8)$ is false.
+Un \key{predicato} è un'espressione che è vera o falsa in base
+al valore assunto dai propri parametri.
+Normalmente i predicati sono indicati con delle lettere maiuscole.
+Per esempio, si può definire il predicato $P(x)$
+che risulta vero quando $x$ è un numero primo.
+Usando questa definizione, $P(7)$ è vero, invece $P(8)$ non lo è.
 
-\index{quantifier}
 
-A \key{quantifier} connects a logical expression
-to the elements of a set.
-The most important quantifiers are
-$\forall$ (\key{for all}) and $\exists$ (\key{there is}).
-For example,
+\index{quantificatore}
+
+Un \key{quantificatore} connette un'espressione logica 
+agli elementi di un insieme. 
+I quantificatori più importanti sono
+$\forall$ (\key{per ogni}) e $\exists$ (\key{esiste}).
+Per esempio,
 \[\forall x (\exists y (y < x))\]
-means that for each element $x$ in the set,
-there is an element $y$ in the set
-such that $y$ is smaller than $x$.
-This is true in the set of integers,
-but false in the set of natural numbers.
+significa che per ogni elemento $x$ dell'insieme,
+esiste un elemento $y$ dell'insieme tale che
+$y$ è minore di $x$.
+Questo è vero per l'insieme dei numeri interi, 
+ma non lo è per l'insieme dei numeri naturali. 
 
-Using the notation described above,
-we can express many kinds of logical propositions.
-For example,
+Usando la notazione appena esposta è possibile
+esprimere diversi tipi di proposizioni logiche.
+Per esempio,
 \[\forall x ((x>1 \land \lnot P(x)) \Rightarrow (\exists a (\exists b (a > 1 \land b > 1 \land x = ab))))\]
-means that if a number $x$ is larger than 1
-and not a prime number,
-then there are numbers $a$ and $b$
-that are larger than $1$ and whose product is $x$.
-This proposition is true in the set of integers.
+significa che per ogni numero $x$ maggiore di 1 non primo,
+esistono sempre due numeri $a$ e $b$ maggiori di 1 tali che
+il loro prodotto sia uguale a $x$.
+Questa proposizione è vera per l'insieme dei numeri interi.
 
 \subsubsection{Functions}
 
