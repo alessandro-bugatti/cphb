@@ -334,29 +334,26 @@ può eseguire sia $n/2$ che $5n$ operazioni e
 questo ovviamente può cambiare radicalmente il tempo
 di esecuzione di un algoritmo.
 
-\section{Maximum subarray sum}
+\section{Sottovettore di somma massima}
 
-\index{maximum subarray sum}
+\index{sottovettore di somma massima}
 
-There are often several possible algorithms
-for solving a problem such that their
-time complexities are different.
-This section discusses a classic problem that
-has a straightforward $O(n^3)$ solution.
-However, by designing a better algorithm, it
-is possible to solve the problem in $O(n^2)$
-time and even in $O(n)$ time.
+A volte per risolvere un problema
+possono essere usati algoritmi
+con complessità diverse.
+In questa sezione viene discusso un problema classico,
+la cui soluzione banale ha una complessità di tipo $O(n^3)$,
+ma con una progettazione migliore si riesce a risolvere in problema
+in tempo $O(n^2)$ e si riesce arrivare addirittura a $O(n)$.
 
-Given an array of $n$ numbers,
-our task is to calculate the
-\key{maximum subarray sum}, i.e.,
-the largest possible sum of 
-a sequence of consecutive values
-in the array\footnote{J. Bentley's
-book \emph{Programming Pearls} \cite{ben86} made the problem popular.}.
-The problem is interesting when there may be
-negative values in the array.
-For example, in the array
+Il problema è così definito: dato un array di 
+$n$ numeri bisogna calcolare il \key{sottovettore di somma massima},
+cioè la maggiore tra le somme di elementi consecutivi dell'array
+\footnote{Il problema è stato reso popolare da J. Bentley nel suo libro
+\emph{Programming Pearls} \cite{ben86}.}.
+Il problema diventa interessante quanto l'array contiene 
+anche valori negativi.
+Per esempio, nell'array
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -372,7 +369,7 @@ For example, in the array
 \end{tikzpicture}
 \end{center}
 \begin{samepage}
-the following subarray produces the maximum sum $10$:
+il sotovettore di somma massima, $10$, è il seguente:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (1,0) rectangle (6,1);
@@ -390,13 +387,13 @@ the following subarray produces the maximum sum $10$:
 \end{center}
 \end{samepage}
 
-\subsubsection{Algorithm 1}
+\subsubsection{Algoritmo 1}
 
-A straightforward way to solve the problem
-is to go through all possible subarrays,
-calculate the sum of values in each subarray and maintain
-the maximum sum.
-The following code implements this algorithm:
+Un modo diretto di risolvere il problema 
+è quello di scorrere tutti i possibili
+sottovettori, calcolare la somma di ognuno e memorizzare
+il massimo di queste somme.
+Questo algoritmo può essere implementato nel modo seguente:
 
 \begin{lstlisting}
 int best = 0;
@@ -411,23 +408,21 @@ for (int a = 0; a < n; a++) {
 }
 cout << best << "\n";
 \end{lstlisting}
+Le variabili \texttt{a} and \texttt{b} fissano il primo
+e l'ultimo indice del sottovettore, e la somma viene
+memorizzata nella variabile \texttt{sum}.
+La variabile \texttt{best} contiene la somma massima trovata durante la ricerca.
 
-The variables \texttt{a} and \texttt{b} fix the first and
-last index of the subarray,
-and the sum of values is calculated to the variable \texttt{sum}.
-The variable \texttt{best} contains the maximum sum found during the search.
+La complessità di questo algoritmo è $O(n^3)$,
+poichè consiste in tre cicli annidati che scorrono
+tutto l'input.
 
-The time complexity of the algorithm is $O(n^3)$,
-because it consists of three nested loops 
-that go through the input.
+\subsubsection{Algoritmo 2}
 
-\subsubsection{Algorithm 2}
-
-It is easy to make Algorithm 1 more efficient
-by removing one loop from it.
-This is possible by calculating the sum at the same
-time when the right end of the subarray moves.
-The result is the following code:
+È facile vedere che si può rendere più efficiente l'Algoritmo 1
+rimuovendo il ciclo interno: questo si ottiene calcolando la somma nel momento
+stesso in cui viene incrementato l'indice di destra del sottovettore,
+ottenendo così il seguente codice:
 
 \begin{lstlisting}
 int best = 0;
@@ -440,38 +435,40 @@ for (int a = 0; a < n; a++) {
 }
 cout << best << "\n";
 \end{lstlisting}
-After this change, the time complexity is $O(n^2)$.
+Con questa modifica la complessità diventa $O(n^2)$.
 
-\subsubsection{Algorithm 3}
+\subsubsection{Algoritmo 3}
 
-Surprisingly, it is possible to solve the problem
-in $O(n)$ time\footnote{In \cite{ben86}, this linear-time algorithm
-is attributed to J. B. Kadane, and the algorithm is sometimes
-called \index{Kadane's algorithm} \key{Kadane's algorithm}.}, which means
-that just one loop is enough.
-The idea is to calculate, for each array position,
-the maximum sum of a subarray that ends at that position.
-After this, the answer for the problem is the
-maximum of those sums.
+Sorprendentemente è possibile risolvere il problema in tempo $O(n)$
+\footnote{In \cite{ben86}, questo algoritmo lineare è attribuito a 
+J. B. Kadane, di conseguenza spesso è chiamato
+\index{Kadane, algoritmo di} \key{algoritmo di Kadane}.}, il che significa
+che un solo ciclo è sufficiente per risolvere il problema.
+L'idea è di calcolare, per ogni posizione nell'array,
+la somma massima dell'array che finisce in quella posizione.
+Fatto questo la risposta al problema si ottiene facilmente
+trovando la massima di queste somme.
 
-Consider the subproblem of finding the maximum-sum subarray
-that ends at position $k$.
-There are two possibilities:
+Si consideri il problema di trovare la somma massima del sottovettore
+che termina alla posizione $k$.
+
+Ci sono due possibilità:
 \begin{enumerate}
-\item The subarray only contains the element at position $k$.
-\item The subarray consists of a subarray that ends
-at position $k-1$, followed by the element at position $k$.
+\item Il sottovettore contiene solo l'elemento alla posizione $k$.
+\item Il sottovettore consiste nel sottovettore che finisce alla posizione $k-1$, 
+seguito dall'elemento in posizione $k$.
 \end{enumerate}
 
-In the latter case, since we want to
-find a subarray with maximum sum,
-the subarray that ends at position $k-1$
-should also have the maximum sum.
-Thus, we can solve the problem efficiently
-by calculating the maximum subarray sum
-for each ending position from left to right.
+In quest'ultimo caso, poichè si sta cercando il 
+sottovettore di somma massima,
+il sottovettore che finisce alla posizione $k-1$
+dovrebbe anche avere la somma massima.
+A questo punto si può risolvere il problema in maniera efficiente 
+calcolando il sottovettore di somma massima per ogni posizione finale 
+del vettore da sinistra a destra.
 
-The following code implements the algorithm:
+L'implementazione è la seguente:
+
 \begin{lstlisting}
 int best = 0, sum = 0;
 for (int k = 0; k < n; k++) {
@@ -481,28 +478,27 @@ for (int k = 0; k < n; k++) {
 cout << best << "\n";
 \end{lstlisting}
 
-The algorithm only contains one loop
-that goes through the input,
-so the time complexity is $O(n)$.
-This is also the best possible time complexity,
-because any algorithm for the problem
-has to examine all array elements at least once.
+L'algoritmo contiene un solo ciclo, 
+quindi la complessità è di tipo $O(n)$. 
+Questà è la migliore complessità possibile,
+poichè qualsiasi algoritmo dovrebbe comunque esaminare
+tutti gli elementi del vettore almeno una volta.
 
-\subsubsection{Efficiency comparison}
+\subsubsection{Confronto dei tempi di esecuzione}
 
-It is interesting to study how efficient 
-algorithms are in practice.
-The following table shows the running times
-of the above algorithms for different
-values of $n$ on a modern computer.
-
-In each test, the input was generated randomly.
-The time needed for reading the input was not
-measured.
+Nella pratica è interessante studiare l'efficienza
+di un algoritmo, intesa come tempo di calcolo effettivo
+per arrivare alla soluzione del problema.
+La seguente tabella mostra i tempi di esecuzione,
+su un computer moderno,
+degli algoritmi visti in precedenza,
+per differenti valori di $n$.
+In ogni test l'input è stato generato casualmente e il 
+tempo di lettura non è stato misurato.
 
 \begin{center}
 \begin{tabular}{rrrr}
-array size $n$ & Algorithm 1 & Algorithm 2 & Algorithm 3 \\
+Dimensione dell'array $n$ & Algoritmo 1 & Algoritmo 2 & Algoritmo 3 \\
 \hline
 $10^2$ & $0.0$ s & $0.0$ s & $0.0$ s \\
 $10^3$ & $0.1$ s & $0.0$ s & $0.0$ s \\
@@ -513,12 +509,10 @@ $10^7$ & > $10.0$ s & > $10.0$ s & $0.0$ s \\
 \end{tabular}
 \end{center}
 
-The comparison shows that all algorithms
-are efficient when the input size is small,
-but larger inputs bring out remarkable
-differences in the running times of the algorithms.
-Algorithm 1 becomes slow
-when $n=10^4$, and Algorithm 2
-becomes slow when $n=10^5$.
-Only Algorithm 3 is able to process
-even the largest inputs instantly.
+Il confronto mostra che tutti gli algoritmi
+sono efficienti finchè l'input rimane piccolo,
+ma più cresce e più le differenze tra i diversi algoritmi
+si allargano. L'Algoritmo 1 diventa lento
+quando $n=10^4$ e l'Algoritmo 2 diventa lento
+per $n=10^5$. Solo l'Algoritmo 3 è in grado di
+elaborare anche input molto grandi in modo quasi istantaneo.
