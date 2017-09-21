@@ -1,30 +1,30 @@
-\chapter{Sorting}
+\chapter{Ordinamento}
 
-\index{sorting}
+\index{ordinamento}
 
-\key{Sorting}
-is a fundamental algorithm design problem.
-Many efficient algorithms
-use sorting as a subroutine,
-because it is often easier to process
-data if the elements are in a sorted order.
+\key{L'ordinamento}
+è uno dei problemi classici dell'informatica.
+Molti algoritmi efficienti 
+al loro interno usano l'ordinamento come
+passaggio verso la soluzione del problema,
+poichè è spesso più facile processare i dati
+se gli elementi sono ordinati. 
 
-For example, the problem ''does an array contain
-two equal elements?'' is easy to solve using sorting.
-If the array contains two equal elements,
-they will be next to each other after sorting,
-so it is easy to find them.
-Also, the problem ''what is the most frequent element
-in an array?'' can be solved similarly.
+Per esempio, il problema "l'array contiene due elementi uguali?",
+può essere risolto facilmente usando l'ordinamento.
+Se l'array contiene due elementi uguali
+e il vettore è ordinato, saranno uno dopo l'altro e 
+quindi saranno facili da trovare.
+Anche il problema "qual è l'elemento più frequente nell'array"
+è facile da risolvere una volta ordinato il vettore.
 
-There are many algorithms for sorting, and they are
-also good examples of how to apply
-different algorithm design techniques.
-The efficient general sorting algorithms
-work in $O(n \log n)$ time,
-and many algorithms that use sorting
-as a subroutine also
-have this time complexity.
+Esistono molti algoritmi per ordinare un vettore, che
+permettono anche di mostrare differenti 
+tecniche di progettazione.
+I migliori algoritmi di ordinamento di carattere generale
+sono di classe $O(n \log n)$ e molti
+algoritmi che usano l'ordinamento come passaggio
+intermedio hanno anch'essi questo tipo di complessità. 
 
 \section{Sorting theory}
 
