@@ -26,17 +26,16 @@ sono di classe $O(n \log n)$ e molti
 algoritmi che usano l'ordinamento come passaggio
 intermedio hanno anch'essi questo tipo di complessità. 
 
-\section{Sorting theory}
+\section{Il problema dell'ordinamento}
 
-The basic problem in sorting is as follows:
+La forma base del problema dell'ordinamento  è la seguente:
 \begin{framed}
 \noindent
-Given an array that contains $n$ elements,
-your task is to sort the elements
-in increasing order.
+Dato un array contenente $n$ elementi, 
+disporre gli elementi in ordine crescente.
 \end{framed}
 \noindent
-For example, the array
+Per esempio, l'array
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -50,7 +49,7 @@ For example, the array
 \node at (7.5,0.5) {$6$};
 \end{tikzpicture}
 \end{center}
-will be as follows after sorting:
+dopo l'ordinamento diventerà:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -65,25 +64,21 @@ will be as follows after sorting:
 \end{tikzpicture}
 \end{center}
 
-\subsubsection{$O(n^2)$ algorithms}
+\subsubsection{Algoritmi con complessità $O(n^2)$}
 
 \index{bubble sort}
 
-Simple algorithms for sorting an array
-work in $O(n^2)$ time.
-Such algorithms are short and usually
-consist of two nested loops.
-A famous $O(n^2)$ time sorting algorithm
-is \key{bubble sort} where the elements
-''bubble'' in the array according to their values.
-
-Bubble sort consists of $n$ rounds.
-On each round, the algorithm iterates through
-the elements of the array.
-Whenever two consecutive elements are found
-that are not in correct order,
-the algorithm swaps them.
-The algorithm can be implemented as follows:
+Gli algoritmi più semplici per ordinare un vettore
+hanno una complessità di tipo $O(n^2)$.
+Solitamente sono corti da scrivere e sono formati da 
+due cicli annidati.
+Un famoso algoritmo di tipo $O(n^2)$ è il
+\key{bubble sort}, dove gli elementi risalgono il vettore
+come "bolle" di gas in un liquido in base al proprio valore.
+Il bubble sort consiste di $n$ passaggi, in ognuno dei quali
+si scorre tutto il vettore. Quando vengono trovati due elementi consecutivi 
+che non sono nell'ordine corretto, questi vengono scambiati.
+Un'implementazione di questo algoritmo è la seguente:
 \begin{lstlisting}
 for (int i = 0; i < n; i++) {
     for (int j = 0; j < n-1; j++) {
@@ -94,14 +89,14 @@ for (int i = 0; i < n; i++) {
 }
 \end{lstlisting}
 
-After the first round of the algorithm,
-the largest element will be in the correct position,
-and in general, after $k$ rounds, the $k$ largest
-elements will be in the correct positions.
-Thus, after $n$ rounds, the whole array
-will be sorted.
+Dopo il primo passaggio, l'elemento maggiore sarà nella sua posizione
+corretta in fondo al vettore e, in generale, dopo $k$ passaggi,
+i $k$ elementi più grandi del vettore saranno nella
+loro posizione finale.
+Quindi dopo $n$ passaggi, tutto il vettore 
+risulterà ordinato.
 
-For example, in the array
+Per esempio, nell'array
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -119,8 +114,7 @@ For example, in the array
 \end{center}
 
 \noindent
-the first round of bubble sort swaps elements
-as follows:
+il primo passaggio scambierà gli elementi nel seguente modo:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -186,25 +180,24 @@ as follows:
 \end{tikzpicture}
 \end{center}
 
-\subsubsection{Inversions}
+\subsubsection{Inversioni}
 
-\index{inversion}
+\index{inversione}
 
-Bubble sort is an example of a sorting
-algorithm that always swaps \emph{consecutive}
-elements in the array.
-It turns out that the time complexity
-of such an algorithm is \emph{always}
-at least $O(n^2)$, because in the worst case,
-$O(n^2)$ swaps are required for sorting the array.
+Il bubble sort è un esempio di algoritmo di ordinamento
+che scambia sempre due elementi \emph{consecutivi} nell'array. 
+Si può vedere che la complessità di questo algoritmo,
+nel caso peggiore, è sempre $O(n^2)$, 
+perchè sono richiesti $O(n^2)$ scambi per ordinare l'array. 
 
-A useful concept when analyzing sorting
-algorithms is an \key{inversion}:
-a pair of array elements
-$(\texttt{array}[a],\texttt{array}[b])$ such that
-$a<b$ and $\texttt{array}[a]>\texttt{array}[b]$,
-i.e., the elements are in the wrong order.
-For example, the array
+Un concetto utile quando si analizzano gli algoritmi di ordinamento
+è quello di \key{inversione}: si dice inversione una coppia di elementi 
+$(\texttt{array}[a],\texttt{array}[b])$ tale che 
+$a<b$ e $\texttt{array}[a]>\texttt{array}[b]$,
+cioè quando gli elementi non sono nell'ordine corretto.
+
+Per esempio, l'array
+
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -218,55 +211,55 @@ For example, the array
 \node at (7.5,0.5) {$8$};
 \end{tikzpicture}
 \end{center}
-has tree inversions: $(6,3)$, $(6,5)$ and $(9,8)$.
-The number of inversions indicates
-how much work is needed to sort the array.
-An array is completely sorted when
-there are no inversions.
-On the other hand, if the array elements
-are in the reverse order,
-the number of inversions is the largest possible:
+ha tre inversioni: $(6,3)$, $(6,5)$ e $(9,8)$.
+Il numero di inversioni indica quando
+lavoro deve essere fatto per ordinare l'array,
+difatti un array è completamente ordinato 
+quando non ci sono più inversioni.
+D'altra parte, se l'array è ordinato al contrario,
+il numero di inversioni è il più grande possibile:
+
 \[1+2+\cdots+(n-1)=\frac{n(n-1)}{2} = O(n^2)\]
 
-Swapping a pair of consecutive elements that are
-in the wrong order removes exactly one inversion
-from the array.
-Hence, if a sorting algorithm can only
-swap consecutive elements, each swap removes
-at most one inversion, and the time complexity
-of the algorithm is at least $O(n^2)$.
+Scambiare una coppia di elementi consecutivi che sono
+nell'ordine sbagliato, rimuove esattamente un'inversione.
+Qundi, se un algoritmo è in grado di scambiare solo
+elementi consecutivi, ogni scambio rimuove al massimo
+un'inversione, e la complessità dell'algoritmo è di tipo $O(n^2)$
 
-\subsubsection{$O(n \log n)$ algorithms}
+\subsubsection{Algoritmi di tipo $O(n \log n)$}
 
 \index{merge sort}
 
-It is possible to sort an array efficiently
-in $O(n \log n)$ time using algorithms
-that are not limited to swapping consecutive elements.
-One such algorithm is \key{merge sort}\footnote{According to \cite{knu983},
-merge sort was invented by J. von Neumann in 1945.},
-which is based on recursion.
+È possibile ordinare un array in maniera efficiente usando
+degli algoritmi che non si limitano allo scambio di elementi
+consecutivi, arrivando a una  complessità di tipo $O(n \log n)$.
 
-Merge sort sorts a subarray \texttt{array}$[a \ldots b]$ as follows:
+Uno di questi algoritmi è il \key{merge sort}\footnote{Secondo \cite{knu983},
+il merge sort è stato inventato da J. von Neumann nel 1945.}
+e per risolvere il problema utilizza la ricorsione.
+
+Il merge sort ordina un sottovettore \texttt{array}$[a \ldots b]$ nel modo seguente:
 
 \begin{enumerate}
-\item If $a=b$, do not do anything, because the subarray is already sorted.
-\item Calculate the position of the middle element: $k=\lfloor (a+b)/2 \rfloor$.
-\item Recursively sort the subarray \texttt{array}$[a \ldots k]$.
-\item Recursively sort the subarray \texttt{array}$[k+1 \ldots b]$.
-\item \emph{Merge} the sorted subarrays \texttt{array}$[a \ldots k]$ and
+\item Se $a=b$ non si fa niente, perchè il sottovettore è già ordinato.
+\item Si calcoli la posizione dell'elemento mediano: $k=\lfloor (a+b)/2 \rfloor$.
+\item Si ordini ricorsivamente il sottovettore \texttt{array}$[a \ldots k]$.
+\item Si ordini ricorsivamente il sottovettore \texttt{array}$[k+1 \ldots b]$.
+\item Si fondano (\emph{merge}) i sottovettori ordinati \texttt{array}$[a \ldots k]$ e
 \texttt{array}$[k+1 \ldots b]$
-into a sorted subarray \texttt{array}$[a \ldots b]$.
+in un array ordinato \texttt{array}$[a \ldots b]$.
 \end{enumerate}
 
-Merge sort is an efficient algorithm, because it
-halves the size of the subarray at each step.
-The recursion consists of $O(\log n)$ levels,
-and processing each level takes $O(n)$ time.
-Merging the subarrays \texttt{array}$[a \ldots k]$ and \texttt{array}$[k+1 \ldots b]$
-is possible in linear time, because they are already sorted.
+Il merge sort è un algoritmo efficiente perchè
+dimezza la dimensione del sottovettore a ogni passaggio.
+Quindi la ricorsione consiste di $O(\log n)$ livelli e 
+ogni livello richiede $O(n)$ operazioni.
+Fondere i sottovettori \texttt{array}$[a \ldots k]$ e \texttt{array}$[k+1 \ldots b]$
+è un'operazione che può essere eseguita in tempo lineare, perchè entrambi sono già ordinati.
 
-For example, consider sorting the following array:
+Per esempio, si condideri il seguente array:
+
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -281,8 +274,8 @@ For example, consider sorting the following array:
 \end{tikzpicture}
 \end{center}
 
-The array will be divided into two subarrays
-as follows:
+L'array verrà suddiviso nei due sottoarray come segue:
+
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (4,1);
@@ -300,8 +293,8 @@ as follows:
 \end{tikzpicture}
 \end{center}
 
-Then, the subarrays will be sorted recursively
-as follows:
+Successivamente i due sottovettori verranno ordinati ricorsivamente:
+
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (4,1);
@@ -319,8 +312,9 @@ as follows:
 \end{tikzpicture}
 \end{center}
 
-Finally, the algorithm merges the sorted
-subarrays and creates the final sorted array:
+Infine l'algoritmo fonderà i due sottovettori ordinati
+e creerà il vettore finale ordinato:
+
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -335,19 +329,20 @@ subarrays and creates the final sorted array:
 \end{tikzpicture}
 \end{center}
 
-\subsubsection{Sorting lower bound}
+\subsubsection{Limite inferiore per il problema dell'ordinamento}
 
-Is it possible to sort an array faster
-than in $O(n \log n)$ time?
-It turns out that this is \emph{not} possible
-when we restrict ourselves to sorting algorithms
-that are based on comparing array elements.
+È possibile ordinare un vettore in un tempo 
+inferiore a $O(n \log n)$?
+Si può verificare che questo \emph{non} è possibile
+nel caso generale in cui si stia cercando di ordinare 
+un array usando solo operazioni di confronto tra i
+suoi elementi.
 
-The lower bound for the time complexity
-can be proved by considering sorting
-as a process where each comparison of two elements
-gives more information about the contents of the array.
-The process creates the following tree:
+Il limite inferiore alla complessità
+deriva dalla considerazione che l'ordinamento
+è un processo nel quale ogni confronto tra due elementi
+fornisce un'informazione addizionale sul contenuto dell'array.
+Questo processo porta alla seguente struttura ad albero:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -387,45 +382,47 @@ The process creates the following tree:
 \end{tikzpicture}
 \end{center}
 
-Here ''$x<y?$'' means that some elements
-$x$ and $y$ are compared.
-If $x<y$, the process continues to the left,
-and otherwise to the right.
-The results of the process are the possible
-ways to sort the array, a total of $n!$ ways.
-For this reason, the height of the tree
-must be at least
+Qui ''$x<y?$'' significa che vengono confrontati 
+due elementi qualsiasi $x$ e $y$.
+Se $x<y$, il processo continua alla sinistra, 
+altrimenti prosegue alla destra.
+I risultati di questo processo sono i possibili
+modi in dui un array può essere "disordinato", per un totale di $n!$ modi diversi,
+cioè tutte le possibili permutazioni di $n$ elementi.
+Per questa ragione l'altezza dell'albero 
+deve essere almeno
+
 \[ \log_2(n!) = \log_2(1)+\log_2(2)+\cdots+\log_2(n).\]
-We get a lower bound for this sum
-by choosing the last $n/2$ elements and
-changing the value of each element to $\log_2(n/2)$.
-This yields an estimate
+
+Il limite inferiore per questa somma può essere
+stimato mantenendo solo gli ultimi $n/2$ elementi e
+sostituendo ogni termine con $\log_2(n/2)$.
+Il valore così ottenuto sarà minore di $log_2(n!)$, cioè 
 \[ \log_2(n!) \ge (n/2) \cdot \log_2(n/2),\]
-so the height of the tree and the minimum
-possible number of steps in a sorting
-algorithm in the worst case
-is at least $n \log n$.
+e quindi l'altezza dell'albero e il numero minimo 
+di passaggi da effettuare nel caso pessimo 
+sarà di tipo $O(n \log n)$.
 
 \subsubsection{Counting sort}
 
 \index{counting sort}
 
-The lower bound $n \log n$ does not apply to
-algorithms that do not compare array elements
-but use some other information.
-An example of such an algorithm is
-\key{counting sort} that sorts an array in
-$O(n)$ time assuming that every element in the array
-is an integer between $0 \ldots c$ and $c=O(n)$.
+Il limite inferiore di $n \log n$ non riguarda gli algoritmi
+di ordinamento che non usano il confronto tra due elementi,
+ma utilizzano altre informazioni.
+Un esempio in questo senso è l'algoritmo
+\key{counting sort}, che ordina un array in
+$O(n)$, nell'ipotesi che ogni elemento dell'array sia compreso tra
+$0 \ldots c$ e $c=O(n)$.
 
-The algorithm creates a \emph{bookkeeping} array,
-whose indices are elements of the original array.
-The algorithm iterates through the original array
-and calculates how many times each element
-appears in the array.
+Questo algoritmo crea un array di supporto, in cui gli indici
+sono gli elementi dell'array da ordinare.
+L'algoritmo itera attraverso tutto l'array da ordinare e,
+per ogni elemento, incrementa il valore di un contatore
+dell'array di supporto all'indirizzo corrispondente all'elemento.
 \newpage
 
-For example, the array
+Per esempio nell'array
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -439,7 +436,7 @@ For example, the array
 \node at (7.5,0.5) {$9$};
 \end{tikzpicture}
 \end{center}
-corresponds to the following bookkeeping array:
+genererà il seguente vettore di supporto:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (9,1);
@@ -467,23 +464,22 @@ corresponds to the following bookkeeping array:
 \end{tikzpicture}
 \end{center}
 
-For example, the value at position 3
-in the bookkeeping array is 2,
-because the element 3 appears 2 times
-in the original array.
+In questo esempio il valore alla posizione 3
+nel vettore di supporto è 2,
+perchè l'elemento di valore 3 compare due volte
+nel vettore da ordinare.
 
-Construction of the bookkeeping array
-takes $O(n)$ time. After this, the sorted array
-can be created in $O(n)$ time because
-the number of occurrences of each element can be retrieved
-from the bookkeeping array.
-Thus, the total time complexity of counting
-sort is $O(n)$.
+La costruzione dell'array di supporto costa
+$O(n)$ e fatto questo la creazione dell'array ordinato
+prende solo $O(n)$, poichè per ogni elemento del vettore
+di controllo vengono inseriti un certo numero di elementi 
+corrispondenti all'indice, in base al valore dei contatori.
+Quindi al complessità totale sarà ancora di tipo $O(n)$.
 
-Counting sort is a very efficient algorithm
-but it can only be used when the constant $c$
-is small enough, so that the array elements can
-be used as indices in the bookkeeping array.
+Il counting sort è molto efficiente, ma può essere usato
+solo se la costante $c$ è sufficientemente piccola, in modo 
+che i valori del vettore possano essere usati come indice
+per l'array di supporto.
 
 \section{Sorting in C++}
 
