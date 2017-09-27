@@ -420,7 +420,6 @@ sono gli elementi dell'array da ordinare.
 L'algoritmo itera attraverso tutto l'array da ordinare e,
 per ogni elemento, incrementa il valore di un contatore
 dell'array di supporto all'indirizzo corrispondente all'elemento.
-\newpage
 
 Per esempio nell'array
 \begin{center}
@@ -481,78 +480,83 @@ solo se la costante $c$ è sufficientemente piccola, in modo
 che i valori del vettore possano essere usati come indice
 per l'array di supporto.
 
-\section{Sorting in C++}
+\section{Ordinamento in C++}
 
-\index{sort@\texttt{sort}}
+\index{ordinamento@\texttt{ordinamento}}
 
-It is almost never a good idea to use
-a home-made sorting algorithm
-in a contest, because there are good
-implementations available in programming languages.
-For example, the C++ standard library contains
-the function \texttt{sort} that can be easily used for
-sorting arrays and other data structures.
+Durante una gara di informatica 
+non è quasi mai una buona idea usare un 
+algoritmo di ordinamento scritto da sè,
+dal momento che tutti i linguaggi di programmazione
+offrono delle ottime implementazioni
+all'interno delle proprie librerie.
+Per esempio, la libreria standard del C++
+contiene la funzione \texttt{sort}
+che può essere facilmente utilizzata
+per ordinare vettori e altre strutture dati.
 
-There are many benefits in using a library function.
-First, it saves time because there is no need to
-implement the function.
-Second, the library implementation is
-certainly correct and efficient: it is not probable
-that a home-made sorting function would be better.
+Usare una funzione di libreria comporta diversi vantaggi:
+\begin{itemize}
+\item si risparmia tempo perchè non c'è bisogno di scrivere
+il codice che implementa l'ordinamento
+\item l'implementazione di libreria è sicuramente
+corretta e efficiente: è decisamente poco probabile
+che la propria implementazione possa fare di meglio
+\end{itemize}
 
-In this section we will see how to use the
-C++ \texttt{sort} function.
-The following code sorts
-a vector in increasing order:
+In questa sezione si vedrà come utilizzare la
+funzione \texttt{sort} del C++.
+Il seguente codice ordina un vettore
+in modo crescente:
 \begin{lstlisting}
 vector<int> v = {4,2,5,3,5,8,3};
 sort(v.begin(),v.end());
 \end{lstlisting}
-After the sorting, the contents of the
-vector will be
+Dopo l'ordinamento il contenuto del vettore sarà
 $[2,3,3,4,5,5,8]$.
-The default sorting order is increasing,
-but a reverse order is possible as follows:
+L'ordinamento di default è in senso crescente,
+ma è possibile ordinare in senso decrescente così:
 \begin{lstlisting}
 sort(v.rbegin(),v.rend());
 \end{lstlisting}
-An ordinary array can be sorted as follows:
+Oltre ai \emph{vector} di libreria del C++,
+è possibile ordinare un normale array in questo modo:
 \begin{lstlisting}
 int n = 7; // array size
 int a[] = {4,2,5,3,5,8,3};
 sort(a,a+n);
 \end{lstlisting}
-\newpage
-The following code sorts the string \texttt{s}:
+
+Invece il seguente codice ordina la stringa \texttt{s}:
 \begin{lstlisting}
 string s = "monkey";
 sort(s.begin(), s.end());
 \end{lstlisting}
-Sorting a string means that the characters
-of the string are sorted.
-For example, the string ''monkey'' becomes ''ekmnoy''.
+Ordinare una stringa significa ordinare i singoli
+caratteri da cui è composta, quindi in questo esempio
+''monkey'' diventerà ''ekmnoy''.
 
-\subsubsection{Comparison operators}
+\subsubsection{Operatori di confronto}
 
-\index{comparison operator}
+\index{operatori di confronto}
 
-The function \texttt{sort} requires that
-a \key{comparison operator} is defined for the data type
-of the elements to be sorted.
-When sorting, this operator will be used
-whenever it is necessary to find out the order of two elements.
+La funzione \texttt{sort} richiede l'esistenza di un operatore 
+di confronto che sia definito per i tipi che si intendono ordinare,
+che verrà utilizzato nel momento in cui è necessario scoprire
+l'ordine relativo di due elementi.
 
-Most C++ data types have a built-in comparison operator,
-and elements of those types can be sorted automatically.
-For example, numbers are sorted according to their values
-and strings are sorted in alphabetical order.
+La maggior parte dei tipi di dato nativi del C++
+hanno un operatore di confronto già definito e quindi
+possono essere ordinati senza ulteriori specificazioni, 
+come visto negli esempi precedenti, dove i numeri sono stati
+ordinati in base al proprio valore e le lettere in ordine
+alfabetico.
 
 \index{pair@\texttt{pair}}
 
-Pairs (\texttt{pair}) are sorted primarily according to their
-first elements (\texttt{first}).
-However, if the first elements of two pairs are equal,
-they are sorted according to their second elements (\texttt{second}):
+Le coppie (\texttt{pair}) sono ordinate in base al valore del primo elemento (\texttt{first}).
+Però, se due coppie hanno lo stesso primo elemento, allora
+l'ordinamento utilizzerà il secondo valore (\texttt{second}), per stabilire come ordinarli.
 \begin{lstlisting}
 vector<pair<int,int>> v;
 v.push_back({1,5});
@@ -560,16 +564,18 @@ v.push_back({2,3});
 v.push_back({1,2});
 sort(v.begin(), v.end());
 \end{lstlisting}
-After this, the order of the pairs is
-$(1,2)$, $(1,5)$ and $(2,3)$.
+Dopo l'esecuzione, l'ordine delle coppie sarà
+$(1,2)$, $(1,5)$ e $(2,3)$.
 
 \index{tuple@\texttt{tuple}}
 
-In a similar way, tuples (\texttt{tuple})
-are sorted primarily by the first element,
-secondarily by the second element, etc.\footnote{Note that in some older compilers,
-the function \texttt{make\_tuple} has to be used to create a tuple instead of
-braces (for example, \texttt{make\_tuple(2,1,4)} instead of \texttt{\{2,1,4\}}).}:
+In un modo del tutto simile, le tuple (\texttt{tuple})
+sono ordinate rispetto al loro primo elemento,
+in caso di valori uguali si procede a confrontare il secondo elemento, ecc.
+\footnote{Da notare che in alcuni vecchi compilatori è necessario utilizzare
+la funzione \texttt{make\_tuple} per creare una tupla, al posto di usare la
+notazione con le parentesi graffe (ad esempio \texttt{make\_tuple(2,1,4)} 
+al posto di \texttt{\{2,1,4\}}).}:
 \begin{lstlisting}
 vector<tuple<int,int,int>> v;
 v.push_back({2,1,4});
@@ -577,8 +583,8 @@ v.push_back({1,5,3});
 v.push_back({2,1,3});
 sort(v.begin(), v.end());
 \end{lstlisting}
-After this, the order of the tuples is
-$(1,5,3)$, $(2,1,3)$ and $(2,1,4)$.
+Dopo l'esecuzione le tuple saranno in questo ordine:
+$(1,5,3)$, $(2,1,3)$ e $(2,1,4)$.
 
 \subsubsection{User-defined structs}
 
