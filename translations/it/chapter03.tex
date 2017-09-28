@@ -586,23 +586,22 @@ sort(v.begin(), v.end());
 Dopo l'esecuzione le tuple saranno in questo ordine:
 $(1,5,3)$, $(2,1,3)$ e $(2,1,4)$.
 
-\subsubsection{User-defined structs}
+\subsubsection{Strutture definite dall'utente}
 
-User-defined structs do not have a comparison
-operator automatically.
-The operator should be defined inside
-the struct as a function
-\texttt{operator<},
-whose parameter is another element of the same type.
-The operator should return \texttt{true}
-if the element is smaller than the parameter,
-and \texttt{false} otherwise.
+Le strutture definite dall'utente non hanno
+un operatore di confronto se non viene creato appositamente.
+L'operatore dovrebbe essere definito all'interno 
+della struttura attraverso la ridefinizione dell'\texttt{operator<},
+il cui unico parametro è un altro elemento dello stesso tipo.
+L'operatore deve tornare \texttt{true}
+se l'elemento è minore del parametro,
+\texttt{false} altrimenti.
 
-For example, the following struct \texttt{P}
-contains the x and y coordinates of a point.
-The comparison operator is defined so that
-the points are sorted primarily by the x coordinate
-and secondarily by the y coordinate.
+Per esempio, la seguente struttura \texttt{P}
+contiene le coordinate x e y di un punto.
+L'operatore di confronto è definito in modo che i 
+punti verranno ordinati utilizzando la coordinata x,
+e nel caso fossero uguali verrà utilizzata la coordinata y.
 
 \begin{lstlisting}
 struct P {
