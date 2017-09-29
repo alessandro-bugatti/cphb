@@ -636,15 +636,15 @@ in questo modo:
 sort(v.begin(), v.end(), comp);
 \end{lstlisting}
 
-\section{Binary search}
+\section{Ricerca binaria}
 
-\index{binary search}
+\index{ricerca binaria}
 
-A general method for searching for an element
-in an array is to use a \texttt{for} loop
-that iterates through the elements of the array.
-For example, the following code searches for
-an element $x$ in an array:
+Un metodo generale per cercare un elemento 
+all'interno di un array è di usare un ciclo \texttt{for}
+che itera attraverso tutti gli elementi dell'array.
+Per esempio, il seguente codice cerca l'elemento $x$
+all'interno di un array:
 
 \begin{lstlisting}
 for (int i = 0; i < n; i++) {
@@ -654,22 +654,23 @@ for (int i = 0; i < n; i++) {
 }
 \end{lstlisting}
 
-The time complexity of this approach is $O(n)$,
-because in the worst case, it is necessary to check
-all elements of the array.
-If the order of the elements is arbitrary,
-this is also the best possible approach, because
-there is no additional information available where
-in the array we should search for the element $x$.
+La complessità di questo approccio è $O(n)$,
+perchè nel caso pessimo è necessario controllare tutti
+gli elementi dell'array.
+Se l'ordine degli elementi è arbitrario 
+questo è anche il miglior approccio possibile,
+perchè non è disponibile nessuna informazione 
+aggiuntiva su dove cercare l'elemento $x$ 
+all'interno dell'array.
 
-However, if the array is \emph{sorted},
-the situation is different.
-In this case it is possible to perform the
-search much faster, because the order of the
-elements in the array guides the search.
-The following \key{binary search} algorithm
-efficiently searches for an element in a sorted array
-in $O(\log n)$ time.
+Comunque, nel caso l'array sia \emph{ordinato}
+allora la situazione è differente.
+In questo caso è possibile migliorare le prestazioni
+in maniera netta, perchè l'ordine degli elementi 
+può guidare la ricerca.
+Il seguente algoritmo di \key{ricerca binaria}
+esegue in modo efficiente la ricerca all'interno di 
+un vettore ordinato in tempo $O(\log n)$. 
 
 \subsubsection{Method 1}
 
