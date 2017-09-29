@@ -613,16 +613,16 @@ struct P {
 };
 \end{lstlisting}
 
-\subsubsection{Comparison functions}
+\subsubsection{Funzioni di confronto}
 
-\index{comparison function}
+\index{confronto, funzioni di}
 
-It is also possible to give an external
-\key{comparison function} to the \texttt{sort} function
-as a callback function.
-For example, the following comparison function \texttt{comp}
-sorts strings primarily by length and secondarily
-by alphabetical order:
+Oltre agli operatori è possibile usare anche una
+\key{funzione di confronto} esterna
+alla funzione \key{sort}, passandola come una callback. 
+Per esempio, la seguente funzione di confronto, \texttt{comp},
+ordina delle stringhe per lunghezza e successivamente, in caso di 
+lunghezza uguale, in ordine alfabetico:
 
 \begin{lstlisting}
 bool comp(string a, string b) {
@@ -630,7 +630,8 @@ bool comp(string a, string b) {
     return a < b;
 }
 \end{lstlisting}
-Now a vector of strings can be sorted as follows:
+Quindi un vettore di stringhe può essere ordinato 
+in questo modo:
 \begin{lstlisting}
 sort(v.begin(), v.end(), comp);
 \end{lstlisting}
