@@ -742,34 +742,35 @@ La complessità è $O(\log n)$, come nell'algoritmo
 precedente perchè il codice nel ciclo \texttt{while} 
 è eseguito al massimo due volte per ogni lunghezza di salto.
 
-\subsubsection{C++ functions}
+\subsubsection{Funzioni C++}
 
-The C++ standard library contains the following functions
-that are based on binary search and work in logarithmic time:
+La libreria standard del C++ contiene le seguenti funzioni che 
+sono basate sulla ricerca binaria e funzionano in tempo logaritmico:
 
 \begin{itemize}
-\item \texttt{lower\_bound} returns a pointer to the
-first array element whose value is at least $x$.
-\item \texttt{upper\_bound} returns a pointer to the
-first array element whose value is larger than $x$.
-\item \texttt{equal\_range} returns both above pointers.
+\item \texttt{lower\_bound} ritorna un puntatore al primo elemento dell'array
+il cui valore è almeno $x$.
+\item \texttt{upper\_bound} ritorna un puntatore al primo elemento dell'array
+il cui valore è maggiore di $x$.
+\item \texttt{equal\_range} ritorna entrambi i puntatori delle funzioni precedenti.
 \end{itemize}
 
-The functions assume that the array is sorted.
-If there is no such element, the pointer points to
-the element after the last array element.
-For example, the following code finds out whether
-an array contains an element with value $x$:
+Queste funzioni assumono che il vettore sia ordinato
+Se non fosse presente l'elemento cercato, i puntatori
+faranno riferimento all'elemento dopo l'ultimo elemento
+valido dell'array.
+Per esempio nel seguente codice si cerca se il vettore
+contiene un elemento di valore $x$:
 
 \begin{lstlisting}
 auto k = lower_bound(array,array+n,x)-array;
 if (k < n && array[k] == x) {
-    // x found at index k
+    // x trovato in posizione k
 }
 \end{lstlisting}
 
-Then, the following code counts the number of elements
-whose value is $x$:
+Come altro esempio, il seguente codice conta il numero di elementi
+i cui valori siano esattamente $x$:
 
 \begin{lstlisting}
 auto a = lower_bound(array, array+n, x);
@@ -777,7 +778,7 @@ auto b = upper_bound(array, array+n, x);
 cout << b-a << "\n";
 \end{lstlisting}
 
-Using \texttt{equal\_range}, the code becomes shorter:
+Usando \texttt{equal\_range}, il codice diventa ancora più corto:
 
 \begin{lstlisting}
 auto r = equal_range(array, array+n, x);
