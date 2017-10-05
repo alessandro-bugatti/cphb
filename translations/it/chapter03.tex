@@ -785,18 +785,19 @@ auto r = equal_range(array, array+n, x);
 cout << r.second-r.first << "\n";
 \end{lstlisting}
 
-\subsubsection{Finding the smallest solution}
+\subsubsection{Trovare la soluzione più piccola}
 
-An important use for binary search is
-to find the position where the value of a \emph{function} changes.
-Suppose that we wish to find the smallest value $k$
-that is a valid solution for a problem.
-We are given a function $\texttt{ok}(x)$
-that returns \texttt{true} if $x$ is a valid solution
-and \texttt{false} otherwise.
-In addition, we know that $\texttt{ok}(x)$ is \texttt{false}
-when $x<k$ and \texttt{true} when $x \ge k$.
-The situation looks as follows:
+Un utilizzo importante della ricerca binaria 
+si ha quando è necessario trovare la posizione dove
+il valore di una certa \emph{funzione} cambia.
+Si supponga che lo scopo sia quello di trovare il più piccolo
+valore $k$ che sia soluzione per un certo problema.
+Si abbia una funzione $\texttt{ok}(x)$
+che ritorna \texttt{true} se $x$ è una soluzione valida e
+\texttt{false} altrimenti.
+Inoltre sia noto che $\texttt{ok}(x)$ è \texttt{false}
+quando $x<k$ e \texttt{true} quando $x \ge k$.
+La situazione è quindi la seguente:
 
 \begin{center}
 \begin{tabular}{r|rrrrrrrr}
@@ -808,7 +809,7 @@ $\texttt{ok}(x)$ & \texttt{false} & \texttt{false}
 \end{center}
 
 \noindent
-Now, the value of $k$ can be found using binary search:
+Allora il valore $k$ può essere trovato utilizzando la ricerca binaria:
 
 \begin{lstlisting}
 int x = -1;
@@ -818,41 +819,42 @@ for (int b = z; b >= 1; b /= 2) {
 int k = x+1;
 \end{lstlisting}
 
-The search finds the largest value of $x$ for which
-$\texttt{ok}(x)$ is \texttt{false}.
-Thus, the next value $k=x+1$
-is the smallest possible value for which
-$\texttt{ok}(k)$ is \texttt{true}.
-The initial jump length $z$ has to be
-large enough, for example some value
-for which we know beforehand that $\texttt{ok}(z)$ is \texttt{true}.
+La ricerca trova il più grande valore di $x$ per il quale
+$\texttt{ok}(x)$ è \texttt{false}.
+Quindi il valore successivo, $k=x+1$,
+è il più piccolo valore per il quale
+$\texttt{ok}(k)$ è \texttt{true}.
+La lunghezza iniziale del salto $z$ deve essere
+grande abbastaza, ad esempio un valore che cui si sappia con 
+certezza che $\texttt{ok}(z)$ è \texttt{true}.
 
-The algorithm calls the function \texttt{ok}
-$O(\log z)$ times, so the total time complexity
-depends on the function \texttt{ok}.
-For example, if the function works in $O(n)$ time,
-the total time complexity is $O(n \log z)$.
+L'algoritmo chiama la funzione \texttt{ok}
+$O(\log z)$ volte, così la complessità totale
+dipende dalla funzione \texttt{ok}.
+Se per esempio la funzione fosse di tipo $O(n)$,
+la complessità totale sarebbe $O(n \log z)$.
 
-\subsubsection{Finding the maximum value}
+\subsubsection{Trovare il valore massimo}
 
-Binary search can also be used to find
-the maximum value for a function that is
-first increasing and then decreasing.
-Our task is to find a position $k$ such that
+La ricerca binaria può essere anche utilizzata per trovare 
+il valore massimo di una funzione che prima si incrementa
+e successivamente si decrementa.
+Il compito è quello di trovare la posizione $k$ 
+tale che
 
 \begin{itemize}
 \item
-$f(x)<f(x+1)$ when $x<k$, and
+$f(x)<f(x+1)$ quando $x<k$, e
 \item
-$f(x)>f(x+1)$ when $x \ge k$.
+$f(x)>f(x+1)$ quando $x \ge k$.
 \end{itemize}
 
-The idea is to use binary search
-for finding the largest value of $x$
-for which $f(x)<f(x+1)$.
-This implies that $k=x+1$
-because $f(x+1)>f(x+2)$.
-The following code implements the search: 
+L'idea è di usare la ricerca binaria
+per trovare il più grande valore di $x$
+per il quale valga $f(x)<f(x+1)$.
+Questo implica che $k=x+1$
+poichè $f(x+1)>f(x+2)$.
+La ricerca può quindi essere implementata attraverso il seguente codice:
 
 \begin{lstlisting}
 int x = -1;
@@ -862,8 +864,7 @@ for (int b = z; b >= 1; b /= 2) {
 int k = x+1;
 \end{lstlisting}
 
-Note that unlike in the ordinary binary search,
-here it is not allowed that consecutive values
-of the function are equal.
-In this case it would not be possible to know
-how to continue the search.
+Bisogna notare che, a differenza della normale ricerca binaria,
+qui non è permesso che valori consecutivi della funzione
+possano essere uguali, poichè in questo caso 
+non sarebbe possibile sapere come continuare la ricerca.
