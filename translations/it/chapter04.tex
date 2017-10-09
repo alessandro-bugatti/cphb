@@ -135,38 +135,38 @@ string c = b.substr(3,4);
 cout << c << "\n"; // tiva
 \end{lstlisting}
 
-\section{Set structures}
+\section{Set}
 
 \index{set}
 
-A \key{set} is a data structure that
-maintains a collection of elements.
-The basic operations of sets are element
-insertion, search and removal.
+Un \key{set} è una struttura dati che contiene un 
+insieme o collezione di elementi.
+Le operazioni base che si possono applicare a un set
+sono l'inserimento, la ricerca e la rimozione. 
+La libreria standard del C++ contiene due implementazioni
+dei set:
+\begin{itemize}
+\item la struttura \texttt{set}, che è basata su un albero binario bilanciato e 
+le cui operazioni hanno un costo di tipo $O(\log n)$.
+\item la struttura \texttt{unordered\_set} che invece usa l'hashing,
+e le sue operazioni hanno in media prestazioni di tipo $O(1)$.
+\end{itemize}
 
-The C++ standard library contains two set
-implementations:
-The structure \texttt{set} is based on a balanced
-binary tree and its operations work in $O(\log n)$ time.
-The structure \texttt{unordered\_set} uses hashing,
-and its operations work in $O(1)$ time on average.
+La scelta su quale implementazione utilizzare
+è spesso solo una questione di "gusti".
+Il beneficio della struttura \texttt{set} 
+è che mantiene l'ordine degli elementi inseriti e
+che espone funzioni che non sono disponibili negli
+\texttt{unordered\_set}.
+D'altronde gli \texttt{unordered\_set}
+possono essere più efficienti.
 
-The choice of which set implementation to use
-is often a matter of taste.
-The benefit of the \texttt{set} structure
-is that it maintains the order of the elements
-and provides functions that are not available
-in \texttt{unordered\_set}.
-On the other hand, \texttt{unordered\_set}
-can be more efficient.
-
-The following code creates a set
-that contains integers,
-and shows some of the operations.
-The function \texttt{insert} adds an element to the set,
-the function \texttt{count} returns the number of occurrences
-of an element in the set,
-and the function \texttt{erase} removes an element from the set.
+Il seguente codice crea un set che contiene interi e mostra
+alcune operazioni basilari.
+La funzione \texttt{insert} aggiunge un elemento al set,
+la funzione \texttt{count} ritorna il numero di occorrenze 
+di un elemento all'interno di un set
+e la funzione \texttt{erase} rimuove un elemento dal set.
 
 \begin{lstlisting}
 set<int> s;
@@ -181,12 +181,12 @@ cout << s.count(3) << "\n"; // 0
 cout << s.count(4) << "\n"; // 1
 \end{lstlisting}
 
-A set can be used mostly like a vector,
-but it is not possible to access
-the elements using the \texttt{[]} notation.
-The following code creates a set,
-prints the number of elements in it, and then
-iterates through all the elements:
+Un set può essere utilizzato più o meno come un vettore,
+ma non è possibile accedere agli elementi
+usando la notazione \texttt{[]}.
+Il seguente codice crea un set,
+stampa il numero di elementi contenuti e itera
+attraverso tutti gli elementi:
 \begin{lstlisting}
 set<int> s = {2,5,6,8};
 cout << s.size() << "\n"; // 4
@@ -195,15 +195,13 @@ for (auto x : s) {
 }
 \end{lstlisting}
 
-An important property of sets is
-that all their elements are \emph{distinct}.
-Thus, the function \texttt{count} always returns
-either 0 (the element is not in the set)
-or 1 (the element is in the set),
-and the function \texttt{insert} never adds
-an element to the set if it is
-already there.
-The following code illustrates this:
+Un'importante proprietà dei set è che tutti gli elementi
+sono \emph{distinti}, quindi la funzione \texttt{count}
+ritorna o 0 (l'elemento non è presente) oppure 1 
+(l'elemento è presente) e la funzione 
+\texttt{insert} non aggiunge mai un elemento
+se è già presente nel set, come si può vedere
+nel seguente codice:
 
 \begin{lstlisting}
 set<int> s;
@@ -213,13 +211,13 @@ s.insert(5);
 cout << s.count(5) << "\n"; // 1
 \end{lstlisting}
 
-C++ also contains the structures
-\texttt{multiset} and \texttt{unordered\_multiset}
-that otherwise work like \texttt{set}
-and \texttt{unordered\_set}
-but they can contain multiple instances of an element.
-For example, in the following code all three instances
-of the number 5 are added to a multiset:
+Inoltre il C++ contiene le strutture
+\texttt{multiset} e \texttt{unordered\_multiset}
+che funzionano come i \texttt{set}
+e gli \texttt{unordered\_set}
+tranne che possono contenere più istanze dello stesso elemento.
+Per esempio nel seguente codice tutte e tre le istanze del
+numero 5 vengono aggiunte al multiset:
 
 \begin{lstlisting}
 multiset<int> s;
@@ -228,15 +226,15 @@ s.insert(5);
 s.insert(5);
 cout << s.count(5) << "\n"; // 3
 \end{lstlisting}
-The function \texttt{erase} removes
-all instances of an element
-from a multiset:
+La funzione \texttt{erase} rimuove tutte
+le istanze di un elemento da un multiset:
 \begin{lstlisting}
 s.erase(5);
 cout << s.count(5) << "\n"; // 0
 \end{lstlisting}
-Often, only one instance should be removed,
-which can be done as follows:
+Quando invece deve essere rimossa una sola istanza
+di un elemento da un multiset,
+è possibile procedere in questo modo:
 \begin{lstlisting}
 s.erase(s.find(5));
 cout << s.count(5) << "\n"; // 2
