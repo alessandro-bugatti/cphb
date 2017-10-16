@@ -466,16 +466,16 @@ l'elemento più vicino a $x$ è o l'elemento puntato da
 \end{itemize}
 \end{samepage}
 
-\section{Other structures}
+\section{Altre strutture}
 
 \subsubsection{Bitset}
 
 \index{bitset}
 
-A \key{bitset} is an array
-whose each value is either 0 or 1.
-For example, the following code creates
-a bitset that contains 10 elements:
+Un \key{bitset} è un array in cui ogni valore
+è 0 o 1. 
+Per esempio il seguente codice crea
+un bitset che contiene 10 elementi:
 \begin{lstlisting}
 bitset<10> s;
 s[1] = 1;
@@ -486,41 +486,43 @@ cout << s[4] << "\n"; // 1
 cout << s[5] << "\n"; // 0
 \end{lstlisting}
 
-The benefit of using bitsets is that
-they require less memory than ordinary arrays,
-because each element in a bitset only
-uses one bit of memory.
-For example, 
-if $n$ bits are stored in an \texttt{int} array,
-$32n$ bits of memory will be used,
-but a corresponding bitset only requires $n$ bits of memory.
-In addition, the values of a bitset
-can be efficiently manipulated using
-bit operators, which makes it possible to
-optimize algorithms using bit sets.
+Il vantaggio di usare i bitset è che 
+richiedono meno memoria che gli array normali,
+perchè ogni elemento in un bitset usa
+un solo bit di memoria.
+Per esempio, se $n$ bit sono memorizzati in un
+array di interi, saranno usati $32n$ bit di memoria,
+mentre il bitset contenente le stesse informazioni
+richiederà solamente $n$ bit di memoria.
+Inoltre i valori all'interno di un bitset 
+possono essere manipolati in maniera efficiente
+usando gli operatori sui bit,
+rendendo possibile ottimizzare gli algoritmi
+che utilizzano dei bitset.
 
-The following code shows another way to create the above bitset:
+Il seguente codice mostra un altro modo di creare il bitset
+visto in precedenza:
 \begin{lstlisting}
 bitset<10> s(string("0010011010")); // from right to left
 cout << s[4] << "\n"; // 1
 cout << s[5] << "\n"; // 0
 \end{lstlisting}
 
-The function \texttt{count} returns the number
-of ones in the bitset:
+La funzione \texttt{count} ritorna il numero 
+di 1 contenuti nel bitset:
 
 \begin{lstlisting}
 bitset<10> s(string("0010011010"));
 cout << s.count() << "\n"; // 4
 \end{lstlisting}
 
-The following code shows examples of using bit operations:
+Il seguente codice mostra degli esempi di operazioni sui bit:
 \begin{lstlisting}
 bitset<10> a(string("0010110110"));
 bitset<10> b(string("1011011000"));
-cout << (a&b) << "\n"; // 0010010000
-cout << (a|b) << "\n"; // 1011111110
-cout << (a^b) << "\n"; // 1001101110
+cout << (a&b) << "\n"; // 0010010000, AND
+cout << (a|b) << "\n"; // 1011111110, OR
+cout << (a^b) << "\n"; // 1001101110, XOR
 \end{lstlisting}
 
 \subsubsection{Deque}
