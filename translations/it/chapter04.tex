@@ -558,15 +558,15 @@ da entrambi gli estremi in media è un'operazione di tipo $O(1)$.
 
 \index{stack}
 
-A \key{stack}
-is a data structure that provides two
-$O(1)$ time operations:
-adding an element to the top,
-and removing an element from the top.
-It is only possible to access the top
-element of a stack.
+Uno \key{stack} è una struttura dati che fornisce 
+due operazione che hanno costo $O(1)$:
+aggiungere un elemento un elemento in testa
+e rimuovere un elemento in testa.
+Quindi in uno stack l'accesso avviene da una sola
+estremità e solo l'elemento in quella posizione può essere 
+acceduto tramite il metodo \key{top}.
 
-The following code shows how a stack can be used:
+Il seguente codice mostra come può essere utilizzato uno stack:
 \begin{lstlisting}
 stack<int> s;
 s.push(3);
