@@ -529,16 +529,16 @@ cout << (a^b) << "\n"; // 1001101110, XOR
 
 \index{deque}
 
-A \key{deque} is a dynamic array
-whose size can be efficiently
-changed at both ends of the array.
-Like a vector, a deque provides the functions
-\texttt{push\_back} and \texttt{pop\_back}, but
-it also includes the functions
-\texttt{push\_front} and \texttt{pop\_front}
-which are not available in a vector.
+Una \key{deque} è un array dinamico
+la cui dimensione può essere modificata in 
+maniera efficiente ad entrambi gli estremi dell'array.
+Una deque provvede delle funzioni uguali a quelle di un vector,
+come \texttt{push\_back} e \texttt{pop\_back}, 
+inoltre però possiede anche le funzioni
+\texttt{push\_front} e \texttt{pop\_front}
+che non sono disponibili nei vector.
 
-A deque can be used as follows:
+Una deque può essere usata nel modo seguente:
 \begin{lstlisting}
 deque<int> d;
 d.push_back(5); // [5]
@@ -548,11 +548,11 @@ d.pop_back(); // [3,5]
 d.pop_front(); // [5]
 \end{lstlisting}
 
-The internal implementation of a deque
-is more complex than that of a vector,
-and for this reason, a deque is slower than a vector.
-Still, both adding and removing
-elements take $O(1)$ time on average at both ends.
+L'implementazione interna di una deque è più 
+complessa di quella di un vettore,
+e per questa ragione è più lenta di un vettore.
+Comunque, sia aggiungere che rimuovere elementi 
+da entrambi gli estremi in media è un'operazione di tipo $O(1)$.
 
 \subsubsection{Stack}
 
