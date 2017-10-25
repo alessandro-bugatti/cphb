@@ -580,14 +580,15 @@ cout << s.top(); // 2
 
 \index{queue}
 
-A \key{queue} also
-provides two $O(1)$ time operations:
-adding an element to the end of the queue,
-and removing the first element in the queue.
-It is only possible to access the first
-and last element of a queue.
+Anche una \key{queue} (coda in italiano) 
+espone due operazioni di tipo $O(1)$:
+aggiungere un elemento alla fine della coda,
+e rimuovere il primo elemento della coda.
+Quindi gli unici elementi a cui si può avere 
+accesso sono il primo e l'ultimo elemento 
+della coda.
 
-The following code shows how a queue can be used:
+Il seguente codice mostra un possibile utilizzo di una coda:
 \begin{lstlisting}
 queue<int> q;
 q.push(3);
@@ -598,34 +599,37 @@ q.pop();
 cout << q.front(); // 2
 \end{lstlisting}
 
-\subsubsection{Priority queue}
+\subsubsection{Priority queue (coda con priorità)}
 
 \index{priority queue}
 \index{heap}
 
-A \key{priority queue}
-maintains a set of elements.
-The supported operations are insertion and,
-depending on the type of the queue,
-retrieval and removal of
-either the minimum or maximum element.
-Insertion and removal take $O(\log n)$ time,
-and retrieval takes $O(1)$ time.
+Una \key{priority queue} (coda con priorità in italiano)
+contiene un insieme di elementi.
+Le operazioni supportate sono l'inserimento e,
+a seconda del tipo di coda con priorità,
+il recupero e la rimozione del massimo o minimo elemento 
+della coda.
+L'inserimento e la rimozione sono operazioni
+con costo $O(\log n)$,
+invece il recupero dell'elemento massimo o minimo
+è di tipo $O(1)$.
 
-While an ordered set efficiently supports
-all the operations of a priority queue,
-the benefit of using a priority queue is
-that it has smaller constant factors.
-A priority queue is usually implemented using
-a heap structure that is much simpler than a
-balanced binary tree used in an ordered set.
+Mentre un set ordinato supporta in maniera
+efficiente tutte le operazioni che supporta una coda con priorità,
+il beneficio nell'utilizzare una coda con priorità è che
+ha un fattore costante più piccolo, quindi è leggermente più efficiente 
+nell'operazione di recupero. Questo perchè una coda con priorità 
+è generalmente implementata utilizzando un heap, che è una 
+struttura molto più semplice che l'albero binario bilanciato
+solitamente usato nei set ordinati.
 
 \begin{samepage}
-By default, the elements in a C++
-priority queue are sorted in decreasing order,
-and it is possible to find and remove the
-largest element in the queue.
-The following code illustrates this:
+Di default gli elementi di una coda con priorità
+del C++ sono ordinati in ordine decrescente e quindi è
+possibile recuperare e eliminare il massimo
+elemento presente.
+Il seguente codice mostra come farlo:
 
 \begin{lstlisting}
 priority_queue<int> q;
@@ -643,10 +647,9 @@ q.pop();
 \end{lstlisting}
 \end{samepage}
 
-If we want to create a priority queue
-that supports finding and removing
-the smallest element,
-we can do it as follows:
+Volendo creare una coda con priorità 
+che supporti il recupero e la rimozione dell'elemento
+più piccolo si può procedere in questo modo:
 
 \begin{lstlisting}
 priority_queue<int,vector<int>,greater<int>> q;
