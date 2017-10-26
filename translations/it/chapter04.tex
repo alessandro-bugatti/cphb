@@ -677,7 +677,7 @@ typedef tree<int,null_type,less<int>,rb_tree_tag,
              tree_order_statistics_node_update> indexed_set; 
 \end{lstlisting}
 
-A questo punto è possibile dichiarare un indexed_set in questo modo:
+A questo punto è possibile dichiarare un indexed\_set in questo modo:
 \begin{lstlisting}
 indexed_set s;
 s.insert(2);
@@ -708,70 +708,70 @@ cout << s.order_of_key(8) << "\n"; // 3
 \end{lstlisting}
 Entrambe le funzioni hanno un tempo di esecuzione di tipo logaritmico.
 
-\section{Confrontare per ordinare}
+\section{Confronto e ordinamento}
 
-It is often possible to solve a problem
-using either data structures or sorting.
-Sometimes there are remarkable differences
-in the actual efficiency of these approaches,
-which may be hidden in their time complexities.
+Spesso è possibile risolvere un problema 
+usando delle strutture dati oppure l'ordinamento.
+A volte però possono esserci delle differenze notevoli
+tra questi diversi approci, differenze che rimangono
+nascoste quando si guarda solo alla complessità computazionale.
 
-Let us consider a problem where
-we are given two lists $A$ and $B$
-that both contain $n$ elements.
-Our task is to calculate the number of elements
-that belong to both of the lists.
-For example, for the lists
-\[A = [5,2,8,9,4] \hspace{10px} \textrm{and} \hspace{10px} B = [3,2,9,5],\]
-the answer is 3 because the numbers 2, 5
-and 9 belong to both of the lists.
+Si consideri ad esempio un problema nel
+quale siano date due liste $A$ e $B$,
+entrambe contenenti $n$ elementi.
+Il compito è di trovare quanti sono gli elementi
+contenuti in entrambe le liste.
+Per esempio, date le liste
+\[A = [5,2,8,9,4] \hspace{10px} \textrm{e} \hspace{10px} B = [3,2,9,5],\]
+la risposta è 3 perchè 2, 5 e 9 appartengono 
+a entrambe le liste.
 
-A straightforward solution to the problem is
-to go through all pairs of elements in $O(n^2)$ time,
-but next we will focus on
-more efficient algorithms.
+Una soluzione diretta del problema è quella di
+confrontare tutte le possibili copie di elementi 
+presi da A e B, con un costo di tipo $O(n^2)$,
+ma come si vedrà nel seguito ci sono algoritmi
+molto più efficienti.
 
-\subsubsection{Algorithm 1}
+\subsubsection{Algoritmo 1}
 
-We construct a set of the elements that appear in $A$,
-and after this, we iterate through the elements
-of $B$ and check for each elements if it
-also belongs to $A$.
-This is efficient because the elements of $A$
-are in a set.
-Using the \texttt{set} structure,
-the time complexity of the algorithm is $O(n \log n)$.
+Si costruisca il set degli elementi appartenenti a $A$,
+e successivamente si iteri tra gli elementi di $B$ 
+e si controlli per ogni elemento se appartiene anche a $A$.
+Questo è efficiente perchè gli elementi di $A$
+si trovano in un set.
+Usando la struttura \texttt{set},
+la complessità di questo algoritmo diventa di tipo $O(n \log n)$.
 
-\subsubsection{Algorithm 2}
+\subsubsection{Algoritmo 2}
 
-It is not necessary to maintain an ordered set,
-so instead of the \texttt{set} structure
-we can also use the \texttt{unordered\_set} structure.
-This is an easy way to make the algorithm
-more efficient, because we only have to change
-the underlying data structure.
-The time complexity of the new algorithm is $O(n)$.
+Siccome non è necessario mantenere il set ordinato,
+al posto della struttura \texttt{set} 
+si può provare a utilizzare un \texttt{unordered\_set}.
+Questo è un modo molto semplice per ottimizzare 
+le prestazioni dell'algoritmo, perchè basta cambiare la
+struttura dati sottostante.
+La complessità del nuovo algoritmo diventa quindi $O(n)$.
 
-\subsubsection{Algorithm 3}
+\subsubsection{Algoritmo 3}
+Al posto delle strutture dati è possibile utilizzare
+l'ordinamento.
+Come primo passo è necessario ordinare entrambe le liste $A$ e $B$
+e successivamente iterare attraverso le liste allo stesso tempo
+per trovare gli elementi comuni.
+La complessità dell'ordinamento è $O(n \log n)$,
+e il resto dell'algoritmo funziona in tempo $O(n)$,
+così la complessità totale sarà $O(n \log n)$.
 
-Instead of data structures, we can use sorting.
-First, we sort both lists $A$ and $B$.
-After this, we iterate through both the lists
-at the same time and find the common elements.
-The time complexity of sorting is $O(n \log n)$,
-and the rest of the algorithm works in $O(n)$ time,
-so the total time complexity is $O(n \log n)$.
+\subsubsection{Confronto di prestazioni}
 
-\subsubsection{Efficiency comparison}
-
-The following table shows how efficient
-the above algorithms are when $n$ varies and
-the elements of the lists are random
-integers between $1 \ldots 10^9$:
+La seguente tabella mostra quanto siano efficienti
+gli algoritmi appena visti quando $n$ varia e
+gli elementi della lista sono interi casuali con valori
+compresi tra $1 \ldots 10^9$:
 
 \begin{center}
 \begin{tabular}{rrrr}
-$n$ & Algorithm 1 & Algorithm 2 & Algorithm 3 \\
+$n$ & Algoritmo 1 & Algoritmo 2 & Algoritmo 3 \\
 \hline
 $10^6$ & $1.5$ s & $0.3$ s & $0.2$ s \\
 $2 \cdot 10^6$ & $3.7$ s & $0.8$ s & $0.3$ s \\
@@ -781,22 +781,21 @@ $5 \cdot 10^6$ & $10.0$ s & $2.3$ s & $0.9$ s \\
 \end{tabular}
 \end{center}
 
-Algorithms 1 and 2 are equal except that
-they use different set structures.
-In this problem, this choice has an important effect on
-the running time, because Algorithm 2
-is 4–5 times faster than Algorithm 1.
+Gli algoritmi 1 e 2 sono uguali tranne che per il 
+fatto che usano strutture dati differenti.
+In questo problema, questa scelta ha un effetto
+importante sul tempo di esecuzione, perchè l'algoritmo 2
+è 4-5 volte più veloce dell'algoritmo 1.
 
-However, the most efficient algorithm is Algorithm 3
-which uses sorting.
-It only uses half the time compared to Algorithm 2.
-Interestingly, the time complexity of both
-Algorithm 1 and Algorithm 3 is $O(n \log n)$,
-but despite this, Algorithm 3 is ten times faster.
-This can be explained by the fact that
-sorting is a simple procedure and it is done
-only once at the beginning of Algorithm 3,
-and the rest of the algorithm works in linear time.
-On the other hand,
-Algorithm 1 maintains a complex balanced binary tree
-during the whole algorithm.
+Comunque l'algoritmo 3, che usa l'ordinamento, risulta essere
+il più efficiente di tutti, impiegando solo metà del tempo
+dell'algoritmo 2.
+È interessante notare che sia l'algoritmo 1 che il 3
+hanno complessità computazionale uguale a $O(n \log n)$,
+ma, nonostante questo, l'algoritmo 3 è dieci volte più veloce.
+Questo può essere spiegato dal fatto che l'ordinamento è una
+procedura semplice e viene effettuata una sola volta all'inizio
+dell'algoritmo 3, dopodichè l'algoritmo lavora in 
+tempo lineare.
+D'altra parte l'algoritmo 1 deve mantenere bilanciato 
+un albero binario durante tutto il suo tempo d'esecuzione.
