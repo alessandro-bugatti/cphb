@@ -17,35 +17,36 @@ Se la ricerca completa è troppo lenta,
 può essere bisogno utilizzare altre tecniche, 
 come gli algoritmi greedy o la programmazione dinamica.
 
-\section{Generating subsets}
+\section{Generazioni di sottoinsiemi}
 
-\index{subset}
+\index{sottoinsiemi}
 
-We first consider the problem of generating
-all subsets of a set of $n$ elements.
-For example, the subsets of $\{0,1,2\}$ are
+Si considera come prima cosa il problema di 
+generare tutti i sottoinsiemi possibili di 
+un insieme di $n$ elementi.
+Per esempio, i sottoinsiemi di $\{0,1,2\}$ sono
 $\emptyset$, $\{0\}$, $\{1\}$, $\{2\}$, $\{0,1\}$,
-$\{0,2\}$, $\{1,2\}$ and $\{0,1,2\}$.
-There are two common methods to generate subsets:
-we can either perform a recursive search
-or exploit the bit representation of integers.
+$\{0,2\}$, $\{1,2\}$ e $\{0,1,2\}$.
+I due tipici metodi per generare sottoinsiemi prevedono
+o che si faccia una ricerca ricorsiva oppure
+che si sfrutti la rappresentazione binaria degli interi.
 
-\subsubsection{Method 1}
+\subsubsection{Metodo 1}
 
-An elegant way to go through all subsets
-of a set is to use recursion.
-The following function \texttt{search}
-generates the subsets of the set
+Un modo elegante per generare tutti i sottoinsiemi 
+di un insieme dato è quello che usa la ricorsione.
+La seguente funzione \texttt{search}
+genera i sottoinsiemi dell'insieme
 $\{0,1,\ldots,n-1\}$.
-The function maintains a vector \texttt{subset}
-that will contain the elements of each subset.
-The search begins when the function is called
-with parameter 0.
+La funzione contieme un vettore \texttt{subset}
+che conterrà gli elementi di ogni sottoinsieme.
+La ricerca inizia quando viene chiamata la funzione
+passandogli come parametro il valore 0.
 
 \begin{lstlisting}
 void search(int k) {
     if (k == n) {
-        // process subset
+        // processa il sottoinsieme
     } else {
         search(k+1);
         subset.push_back(k);
@@ -55,20 +56,19 @@ void search(int k) {
 }
 \end{lstlisting}
 
-When the function \texttt{search}
-is called with parameter $k$,
-it decides whether to include the
-element $k$ in the subset or not,
-and in both cases,
-then calls itself with parameter $k+1$
-However, if $k=n$, the function notices that
-all elements have been processed
-and a subset has been generated.
+Quando la funzione \texttt{search}
+viene chiamata con il parametro $k$,
+decide se includere o meno l'elemento $k$
+nel sottoinsieme, e, in entrambi i casi,
+richiama se stessa con il parametro $k+1$.
+Comunque, se $k=n$, 
+la funzione si accorge che tutti gli elementi sono stati processati e
+viene generato il sottoinsieme.
 
-The following tree illustrates the function calls when $n=3$.
-We can always choose either the left branch
-($k$ is not included in the subset) or the right branch
-($k$ is included in the subset).
+Il seguente albero mostra le chiamate ricorsive della funzione con $n=3$.
+Si può vedere come è sempre possibile scegliere o il ramo sinistro
+($k$ non è incluso nel sottoinsieme) o il ramo destro
+($k$ è incluso nel sottoinsieme).
 
 \begin{center}
 \begin{tikzpicture}[scale=.45]
@@ -123,37 +123,34 @@ We can always choose either the left branch
 \end{tikzpicture}
 \end{center}
 
-\subsubsection{Method 2}
+\subsubsection{Metodo 2}
 
-Another way to generate subsets is based on
-the bit representation of integers.
-Each subset of a set of $n$ elements
-can be represented as a sequence of $n$ bits,
-which corresponds to an integer between $0 \ldots 2^n-1$.
-The ones in the bit sequence indicate
-which elements are included in the subset.
+Un altro modo di generare dei sottoinsiemi è basato
+sulla rapprensentazione binaria degli interi.
+Ogni sottoinsieme di un insieme di $n$ elementi
+può essere rappresentato come una sequenza di $n$ bit,
+che corrisponde a un intero tra $0 \ldots 2^n-1$.
+Gli uno nella sequenza indicano quali elementi
+sono inclusi nel sottoinsieme.
 
-The usual convention is that
-the last bit corresponds to element 0,
-the second last bit corresponds to element 1,
-and so on.
-For example, the bit representation of 25
-is 11001, which corresponds to the subset $\{0,3,4\}$.
-
-The following code goes through the subsets
-of a set of $n$ elements
+La rappresentazione usuale prevede che l'ultimo bit corrisponda
+all'elemento 0, il penultimo bit all'elemento 1 e così via.
+Per esempio, la rappresentazione di 25 è 11001, che corrisponde al sottoinsieme
+$\{0,3,4\}$.
+Il seguente codice scorre tutti i sottoinsiemi di un 
+insieme di $n$ elementi
 
 \begin{lstlisting}
 for (int b = 0; b < (1<<n); b++) {
-    // process subset
+    // processa il sottoinsieme
 }
 \end{lstlisting}
 
-The following code shows how we can find
-the elements of a subset that corresponds to a bit sequence.
-When processing each subset,
-the code builds a vector that contains the
-elements in the subset.
+Il seguente codice mostra come sia possibile trovare gli
+elementi di un sottoinsieme che corrisponde a una sequenza di bit.
+Quando ogni sottoinsieme viene processato,
+il codice costruisce un vettore che contiene gli
+elementi del sottoinsieme.
 
 \begin{lstlisting}
 for (int b = 0; b < (1<<n); b++) {
