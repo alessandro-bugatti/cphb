@@ -161,34 +161,34 @@ for (int b = 0; b < (1<<n); b++) {
 }
 \end{lstlisting}
 
-\section{Generating permutations}
+\section{Generazione delle permutazioni}
 
-\index{permutation}
+\index{permutazioni}
 
-Next we consider the problem of generating
-all permutations of a set of $n$ elements.
-For example, the permutations of $\{0,1,2\}$ are
+Un altro problema è quello di generare tutte le combinazioni possibili
+di un insieme di $n$ elementi.
+Per esempio, le permutazioni di $\{0,1,2\}$ sono
 $(0,1,2)$, $(0,2,1)$, $(1,0,2)$, $(1,2,0)$,
-$(2,0,1)$ and $(2,1,0)$.
-Again, there are two approaches:
-we can either use recursion or go through the
-permutations iteratively.
+$(2,0,1)$ e $(2,1,0)$.
+Anche in questo caso si possono seguire due strade:
+o usare la ricorsione oppure creare tutte le permutazioni in 
+modo iterativo.
 
-\subsubsection{Method 1}
+\subsubsection{Metodo 1}
 
-Like subsets, permutations can be generated
-using recursion.
-The following function \texttt{search} goes
-through the permutations of the set $\{0,1,\ldots,n-1\}$.
-The function builds a vector \texttt{permutation}
-that contains the permutation,
-and the search begins when the function is
-called without parameters.
+Come per i sottoinsiemi, le permutazioni possono
+essere generate con la ricorsione.
+La funzione \texttt{search} produce tutte le 
+permutazioni dell'insieme $\{0,1,\ldots,n-1\}$.
+La funzione costruisce il vettore \texttt{permutation}
+che contiene la permutazione,
+e la ricerca inizia con la funzione che viene chiamata
+senza parametri.
 
 \begin{lstlisting}
 void search() {
     if (permutation.size() == n) {
-        // process permutation
+        // processa la permutazione
     } else {
         for (int i = 0; i < n; i++) {
             if (chosen[i]) continue;
@@ -202,24 +202,22 @@ void search() {
 }
 \end{lstlisting}
 
-Each function call adds a new element to
-\texttt{permutation}.
-The array \texttt{chosen} indicates which
-elements are already included in the permutation.
-If the size of \texttt{permutation} equals the size of the set,
-a permutation has been generated.
+Ogni chiamata di funzione aggiunge un nuovo elemento
+a \texttt{permutation}.
+L'array \texttt{chosen} indica quali elementi sono stati già aggiunti nella permutazione.
+Se la dimensione di \texttt{permutation} è uguale alla dimensione dell'insieme,
+allora è stata generata una nuova permutazione.
 
-\subsubsection{Method 2}
+\subsubsection{Metodo 2}
 
 \index{next\_permutation@\texttt{next\_permutation}}
 
-Another method for generating permutations
-is to begin with the permutation
-$\{0,1,\ldots,n-1\}$ and repeatedly
-use a function that constructs the next permutation
-in increasing order.
-The C++ standard library contains the function
-\texttt{next\_permutation} that can be used for this:
+Un altro metodo per generare una permutazione
+è di iniziare con la permutazione
+$\{0,1,\ldots,n-1\}$ e utilizzare ripetutamente una funzione che costruisce
+la prossima permutazione in ordine crescente.
+La libreria standard del C++ contiene la funzione
+\texttt{next\_permutation} che fa proprio questo:
 
 \begin{lstlisting}
 vector<int> permutation;
@@ -227,7 +225,7 @@ for (int i = 0; i < n; i++) {
     permutation.push_back(i);
 }
 do {
-    // process permutation
+    // processa la permutazione
 } while (next_permutation(permutation.begin(),permutation.end()));
 \end{lstlisting}
 
