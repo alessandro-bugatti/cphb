@@ -451,25 +451,26 @@ calcolare $q(16)=14772512$ su un computer moderno\footnote{
 Non esiste un modo efficiente per calcolare valori grandi di $q(n)$. 
 Il record attuale è $q(27)=234907967154122528$, calcolato nel 2016 \cite{q27}.}.
 
-\section{Pruning the search}
+\section{\textit{Pruning} dell'albero di ricerca}
 
-We can often optimize backtracking
-by pruning the search tree.
-The idea is to add ''intelligence'' to the algorithm
-so that it will notice as soon as possible
-if a partial solution cannot be extended
-to a complete solution.
-Such optimizations can have a tremendous
-effect on the efficiency of the search.
+Il backtracking può essere spesso ottimizzato 
+potando (\textit{pruning} in inglese) l'albero di ricerca.
+L'idea di base è di aggiungere 
+''intelligenza'' all'algoritmo
+in modo che possa notare quanto prima se una
+soluzione parziale può essere estesa fino ad arrivare
+a una soluzione completa oppure no.
+Questo tipo di ottimizzazione può migliorare
+enormemente l'efficienza della ricerca.
 
-Let us consider the problem
-of calculating the number of paths
-in an $n \times n$ grid from the upper-left corner
-to the lower-right corner such that the
-path visits each square exactly once.
-For example, in a $7 \times 7$ grid,
-there are 111712 such paths.
-One of the paths is as follows:
+Si consideri ad esempio il problema di calcolare
+il numero di percorsi in una griglia
+$n \times n$ che vanno dall'angolo superiore sinistro 
+all'angolo in basso a destra in modo tale che
+ogni percorso visiti tutti i quadrati una e una sola volta.
+Per esempio in una griglia $7 \times 7$,
+ci sono 111712 di tali percorsi.
+Uno dei percorsi è quello che segue:
 
 \begin{center}
 \begin{tikzpicture}[scale=.55]
@@ -487,39 +488,38 @@ One of the paths is as follows:
 \end{tikzpicture}
 \end{center}
 
-We focus on the $7 \times 7$ case,
-because its level of difficulty is appropriate to our needs.
-We begin with a straightforward backtracking algorithm,
-and then optimize it step by step using observations
-of how the search can be pruned.
-After each optimization, we measure the running time
-of the algorithm and the number of recursive calls,
-so that we clearly see the effect of each
-optimization on the efficiency of the search.
+Ci si concentrerà adesso su questo esempio perchè
+è di una difficoltà appropriata per dimostrare il funzionamento
+dell'idea.
+Partendo dall'algoritmo di backtracking diretto,
+verranno successivamente mostrati dei miglioramenti
+ottenuti applicando via via osservazioni diverse che
+porteranno a una potatura dell'albero di ricerca.
+Dopo ogni ottimizzazione verranno misurati il tempo di 
+esecuzione e il numero di chiamate ricorsive e si vedrà chiaramente
+l'effetto di ogni ottimizzazione sull'efficienza complessiva
+della ricerca.
 
-\subsubsection{Basic algorithm}
+\subsubsection{Algoritmo diretto}
 
-The first version of the algorithm does not contain
-any optimizations. We simply use backtracking to generate
-all possible paths from the upper-left corner to
-the lower-right corner and count the number of such paths.
+La prima versione dell'algoritmo non contiene nessuna ottimizzazione.
+Il baktracking genererà tutti i percorsi possibili dall'angolo in alto
+a sinistra a quello in basso a destra e li conterà.
 
 \begin{itemize}
 \item
-running time: 483 seconds
+tempo di esecuzione: 483 secondi
 \item
-number of recursive calls: 76 billion
+numero di chiamate ricorsive: 76 miliardi
 \end{itemize}
 
-\subsubsection{Optimization 1}
+\subsubsection{Ottimizzazione 1}
 
-In any solution, we first move one step
-down or right.
-There are always two paths that 
-are symmetric
-about the diagonal of the grid
-after the first step.
-For example, the following paths are symmetric:
+All'interno di una qualsiasi soluzione la prima mossa
+o è verso il basso oppure verso destra. Inoltre ci sono sempre
+due percorsi che sono simmetrici rispetto alla diagonale 
+della griglia dopo aver effettuato il primo passo.
+Per esempio i seguenti percorsi sono simmetrici:
 
 \begin{center}
 \begin{tabular}{ccc}
@@ -554,24 +554,24 @@ For example, the following paths are symmetric:
 \end{tabular}
 \end{center}
 
-Hence, we can decide that we always first
-move one step down (or right),
-and finally multiply the number of solutions by two.
+Quindi si può sempre procedere facendo la prima mossa solo verso il basso
+(oppure solo a destra) e poi moltiplicare il valore trovato per due.
+
 
 \begin{itemize}
 \item
-running time: 244 seconds
+tempo di esecuzione: 244 secondi
 \item
-number of recursive calls: 38 billion
+numero di chiamate ricorsive: 38 miliardi
 \end{itemize}
 
-\subsubsection{Optimization 2}
+\subsubsection{Ottimizzazione 2}
 
-If the path reaches the lower-right square
-before it has visited all other squares of the grid,
-it is clear that
-it will not be possible to complete the solution.
-An example of this is the following path:
+Se il percorso raggiunge l'angolo in basso a destra
+prima di aver visitato tutti gli altri quadrati della griglia,
+è chiaro che non sarà possibile visitare tutti i rimanenti
+quadrati e quindi arrivare a una soluzione completa.
+Un esempio è il percorso seguente:
 
 \begin{center}
 \begin{tikzpicture}[scale=.55]
@@ -585,23 +585,24 @@ An example of this is the following path:
   \end{scope}
 \end{tikzpicture}
 \end{center}
-Using this observation, we can terminate the search
-immediately if we reach the lower-right square too early.
+Usando questa osservazione si può terminare la ricerca immediatamente 
+quando viene raggiunto l'angolo in basso a destra, risparmiando una 
+serie di ulteriori passaggi inutili.
+
 \begin{itemize}
 \item
-running time: 119 seconds
+tempo di esecuzione: 119 secondi
 \item
-number of recursive calls: 20 billion
+numero di chiamate ricorsive: 20 miliardi
 \end{itemize}
 
-\subsubsection{Optimization 3}
+\subsubsection{Ottimizzazione 3}
 
-If the path touches a wall
-and can turn either left or right,
-the grid splits into two parts
-that contain unvisited squares.
-For example, in the following situation,
-the path can turn either left or right:
+Se il percorso tocca uno dei confini esterni e 
+può girare a destra o a sinistra, la griglia viene divisa in due parti
+che conterrano entrambe quadrati non visitati.
+Per esempio nella seguente situazione il percorso può girare sia
+a destra che a sinistra:
 
 \begin{center}
 \begin{tikzpicture}[scale=.55]
@@ -615,26 +616,27 @@ the path can turn either left or right:
   \end{scope}
 \end{tikzpicture}
 \end{center}
-In this case, we cannot visit all squares anymore,
-so we can terminate the search.
-This optimization is very useful:
+In questo caso non è poi più possibile
+visitare tutti i quadrati rimanenti e quindi 
+la ricerca può essere terminata.
+Questa ottimizzazione è molto vantaggiosa:
 
 \begin{itemize}
 \item
-running time: 1.8 seconds
+tempo di esecuzione: 1.8 secondi
 \item
-number of recursive calls: 221 million
+numero di chiamate ricorsive: 221 milioni
 \end{itemize}
 
-\subsubsection{Optimization 4}
+\subsubsection{Ottimizzazione 4}
 
-The idea of Optimization 3
-can be generalized:
-if the path cannot continue forward
-but can turn either left or right,
-the grid splits into two parts
-that both contain unvisited squares.
-For example, consider the following path:
+L'idea dell'Ottimizzazione 3
+può essere generalizzata:
+se un percorso non può continuare diritto
+ma può girare sia a destra che a sinistra,
+la griglia si dividerà in due parti entrambe
+contenenti quadrati non visitati.
+Per esempio si consideri il seguente percorso:
 
 \begin{center}
 \begin{tikzpicture}[scale=.55]
@@ -648,35 +650,33 @@ For example, consider the following path:
   \end{scope}
 \end{tikzpicture}
 \end{center}
-It is clear that we cannot visit all squares anymore,
-so we can terminate the search.
-After this optimization, the search is
-very efficient:
+Risulta chiaro come non sia più possibile visitare tutti i quadrati,
+così si può terminare la ricerca.
+Dopo quest'ultima ottimizzazione la ricerca risulta molto efficiente:
 
 \begin{itemize}
 \item
-running time: 0.6 seconds
+tempo di esecuzione: 0.6 secondi
 \item
-number of recursive calls: 69 million
+numero di chiamate ricorsive: 69 milioni
 \end{itemize}
 
 ~\\
-Now is a good moment to stop optimizing
-the algorithm and see what we have achieved.
-The running time of the original algorithm
-was 483 seconds,
-and now after the optimizations,
-the running time is only 0.6 seconds.
-Thus, the algorithm became nearly 1000 times
-faster after the optimizations.
+Dopo aver visto tutte queste ottimizzazioni
+si può vedere cosa è stato raggiunto: il
+tempo di esecuzione dell'algoritmo originale era di
+483 secondi e dopo tutte le ottimizzazioni è diventato di
+solo 0,6 secondi. Quindi l'algoritmo è diventato circa 
+1000 volte più veloce dopo aver applicato tutte le ottimizzazioni.
 
-This is a usual phenomenon in backtracking,
-because the search tree is usually large
-and even simple observations can effectively
-prune the search.
-Especially useful are optimizations that
-occur during the first steps of the algorithm,
-i.e., at the top of the search tree.
+Questo succede spesso nel backtracking,
+perchè di solito l'albero di ricerca è molto
+largo e anche delle semplici osservazioni
+possono ridurre drasticamente il tempo di ricerca,
+potando molte strade inutili.
+Le ottimizzazioni più utili sono quelle che avvengono 
+nei primi passaggi dell'algoritmo, cioà nella parte alta 
+dell'albero di ricerca.
 
 \section{Meet in the middle}
 
