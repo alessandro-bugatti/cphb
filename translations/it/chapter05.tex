@@ -675,77 +675,82 @@ largo e anche delle semplici osservazioni
 possono ridurre drasticamente il tempo di ricerca,
 potando molte strade inutili.
 Le ottimizzazioni più utili sono quelle che avvengono 
-nei primi passaggi dell'algoritmo, cioà nella parte alta 
+nei primi passaggi dell'algoritmo, cioè nella parte alta 
 dell'albero di ricerca.
 
 \section{Meet in the middle}
 
 \index{meet in the middle}
 
-\key{Meet in the middle} is a technique
-where the search space is divided into
-two parts of about equal size.
-A separate search is performed
-for both of the parts,
-and finally the results of the searches are combined.
+\key{Meet in the middle} (incontriamoci a metà) 
+è una tecnica in cui lo spazio di ricerca è diviso in
+due parti di dimensioni simili.
+Successivamente viene condotta una ricerca 
+separata per ognuna di queste due parti
+e infine i risultati delle due ricerche sono combinati
+per arrivare alla soluzione totale.
 
-The technique can be used
-if there is an efficient way to combine the
-results of the searches.
-In such a situation, the two searches may require less
-time than one large search.
-Typically, we can turn a factor of $2^n$
-into a factor of $2^{n/2}$ using the meet in the
-middle technique.
+La tecnica può essere usata 
+se esiste un modo efficiente per combinare
+i risultati ottenuti dalle due ricerche.
+In questo caso il costo delle due ricerche 
+può richiedere meno tempo della ricerca totale
+fatta su tutto il problema.
 
-As an example, consider a problem where
-we are given a list of $n$ numbers and
-a number $x$,
-and we want to find out if it is possible
-to choose some numbers from the list so that
-their sum is $x$.
-For example, given the list $[2,4,5,9]$ and $x=15$,
-we can choose the numbers $[2,4,9]$ to get $2+4+9=15$.
-However, if $x=10$ for the same list,
-it is not possible to form the sum.
+Quello che succede di solito è che il costo della ricerca 
+totale viene ridotto da  $2^n$ a $2^{n/2}$ utilizzando
+questa tecnica.
 
-A simple algorithm to the problem is to
-go through all subsets of the elements and
-check if the sum of any of the subsets is $x$.
-The running time of such an algorithm is $O(2^n)$,
-because there are $2^n$ subsets.
-However, using the meet in the middle technique,
-we can achieve a more efficient $O(2^{n/2})$ time algorithm\footnote{This
-idea was introduced in 1974 by E. Horowitz and S. Sahni \cite{hor74}.}.
-Note that $O(2^n)$ and $O(2^{n/2})$ are different
-complexities because $2^{n/2}$ equals $\sqrt{2^n}$.
+Come esempio si consideri un problema in cui è data una lista
+di $n$ numeri e un numero $x$,
+e si vuole scoprire se è possibile trovare 
+alcuni numeri della lista la cui somma sia
+esattamente $x$.
+Data ad esempio la lista $[2,4,5,9]$ e $x=15$,
+è possibile scegliere i numeri $[2,4,9]$ per ottenere $2+4+9=15$.
+Si noti comunque  che, ad esempio per $x=10$, non è possibile 
+ottenere il risultato desiderato.
 
-The idea is to divide the list into
-two lists $A$ and $B$ such that both
-lists contain about half of the numbers.
-The first search generates all subsets
-of $A$ and stores their sums to a list $S_A$.
-Correspondingly, the second search creates
-a list $S_B$ from $B$.
-After this, it suffices to check if it is possible
-to choose one element from $S_A$ and another
-element from $S_B$ such that their sum is $x$.
-This is possible exactly when there is a way to
-form the sum $x$ using the numbers of the original list.
+Un modo semplice per risolvere questo problema è 
+quello di iterare tra tutti i sottoinsiemi degli elementi
+e controllare se la somma di uno qualsiasi di questi sottoinsiemi
+è uguale a $x$.
+Il tempo di esecuzione di tale algoritmo è proporzionale a $O(2^n)$,
+poichè ci sono $2^n$ sottoinsiemi.
 
-For example, suppose that the list is $[2,4,5,9]$ and $x=15$.
-First, we divide the list into $A=[2,4]$ and $B=[5,9]$.
-After this, we create lists
-$S_A=[0,2,4,6]$ and $S_B=[0,5,9,14]$.
-In this case, the sum $x=15$ is possible to form,
-because $S_A$ contains the sum $6$,
-$S_B$ contains the sum $9$, and $6+9=15$.
-This corresponds to the solution $[2,4,9]$.
+Usando invece la tecnica \textit{meet in the middle} è 
+possibile ottenere un costo di tipo $O(2^{n/2})$, decisamente più efficiente\footnote{Questa idea è stata presentata
+nel 1974 da E. Horowitz e S. Sahni \cite{hor74}.}.
+Va infatti notato che $O(2^n)$ e $O(2^{n/2})$ sono classi di
+complessità differenti poichè $2^{n/2}$ è uguale a $\sqrt{2^n}$.
 
-The time complexity of the algorithm is $O(2^{n/2})$,
-because both lists $A$ and $B$ contain about $n/2$ numbers
-and it takes $O(2^{n/2})$ time to calculate the sums of
-their subsets to lists $S_A$ and $S_B$.
-After this, it is possible to check in 
-$O(2^{n/2})$ time if the sum $x$ can be created
-from $S_A$ and $S_B$.
+L'idea è di dividere la lista in due liste $A$ e $B$ tali che ognuna 
+contenga la metà dei numeri.
+Con la prima ricerca si generano tutti i sottoinsiemi di $A$
+e si memorizzano le loro somme nella lista $S_A$.
+Allo stesso modo la seconda ricerca crea la lista $S_B$ 
+che contiene le somme di tutti i sottoinsiemi di $B$.
+Fatto questo è sufficiente scegliere ogni elemento della lista $S_A$ 
+e sommarlo con ogni elemento della lista $S_B$ fino a quando
+non si trova la somma desiderata $x$ (se è possibile).
+Questa soluzione è equivalente a quella che poteva essere
+calcolata a partire dalla lista originale.
+
+Per esempio, si supponga di avere la lista $[2,4,5,9]$ con $x=15$.
+Inizialmente si divide la lista nelle due sottoliste
+$A=[2,4]$ e $B=[5,9]$.
+Successivamente si creano le liste
+$S_A=[0,2,4,6]$ e $S_B=[0,5,9,14]$ che contengono
+le somme di tutti i sottoinsiemi di $A$ e $B$ rispettivamente.
+Si può poi verificare che è possibile ottenere la somma
+$x=15$ perchè $S_A$ contiene la somma $6$ e 
+$S_B$ contiene la somma $9$, quindi $6+9=15$,
+che corrisponde alla soluzione $[2,4,9]$.
+
+Il costo computazionale dell'algoritmo è $O(2^{n/2})$,
+poichè entrambe le liste $A$ e $B$ contengono circa $n/2$ numeri
+e sono necessarie $O(2^{n/2})$ operazioni per calcolare le somme
+dei sottoinsiemi da memorizzare in $S_A$ e $S_B$.
+Fatto questo è possibile controllare in tempo 
+$O(2^{n/2})$ se esiste la somma $x$ partendo da
+$S_A$ e $S_B$.
