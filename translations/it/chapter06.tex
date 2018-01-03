@@ -1,92 +1,86 @@
-\chapter{Greedy algorithms}
+\chapter{Algoritmi greedy}
 
-\index{greedy algorithm}
+\index{algoritmi greedy}
 
-A \key{greedy algorithm}
-constructs a solution to the problem
-by always making a choice that looks
-the best at the moment.
-A greedy algorithm never takes back
-its choices, but directly constructs
-the final solution.
-For this reason, greedy algorithms
-are usually very efficient.
+Un \key{algoritmo greedy} (avido, ingordo)
+costruisce una soluzione del problema
+scegliendo in ogni momento quella che è 
+la migliore soluzione possibile.
+In questo modo
+non tornano mai indietro per modificare le proprie scelte,
+ma costruisco direttamente la soluzione finale.
+Per questa ragione gli algoritmi greedy sono solitamente
+molto efficienti.
 
-The difficulty in designing greedy algorithms
-is to find a greedy strategy
-that always produces an optimal solution
-to the problem.
-The locally optimal choices in a greedy
-algorithm should also be globally optimal.
-It is often difficult to argue that
-a greedy algorithm works.
+La difficoltà nel progettare gli algoritmi greedy
+è quella di trovare una strategia greedy che garantisca 
+di produrre sempre la soluzione ottimale del problema.
 
-\section{Coin problem}
+Una scelta ottima \textit{locale} deve sempre 
+essere anche una scelta che garantisce un ottimo \textit{globale},
+ma spesso è difficile dimostrare che un algoritmo greedy
+funziona per ogni input.
 
-As a first example, we consider a problem
-where we are given a set of coins
-and our task is to form a sum of money $n$
-using the coins.
-The values of the coins are
+
+\section{Problema delle monete}
+
+Come primo esempio si consideri il problema 
+in cui viene dato un insieme di monete e lo scopo
+è quello di formare una somma $x$ usando le monete date.
+I valori delle monete sono
 $\texttt{coins}=\{c_1,c_2,\ldots,c_k\}$,
-and each coin can be used as many times we want.
-What is the minimum number of coins needed?
+e ogni moneta può essere usata quante volte si vuole.
+Qual è il mimino numero di monete necessario per ottenere la somma richiesta?
 
-For example, if the coins are the euro coins (in cents)
+Per esempio, se le monete fossero degli euro (espressi in centesimi)
 \[\{1,2,5,10,20,50,100,200\}\]
-and $x=520$,
-we need at least four coins.
-The optimal solution is to select coins
-$200+200+100+20$ whose sum is 520.
+e $n=520$,
+ci sarebbe bisogno di almeno quattro monete
+e la soluzione ottima sarebbe
+$200+200+100+20$, la cui somma è 520.
 
-\subsubsection{Greedy algorithm}
+\subsubsection{Algoritmo greedy}
 
-A simple greedy algorithm to the problem
-always selects the largest possible coin,
-until the required sum of money has been constructed.
-This algorithm works in the example case,
-because we first select two 200 cent coins,
-then one 100 cent coin and finally one 20 cent coin.
-But does this algorithm always work?
+Un semplice algoritmo greedy che risolve il problema 
+prevede di scegliere a ogni passo la più grande moneta possibile,
+fino a che la somma delle monete non sia stata raggiunta.
+Questo algoritmo funziona nel caso di esempio,
+perchè inizialmente si sceglie due volte la moneta da 200,
+poi una volta quella da 100 e infine una da 20.
+Ma questo algoritmo funziona in ogni caso?
+Si può verificare che se le monete sono quelle dell'insieme
+proposto, l'algoritmo funziona sempre, cioè produce sempre 
+una soluzione con il più piccolo numero possibile di monete.
+La correttezza dell'algoritmo può essere dimostrata in questo modo:
+ognuna delle monete 1, 5, 10, 50 e 100 appaiono al massimo 
+una sola volta in una soluzione ottima,
+perchè, se la soluzione contenesse due di tali monete,
+queste potrebbero essere rimpiazzate da una sola moneta,
+ottenendo così una soluzione migliore.
+Per esempio, se la soluzione contenesse $5+5$,
+le due monete dovrebbero essere rimpiazzate da una moneta da $10$.
 
-It turns out that if the coins are the euro coins,
-the greedy algorithm \emph{always} works, i.e.,
-it always produces a solution with the fewest
-possible number of coins.
-The correctness of the algorithm can be
-shown as follows:
+Nello stesso modo, le monete 2 e 20 possono apparire al massimo due 
+volte in una soluzione ottima, perchè la somma $2+2+2$ potrebbe essere
+rimpiazzata dalla somma $5+1$ e la somma $20+20+20$ potrebbe essere rimpiazzata
+dalla somma $50+10$.
+Inoltre una soluzione ottima non può contenere le somme
+$2+2+1$ o $20+20+10$ perchè potrebbero essere 
+rimpiazzate rispettivamente dalle
+monete $5$ e $50$.
 
-First, each coin 1, 5, 10, 50 and 100 appears
-at most once in an optimal solution,
-because if the
-solution would contain two such coins,
-we could replace them by one coin and
-obtain a better solution.
-For example, if the solution would contain
-coins $5+5$, we could replace them by coin $10$.
+Usando queste osservazioni 
+si può mostrare che per ogni moneta di valore $x$,
+non è possibile costruire una somma ottima $x$ o maggiore di $x$
+usando solo monete di valore minore di $x$.
+Per esempio, se $x=100$, la migliore somma ottima possibile
+usando valori minori di 100 è $50+20+20+5+2+2=99$.
+Quindi l'algoritmo greedy che seleziona ad ogni passo la più
+grande moneta possibile produrrà sempre una soluzione ottima.
 
-In the same way, coins 2 and 20 appear
-at most twice in an optimal solution,
-because we could replace
-coins $2+2+2$ by coins $5+1$ and
-coins $20+20+20$ by coins $50+10$.
-Moreover, an optimal solution cannot contain
-coins $2+2+1$ or $20+20+10$,
-because we could replace them by coins $5$ and $50$.
-
-Using these observations,
-we can show for each coin $x$ that
-it is not possible to optimally construct
-a sum $x$ or any larger sum by only using coins
-that are smaller than $x$.
-For example, if $x=100$, the largest optimal
-sum using the smaller coins is  $50+20+20+5+2+2=99$.
-Thus, the greedy algorithm that always selects
-the largest coin produces the optimal solution.
-
-This example shows that it can be difficult
-to argue that a greedy algorithm works,
-even if the algorithm itself is simple.
+Questo esempio dimostra che può essere difficile
+dimostrare la correttezza dell'algoritmo in tutte le situazioni,
+anche se l'algoritmo in sé è semplice. 
 
 \subsubsection{General case}
 
