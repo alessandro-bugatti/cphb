@@ -260,21 +260,23 @@ ottenute selezionando l'evento che termina per primo
 e quindi non si potrà ottenere una soluzione migliore,
 quindi questo algoritmo greedy è corretto.
 
-\section{Tasks and deadlines}
+\section{Attività e deadline}
 
-Let us now consider a problem where
-we are given $n$ tasks with durations and deadlines
-and our task is to choose an order to perform the tasks.
-For each task, we earn $d-x$ points
-where $d$ is the task's deadline
-and $x$ is the moment when we finish the task.
-What is the largest possible total score
-we can obtain?
-
-For example, suppose that the tasks are as follows:
+Si consideri ora un problema dove siano 
+date $n$ attività, ognuna con una durata e una deadline\footnote{Una data entro la quale
+l'attività deve necessariamente terminare}, e il problema 
+è quello di scegliere un ordine in cui eseguire le attività, una di seguito all'altra.
+Inoltre per ogni attività si guadagnano $d-x$ punti,
+dove $d$ è la deadline dell'attività e 
+$x$ è il momento effettivo in cui si conclude l'attività,
+quindi si guadagnano più punti quanto più un'attività si conclude
+prima della propria deadline.
+Qual è il punteggio massimo che si può ottenere 
+ordinando al meglio le attività?
+Si supponga ad esempio che le attività siano le seguenti:
 \begin{center}
 \begin{tabular}{lll}
-task & duration & deadline \\
+attività & durata & deadline \\
 \hline
 $A$ & 4 & 2 \\
 $B$ & 3 & 5 \\
@@ -282,8 +284,8 @@ $C$ & 2 & 7 \\
 $D$ & 4 & 5 \\
 \end{tabular}
 \end{center}
-In this case, an optimal schedule for the tasks
-is as follows:
+In questo caso una pianificazione ottimale per le attività 
+sarebbe la seguente:
 \begin{center}
 \begin{tikzpicture}[scale=.4]
   \begin{scope}
@@ -309,21 +311,20 @@ is as follows:
   \end{scope}
 \end{tikzpicture}
 \end{center}
-In this solution, $C$ yields 5 points,
-$B$ yields 0 points, $A$ yields $-7$ points
-and $D$ yields $-8$ points,
-so the total score is $-10$.
+In questa soluzione $C$ permette di guadagnare 5 punti,
+$B$ fa guadagnare 0 punti, $A$ fa perdere $-7$ punti
+e $D$ altri $-8$ punti,
+così che il punteggio totale finale risulta di $-10$.
 
-Surprisingly, the optimal solution to the problem
-does not depend on the deadlines at all,
-but a correct greedy strategy is to simply
-perform the tasks \emph{sorted by their durations}
-in increasing order.
-The reason for this is that if we ever perform
-two tasks one after another such that the first task
-takes longer than the second task,
-we can obtain a better solution if we swap the tasks.
-For example, consider the following schedule:
+Sorprendentemente la soluzione ottima non dipende affatto
+dalle deadline, ma la strategia greedy corretta è semplicemente
+quella di eseguire le attività \emph{ordinate per durata} in
+ordine crescente.
+Il motivo per cui questa strategia funziona è che
+se, dati due soli task, li si ordina in modo tale che
+il primo task dura più del secondo,
+sicuramente si può ottenere una soluzione migliore scambiandoli,
+come si può vedere dal seguente esempio:
 \begin{center}
 \begin{tikzpicture}[scale=.4]
   \begin{scope}
@@ -342,7 +343,7 @@ For example, consider the following schedule:
   \end{scope}
 \end{tikzpicture}
 \end{center}
-Here $a>b$, so we should swap the tasks:
+Siccome $a>b$, si può scambiare l'ordine dell'attività:
 \begin{center}
 \begin{tikzpicture}[scale=.4]
   \begin{scope}
@@ -361,14 +362,12 @@ Here $a>b$, so we should swap the tasks:
   \end{scope}
 \end{tikzpicture}
 \end{center}
-Now $X$ gives $b$ points less and $Y$ gives $a$ points more,
-so the total score increases by $a-b > 0$.
-In an optimal solution,
-for any two consecutive tasks,
-it must hold that the shorter task comes
-before the longer task.
-Thus, the tasks must be performed
-sorted by their durations.
+Ora $X$ da $b$ punti in meno rispetto al primo ordinamento, ma $Y$ da $a$ punti in più,
+così che il punteggio totale aumenta di $a-b > 0$.
+In una soluzione ottima, date due qualsiasi attività consecutive,
+deve sempre essere vero che quella più breve compaia prima di quella
+più lunga, portando quindi alla conclusione che le attività debbano essere
+ordinate per durata dalla più breve alla più lunga.
 
 \section{Minimizing sums}
 
