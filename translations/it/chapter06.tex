@@ -82,45 +82,42 @@ Questo esempio dimostra che può essere difficile
 dimostrare la correttezza dell'algoritmo in tutte le situazioni,
 anche se l'algoritmo in sé è semplice. 
 
-\subsubsection{General case}
+\subsubsection{Caso generale}
+Il caso generale di questo esempio può contenere monete
+di qualsiasi valore e l'algoritmo greedy \emph{non} porta necessariamente
+a una soluzione ottima.
 
-In the general case, the coin set can contain any coins
-and the greedy algorithm \emph{does not} necessarily produce
-an optimal solution.
+Si può dimostrare che il procedimento greedy non sempre
+funziona mostrando un controesempio in cui si ottiene un risultato non corretto.
+Per questo problema trovare un controesempio è facile:
+se le monete sono hanno valori $\{1,3,4\}$ e la somma richiesta è 6,
+l'algoritmo greedy produrrebbe la soluzione 
+$4+1+1$, mentre è evidente che la soluzione ottima è $3+3$.
 
-We can prove that a greedy algorithm does not work
-by showing a counterexample
-where the algorithm gives a wrong answer.
-In this problem we can easily find a counterexample:
-if the coins are $\{1,3,4\}$ and the target sum
-is 6, the greedy algorithm produces the solution
-$4+1+1$ while the optimal solution is $3+3$.
+Non si sa se il caso generale del problema delle monete
+possa essere risolto da un qualsiasi algoritmo greedy\footnote{Comunque è possibile
+\emph{verificare} in tempo polinomiale
+se l'algoritmo greedy presentato in questo capitolo
+funziona per un dato insieme di monete\cite{pea05}.}.
 
-It is not known if the general coin problem
-can be solved using any greedy algorithm\footnote{However, it is possible
-to \emph{check} in polynomial time
-if the greedy algorithm presented in this chapter works for
-a given set of coins \cite{pea05}.}.
-However, as we will see in Chapter 7,
-in some cases,
-the general problem can be efficiently
-solved using a dynamic
-programming algorithm that always gives the
-correct answer.
+Comunque, come si vedrà nel Capitolo 7,
+in alcuni casi il problema generale può essere risolto
+in maniera efficiente usando la programmazione dinamica,
+che fornisce sempre la risposta corretta.
 
 \section{Scheduling}
 
-Many scheduling problems can be solved
-using greedy algorithms.
-A classic problem is as follows:
-Given $n$ events with their starting and ending
-times, find a schedule
-that includes as many events as possible.
-It is not possible to select an event partially.
-For example, consider the following events:
+Molti problemi di \emph{scheduling} possono essere risolti
+usando degli algoritmi greedy.
+Un problema classico è il seguente:
+dati $n$ eventi con i propri tempi di inizio e di fine,
+trovare una sequenza che contenga il numero maggiore possibile
+di eventi non sovrapposti, cioè che non contenga una o più 
+coppie di eventi la cui intersezione non sia vuota.
+Si condiderino ad esempio i seguenti eventi:
 \begin{center}
 \begin{tabular}{lll}
-event & starting time & ending time \\
+evento & inizio & fine \\
 \hline
 $A$ & 1 & 3 \\
 $B$ & 2 & 5 \\
@@ -128,9 +125,9 @@ $C$ & 3 & 9 \\
 $D$ & 6 & 8 \\
 \end{tabular}
 \end{center}
-In this case the maximum number of events is two.
-For example, we can select events $B$ and $D$
-as follows:
+In questo caso il numero massimo di eventi è due.
+Per esempio si possono selezionare gli eventi $B$ e $D$
+come segue:
 \begin{center}
 \begin{tikzpicture}[scale=.4]
   \begin{scope}
@@ -146,15 +143,14 @@ as follows:
 \end{tikzpicture}
 \end{center}
 
-It is possible to invent several greedy algorithms
-for the problem, but which of them works in every case?
+Si possono inventare diversi algoritmi greedy per risolvere
+questo problema, ma quale funzionerà con qualsiasi input?
 
-\subsubsection*{Algorithm 1}
+\subsubsection*{Algoritmo 1}
 
-The first idea is to select as \emph{short}
-events as possible.
-In the example case this algorithm
-selects the following events:
+La prima idea potrebbe essere quella di selezionare gli eventi
+più \emph{corti} possibili, cioè quelli che durano di meno.
+In questo esempio verrebbero selezionati i seguenti eventi:
 \begin{center}
 \begin{tikzpicture}[scale=.4]
   \begin{scope}
@@ -170,9 +166,8 @@ selects the following events:
 \end{tikzpicture}
 \end{center}
 
-However, selecting short events is not always
-a correct strategy. For example, the algorithm fails
-in the following case:
+Comunque questa strategia non porta sempre alla soluzione ottima.
+Per esempio l'algoritmo fallisce con questi eventi:
 \begin{center}
 \begin{tikzpicture}[scale=.4]
   \begin{scope}
@@ -182,14 +177,15 @@ in the following case:
   \end{scope}
 \end{tikzpicture}
 \end{center}
-If we select the short event, we can only select one event.
-However, it would be possible to select both long events.
+Se viene selezionato l'evento più corto, risulta possibile selezionare solo quello,
+dove la soluzione ottima prevede invece che sia possibile selezionare entrambi gli eventi più lunghi.
 
-\subsubsection*{Algorithm 2}
+\subsubsection*{Algoritmo 2}
 
-Another idea is to always select the next possible
-event that \emph{begins} as \emph{early} as possible.
-This algorithm selects the following events:
+Un'altra idea potrebbe essere quella di selezionare
+il prossimo evento che \emph{inizia} il \emph{prima} possibile.
+
+Questo algoritmo seleziona i seguenti eventi:
 \begin{center}
 \begin{tikzpicture}[scale=.4]
   \begin{scope}
@@ -204,11 +200,11 @@ This algorithm selects the following events:
   \end{scope}
 \end{tikzpicture}
 \end{center}
-
-However, we can find a counterexample
-also for this algorithm.
-For example, in the following case,
-the algorithm only selects one event:
+ 
+Si riesce comunque a trovare un controesempio anche 
+per questo algoritmo.
+Ad esempio, per i seguenti valori,
+l'algoritmo seleziona un solo evento:
 \begin{center}
 \begin{tikzpicture}[scale=.4]
   \begin{scope}
@@ -218,16 +214,16 @@ the algorithm only selects one event:
   \end{scope}
 \end{tikzpicture}
 \end{center}
-If we select the first event, it is not possible
-to select any other events.
-However, it would be possible to select the
-other two events.
+Selezionando il primo evento non è poi possibile
+selezionarne nessun altro, dove invece la soluzione ottima
+contiene due eventi.
 
-\subsubsection*{Algorithm 3}
+\subsubsection*{Algoritmo 3}
 
-The third idea is to always select the next
-possible event that \emph{ends} as \emph{early} as possible.
-This algorithm selects the following events: 
+La terza idea è quella di selezionare il prossimo 
+evento che \emph{finisce} il \emph{prima} possibile.
+
+Questo algoritmo seleziona i seguenti eventi:
 \begin{center}
 \begin{tikzpicture}[scale=.4]
   \begin{scope}
@@ -243,26 +239,26 @@ This algorithm selects the following events:
 \end{tikzpicture}
 \end{center}
 
-It turns out that this algorithm
-\emph{always} produces an optimal solution.
-The reason for this is that it is always an optimal choice
-to first select an event that ends
-as early as possible.
-After this, it is an optimal choice
-to select the next event
-using the same strategy, etc.,
-until we cannot select any more events.
+Si può dimostrare che questo algoritmo produce
+\emph{sempre} una soluzione ottimale.
+Il motivo per cui funziona è che selezionare l'evento 
+che termina per primo è una scelta ottima anche
+globalmente.
+Se successivamente si seleziona il prossimo evento
+scegliendo quello che termina per primo tra quelli rimasti
+si arriva ancora a una scelta ottima globale e continuando 
+così fino a quando non si possono selezionare ulteriori eventi
+si arriva alla soluzione ottima.
 
-One way to argue that the algorithm works
-is to consider
-what happens if we first select an event
-that ends later than the event that ends
-as early as possible.
-Now, we will have at most an equal number of
-choices how we can select the next event.
-Hence, selecting an event that ends later
-can never yield a better solution,
-and the greedy algorithm is correct.
+Un modo per dimostrare che l'algoritmo funziona
+è di considerare cosa succede se al posto di selezionare
+l'evento che finisce il prima possibile se 
+ne seleziona uno che finisce dopo.
+In questo caso il numero di ulteriori scelte possibili
+non può che essere uguale o minore a quelle che si sarebbero
+ottenute selezionando l'evento che termina per primo
+e quindi non si potrà ottenere una soluzione migliore,
+quindi questo algoritmo greedy è corretto.
 
 \section{Tasks and deadlines}
 
