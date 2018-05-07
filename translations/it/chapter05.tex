@@ -355,7 +355,7 @@ void search(int y) {
 \end{samepage}
 
 La ricerca inizia chiamando \texttt{search(0)}.
-La dimensione della scacchiera è $n$,
+La dimensione della scacchiera è $n \times n$,
 e il codice memorizza il numero di soluzioni in \texttt{count}.
 
 Il codice assume che le righe e le colonne 
@@ -747,10 +747,9 @@ $x=15$ perchè $S_A$ contiene la somma $6$ e
 $S_B$ contiene la somma $9$, quindi $6+9=15$,
 che corrisponde alla soluzione $[2,4,9]$.
 
-Il costo computazionale dell'algoritmo è $O(2^{n/2})$,
-poichè entrambe le liste $A$ e $B$ contengono circa $n/2$ numeri
-e sono necessarie $O(2^{n/2})$ operazioni per calcolare le somme
-dei sottoinsiemi da memorizzare in $S_A$ e $S_B$.
-Fatto questo è possibile controllare in tempo 
-$O(2^{n/2})$ se esiste la somma $x$ partendo da
-$S_A$ e $S_B$.
+Il costo computazionale dell'algoritmo è $O(2^{n/2})$:
+prima devono essere generate le liste \emph{ordinate} $S_A$ e $S_B$,
+cosa che può essere fatta in $O(2^{n/2})$ creando tutte le possibili somme e poi ordinandole.
+Dopo questo, poichè le due liste sono ordinate, è possibile 
+verificare in $O(2^{n/2})$ se la somma $x$ può essere creata a partire
+da $S_A$ e $S_B$, utilizzando una tecnica simile a quella del merge-sort.
