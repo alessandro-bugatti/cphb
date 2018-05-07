@@ -26,7 +26,7 @@ funziona per ogni input.
 
 Come primo esempio si consideri il problema 
 in cui viene dato un insieme di monete e lo scopo
-è quello di formare una somma $x$ usando le monete date.
+è quello di formare una somma $n$ usando le monete date.
 I valori delle monete sono
 $\texttt{coins}=\{c_1,c_2,\ldots,c_k\}$,
 e ogni moneta può essere usata quante volte si vuole.
@@ -34,7 +34,7 @@ Qual è il mimino numero di monete necessario per ottenere la somma richiesta?
 
 Per esempio, se le monete fossero degli euro (espressi in centesimi)
 \[\{1,2,5,10,20,50,100,200\}\]
-e $x=520$,
+e $n=520$,
 ci sarebbe bisogno di almeno quattro monete
 e la soluzione ottima sarebbe
 $200+200+100+20$, la cui somma è 520.
@@ -73,7 +73,7 @@ Usando queste osservazioni
 si può mostrare che per ogni moneta di valore $x$,
 non è possibile costruire una somma ottima $x$ o maggiore di $x$
 usando solo monete di valore minore di $x$.
-Per esempio, se $x=100$, la migliore somma ottima possibile
+Per esempio, se $n=100$, la migliore somma ottima possibile
 usando valori minori di 100 è $50+20+20+5+2+2=99$.
 Quindi l'algoritmo greedy che seleziona ad ogni passo la più
 grande moneta possibile produrrà sempre una soluzione ottima.
