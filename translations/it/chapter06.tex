@@ -437,19 +437,19 @@ e il valore minore lo assume nella media delle radici,
 che vale $x=s/n$, che è appunto la media dei numeri
 $a_1,a_2,\ldots,a_n$.
 
-\section{Data compression}
+\section{Compressione dei dati}
 
-\index{data compression}
-\index{binary code}
+\index{compressione dei dati}
+\index{codifica binaria}
 \index{codeword}
 
-A \key{binary code} assigns for each character
-of a string a \key{codeword} that consists of bits.
-We can \emph{compress} the string using the binary code
-by replacing each character by the
-corresponding codeword.
-For example, the following binary code
-assigns codewords for characters
+Un \key{codice binario} assigna ad ogni carattere
+che compone una stringa una \key{codeword} che consiste 
+di un certo insieme ordinato di bit.
+\'{E} possibile \emph{comprimere} una stringa usando il codice 
+binario appropriato che sostituisce ogni carattere con la 
+\emph{codeword} corrispondente.
+Per esempio, sia dato il seguente codice binario:
 \texttt{A}–\texttt{D}:
 \begin{center}
 \begin{tabular}{rr}
@@ -461,23 +461,24 @@ character & codeword \\
 \texttt{D} & 11 \\
 \end{tabular}
 \end{center}
-This is a \key{constant-length} code
-which means that the length of each
-codeword is the same.
-For example, we can compress the string
-\texttt{AABACDACA} as follows:
+In questo caso il codice è a \key{lunghezza costante},
+cioè la lunghezza di ogni \emph{codeword} è la stessa.
+Volendo comprimere la stringa
+\texttt{AABACDACA} il risultato sarà il seguente:
 \[00\,00\,01\,00\,10\,11\,00\,10\,00\]
-Using this code, the length of the compressed
-string is 18 bits.
-However, we can compress the string better
-if we use a \key{variable-length} code
-where codewords may have different lengths.
-Then we can give short codewords for
-characters that appear often
-and long codewords for characters
-that appear rarely.
-It turns out that an \key{optimal} code
-for the above string is as follows:
+Quindi, usando questo codice, la lunghezza della
+stringa rappresentata sarà 18 bit.
+Se invece venisse adottato un codice a 
+\key{lunghezza variabile}, in cui le \emph{codeword}
+hanno lunghezze diverse, si potrebbe ottenere
+una compressione migliore.
+L'idea è quella di associare \emph{codeword} corte
+ai caratteri che appaiono più spesso e 
+\emph{codeword} più lunghe ai caratteri che 
+appaiono meno spesso.
+Si può verificare che un codice \key{ottimale}
+per la stringa dell'esempio precedente 
+è il seguente:
 \begin{center}
 \begin{tabular}{rr}
 character & codeword \\
@@ -488,26 +489,25 @@ character & codeword \\
 \texttt{D} & 111 \\
 \end{tabular}
 \end{center}
-An optimal code produces a compressed string
-that is as short as possible.
-In this case, the compressed string using
-the optimal code is
+Un codice ottimale produce una stringa compressa
+che è la più corta possibile.
+In questo caso la stringa compressa ottenuta sarà
 \[0\,0\,110\,0\,10\,111\,0\,10\,0,\]
-so only 15 bits are needed instead of 18 bits.
-Thus, thanks to a better code it was possible to
-save 3 bits in the compressed string.
+che richiede solo 15 bit al posto di 18.
 
-We require that no codeword
-is a prefix of another codeword.
-For example, it is not allowed that a code
-would contain both codewords 10
-and 1011.
-The reason for this is that we want
-to be able to generate the original string
-from the compressed string.
-If a codeword could be a prefix of another codeword,
-this would not always be possible.
-For example, the following code is \emph{not} valid:
+Quindi, grazie a una codifica migliore, è possibile
+risparmiare 3 bit nella stringa compressa.
+
+Uno dei requisiti per avere \emph{codeword} di lunghezza variabile
+è che nessuna condivida un prefisso con nessun altra.
+Ad esempio non è possibile che possano essere sia
+10 che 1011 come \emph{codeword}, poichè entrambe hanno 
+lo stesso prefisso 10: questo poichè deve essere
+possibile rigenerare la stringa originale a partire dalla
+sua versione compressa e se due \emph{codeword} avessero
+lo stesso prefisso ci sarebbero problemi di ambiguità e 
+questo non sarebbe possibile.
+Per esempio questo codice \emph{non} sarebbe valido:
 \begin{center}
 \begin{tabular}{rr}
 character & codeword \\
@@ -518,9 +518,9 @@ character & codeword \\
 \texttt{D} & 111 \\
 \end{tabular}
 \end{center}
-Using this code, it would not be possible to know
-if the compressed string 1011 corresponds to
-the string \texttt{AB} or the string \texttt{C}.
+Con questo codice non sarebbe ad esempio possibile
+sapere se la stringa compressa 1011 corrisponda alla 
+stringa \texttt{AB} oppure alla stringa \texttt{C}.
 
 \index{Huffman coding}
 
