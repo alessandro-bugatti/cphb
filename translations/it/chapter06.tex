@@ -453,7 +453,7 @@ Per esempio, sia dato il seguente codice binario:
 \texttt{A}–\texttt{D}:
 \begin{center}
 \begin{tabular}{rr}
-character & codeword \\
+carattere & codeword \\
 \hline
 \texttt{A} & 00 \\
 \texttt{B} & 01 \\
@@ -481,7 +481,7 @@ per la stringa dell'esempio precedente
 è il seguente:
 \begin{center}
 \begin{tabular}{rr}
-character & codeword \\
+carattere & codeword \\
 \hline
 \texttt{A} & 0 \\
 \texttt{B} & 110 \\
@@ -499,18 +499,18 @@ Quindi, grazie a una codifica migliore, è possibile
 risparmiare 3 bit nella stringa compressa.
 
 Uno dei requisiti per avere \emph{codeword} di lunghezza variabile
-è che nessuna condivida un prefisso con nessun altra.
-Ad esempio non è possibile che possano essere sia
-10 che 1011 come \emph{codeword}, poichè entrambe hanno 
-lo stesso prefisso 10: questo poichè deve essere
+è che nessuna sia il prefisso di un'altra.
+Ad esempio non è possibile che possano esserci sia
+10 che 1011 come \emph{codeword}, poichè la prima è un prefisso per
+la seconda: il motivo è che deve essere
 possibile rigenerare la stringa originale a partire dalla
-sua versione compressa e se due \emph{codeword} avessero
-lo stesso prefisso ci sarebbero problemi di ambiguità e 
-questo non sarebbe possibile.
+sua versione compressa e se due \emph{codeword} fossero l'una il 
+prefisso dell'altra ci sarebbero problemi di ambiguità, rendendo
+il procedimento impossibile.
 Per esempio questo codice \emph{non} sarebbe valido:
 \begin{center}
 \begin{tabular}{rr}
-character & codeword \\
+carattere & codeword \\
 \hline
 \texttt{A} & 10 \\
 \texttt{B} & 11 \\
@@ -520,40 +520,38 @@ character & codeword \\
 \end{center}
 Con questo codice non sarebbe ad esempio possibile
 sapere se la stringa compressa 1011 corrisponda alla 
-stringa \texttt{AB} oppure alla stringa \texttt{C}.
+stringa \texttt{AB} oppure alla stringa \texttt{C},
+poichè il codice per \texttt{A} è un prefisso del codice di \texttt{C}.
 
-\index{Huffman coding}
+\index{Codifica di Huffman}
 
-\subsubsection{Huffman coding}
+\subsubsection{Codifica di Huffman}
 
-\key{Huffman coding}\footnote{D. A. Huffman discovered this method
-when solving a university course assignment
-and published the algorithm in 1952 \cite{huf52}.} is a greedy algorithm
-that constructs an optimal code for
-compressing a given string.
-The algorithm builds a binary tree
-based on the frequencies of the characters
-in the string,
-and each character's codeword can be read
-by following a path from the root to
-the corresponding node.
-A move to the left corresponds to bit 0,
-and a move to the right corresponds to bit 1.
+La \key{codifica di Huffman}\footnote{D. A. Huffman scoprì questo 
+metodo mentre stava risolvendo un compito assegnatogli
+per un corso universitario e pubblicò l'algoritmo nel 1952 \cite{huf52}.} 
+è un algoritmo greedy che permette di costruire un 
+codice ottimale per comprimere una stringa data. 
+L'algoritmo costruisce un albero binario
+basato sulla frequenza dei caratteri della stringa data,
+e ogni carattere di una \emph{codeword} può essere ottenuto 
+seguendo un cammino dalla radice al nodo corrispondente.
+Una mossa verso sinistra corrisponde a un bit 0,
+mentre una mossa verso destra corrisponde al bit 1.
 
-Initially, each character of the string is
-represented by a node whose weight is the
-number of times the character occurs in the string.
-Then at each step two nodes with minimum weights
-are combined by creating
-a new node whose weight is the sum of the weights
-of the original nodes.
-The process continues until all nodes have been combined.
+Inizialmente ogni carattere della stringa
+è rappresentato da un nodo il cui peso è il numero di
+volte in cui il carattere appare nella stringa.
+Poi ad ogni passaggio i due nodi con il peso minimo
+sono combinati per creare un nuovo nodo
+il cui peso è la somma dei pesi dei nodi originali.
+Il processo continua fino a quando tutti i nodi sono stati combinati.
 
-Next we will see how Huffman coding creates
-the optimal code for the string
+Per comprenderne il funzionamento nell'esempio seguente
+verrà creato il codice di Huffman per la stringa
 \texttt{AABACDACA}.
-Initially, there are four nodes that correspond
-to the characters of the string:
+I nodi iniziali sono quelli corrispondenti ai quattro
+caratteri presenti nella stringa:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
@@ -570,16 +568,16 @@ to the characters of the string:
 %\path[draw,thick,-] (4) -- (5);
 \end{tikzpicture}
 \end{center}
-The node that represents character \texttt{A}
-has weight 5 because character \texttt{A}
-appears 5 times in the string.
-The other weights have been calculated
-in the same way.
 
-The first step is to combine the nodes that
-correspond to characters \texttt{B} and \texttt{D},
-both with weight 1.
-The result is:
+Il nodo che rappresenta il carattere \texttt{A}
+ha peso 5 poichè il carattere \texttt{A}
+appare 5 volte nella stringa.
+Gli altri pesi sono stati calcolati nello 
+stesso modo.
+
+Il primo passaggio è quello di combinare i nodi
+che corrispondono ai caratteri \texttt{B} e \texttt{D},
+entrambi di peso 1, ottenendo così:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (0,0) {$5$};
@@ -600,7 +598,7 @@ The result is:
 \path[draw,thick,-] (4) -- (5);
 \end{tikzpicture}
 \end{center}
-After this, the nodes with weight 2 are combined:
+A questo punto vengono combinati i nodi di peso 2:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (1,0) {$5$};
@@ -626,7 +624,7 @@ After this, the nodes with weight 2 are combined:
 \path[draw,thick,-] (5) -- (6);
 \end{tikzpicture}
 \end{center}
-Finally, the two remaining nodes are combined:
+Infine vengono combinati i nodi rimantenti:
 \begin{center}
 \begin{tikzpicture}[scale=0.9]
 \node[draw, circle] (1) at (2,2) {$5$};
@@ -658,11 +656,11 @@ Finally, the two remaining nodes are combined:
 \end{tikzpicture}
 \end{center}
 
-Now all nodes are in the tree, so the code is ready.
-The following codewords can be read from the tree:
+A questo punto tutti i nodi sono nell'albero e il codice è pronto.
+Le codeword che possono essere ottenute dall'albero sono le seguenti:
 \begin{center}
 \begin{tabular}{rr}
-character & codeword \\
+carattere & codeword \\
 \hline
 \texttt{A} & 0 \\
 \texttt{B} & 110 \\
