@@ -1,40 +1,43 @@
-\chapter{Dynamic programming}
+\chapter{Programmazione dinamica}
 
-\index{dynamic programming}
+\index{programazione dinamica}
 
-\key{Dynamic programming}
-is a technique that combines the correctness
-of complete search and the efficiency
-of greedy algorithms.
-Dynamic programming can be applied if the
-problem can be divided into overlapping subproblems
-that can be solved independently.
-
-There are two uses for dynamic programming:
+La \key{programmazione dinamica}
+è una tecnica che combina la correttezza della
+ricerca completa con l'efficienza degli algoritmi
+greedy.
+La programmazione dinamica può essere
+applicata nei casi in cui il problema da risolvere
+può essere suddiviso in sottoproblemi
+parzialmente sovrapposti e che possono
+essere risolti in maniera indipendente.
+La programmazione dinamica può essere utilizzata
+in due casi:
 
 \begin{itemize}
 \item
-\key{Finding an optimal solution}:
-We want to find a solution that is
-as large as possible or as small as possible.
+\key{Trovare una soluzione ottimale}:
+si vuole trovare una soluzione che è la
+più grande o la più piccola possibile.
 \item
-\key{Counting the number of solutions}:
-We want to calculate the total number of
-possible solutions.
+\key{Contare il numero di soluzioni}:
+si vuole calcolare il numero totale di 
+soluzioni possibili.
 \end{itemize}
 
-We will first see how dynamic programming can
-be used to find an optimal solution,
-and then we will use the same idea for
-counting the solutions.
+Si vedrà prima come usare la programmazione
+dinamica per trovare la soluzione ottima di un problema,
+e poi la stessa idea verrà utilizzata per 
+contare le soluzioni.
 
-Understanding dynamic programming is a milestone
-in every competitive programmer's career.
-While the basic idea is simple,
-the challenge is how to apply
-dynamic programming to different problems.
-This chapter introduces a set of classic problems
-that are a good starting point.
+Comprendere come utilizzare la programmazione dinamica
+è un momento cruciale nella carriera di ogni
+programmatore che dedideri partecipare a delle gare algoritmiche.
+Nonostante l'idea di base sia semplice,
+la difficoltà risiede in come applicarla
+in problemi anche molto differenti tra di loro.
+Questo capitolo introduce un insieme di problemi classici 
+che sono un buon punto di partenza.
 
 \section{Coin problem}
 
