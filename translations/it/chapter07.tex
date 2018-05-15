@@ -39,53 +39,53 @@ in problemi anche molto differenti tra di loro.
 Questo capitolo introduce un insieme di problemi classici 
 che sono un buon punto di partenza.
 
-\section{Coin problem}
+\section{Problema delle monete}
 
-We first focus on a problem that we
-have already seen in Chapter 6:
-Given a set of coin values $\texttt{coins} = \{c_1,c_2,\ldots,c_k\}$
-and a target sum of money $n$, our task is to
-form the sum $n$ using as few coins as possible.
+Questo primo problema era già stato studiato 
+nel capitolo 6: dato un insieme di monete di valori
+$\texttt{coins} = \{c_1,c_2,\ldots,c_k\}$,
+si vuole ottenere una somma
+$n$ che utilizzi il minor numero di monete possibile.
 
-In Chapter 6, we solved the problem using a
-greedy algorithm that always chooses the largest
-possible coin.
-The greedy algorithm works, for example,
-when the coins are the euro coins,
-but in the general case the greedy algorithm
-does not necessarily produce an optimal solution.
+Nel capitolo 6 il problema è stato risolto utilizzando
+un algoritmo greedy che ad ogni passo sceglie 
+la moneta più grande possibile.
+L'algoritmo greedy funziona ad esempio se i valori delle
+monete sono quelli degli euro,
+ma nel caso generale con valori delle monete qualsiasi
+non è detto produca il risultato ottimo.
 
-Now is time to solve the problem efficiently
-using dynamic programming, so that the algorithm
-works for any coin set.
-The dynamic programming
-algorithm is based on a recursive function
-that goes through all possibilities how to
-form the sum, like a brute force algorithm.
-However, the dynamic programming
-algorithm is efficient because
-it uses \emph{memoization} and
-calculates the answer to each subproblem only once.
+Adesso si vedrà che utilizzando la
+programmazione dinamica il problema 
+potrà essere risolto in modo efficiente,
+garantendo il risultato corretto 
+per insiemi qualsiasi dei valori delle monete.
+Questo algoritmo si basa su una formulazione
+ricorsiva che esplora tutte le somme possibili,
+come nell'approcio a forza bruta.
+Però, a differenza di quest'ultimo, la versione
+dinamica utilizza la \emph{memoizzazione} e calcola
+la risposta a ogni sottoproblema una volta soltanto.
 
-\subsubsection{Recursive formulation}
+\subsubsection{Formulazione ricorsiva}
 
-The idea in dynamic programming is to
-formulate the problem recursively so
-that the solution to the problem can be
-calculated from solutions to smaller
-subproblems.
-In the coin problem, a natural recursive
-problem is as follows:
-what is the smallest number of coins
-required to form a sum $x$?
+L'idea nella programmazione dinamica è quella di 
+formulare il problema in forma ricorsiva
+in modo che il problema possa essere 
+risolto combinando le soluzioni di sottoproblemi
+più piccoli.
+Nel problema delle monete una formulazione
+ricorsiva del problema è la seguente:
+qual è il più piccolo numero di monete richiesto per 
+formare una somma $x$?
 
-Let $\texttt{solve}(x)$
-denote the minimum
-number of coins required for a sum $x$.
-The values of the function depend on the
-values of the coins.
-For example, if $\texttt{coins} = \{1,3,4\}$,
-the first values of the function are as follows:
+Sia $\texttt{solve}(x)$
+il minimo numero di monete richieste per 
+formare una somma $x$. Il valore
+della funzione dipende dai valori delle monete
+che si hanno a disposizione.
+Avendo come insieme $\texttt{coins} = \{1,3,4\}$,
+i primi valori della funzione saranno:
 
 \[
 \begin{array}{lcl}
@@ -103,25 +103,26 @@ the first values of the function are as follows:
 \end{array}
 \]
 
-For example, $\texttt{solve}(10)=3$,
-because at least 3 coins are needed
-to form the sum 10.
-The optimal solution is $3+3+4=10$.
+Per esempio, $\texttt{solve}(10)=3$,
+poichè servono almeno 3 monete per formare
+la somma 10, che in questo caso sono $3+3+4=10$.
 
-The essential property of $\texttt{solve}$ is
-that its values can be
-recursively calculated from its smaller values.
-The idea is to focus on the \emph{first}
-coin that we choose for the sum.
-For example, in the above scenario,
-the first coin can be either 1, 3 or 4.
-If we first choose coin 1,
-the remaining task is to form the sum 9
-using the minimum number of coins,
-which is a subproblem of the original problem.
-Of course, the same applies to coins 3 and 4.
-Thus, we can use the following recursive formula
-to calculate the minimum number of coins:
+La proprietà essenziale delle funzione $\texttt{solve}$ 
+è che i suoi valori possono essere calcolati
+ricorsivamente a partire da valori più piccoli.
+
+L'idea è di focalizzarsi sulla \emph{prima}
+moneta che può essere scelta per la somma.
+Nell'esempio mostrato la prima moneta 
+potrebbe essere 1, 3 o 4.
+Scegliendo come prima moneta quella di valore 1,
+il problema diventa come formare la somma 9
+usando il minor numero di monete,
+che, come si vede, è un sottoproblema del problema originale.
+Ovviamente lo stesso discorso si potrebbe applicare
+alle monete di valore 3 e 4.
+Quindi ne deriva la seguente formula ricorsiva per
+il calcolo del minimo numero di monete:
 \begin{equation*}
 \begin{split}
 \texttt{solve}(x) = \min( & \texttt{solve}(x-1)+1, \\
@@ -129,14 +130,14 @@ to calculate the minimum number of coins:
                            & \texttt{solve}(x-4)+1).
 \end{split}
 \end{equation*}
-The base case of the recursion is $\texttt{solve}(0)=0$,
-because no coins are needed to form an empty sum.
-For example,
+Il caso base della ricorsione è $\texttt{solve}(0)=0$,
+perchè per formare la somma 0 non sono necessarie monete.
+Per esempio
 \[ \texttt{solve}(10) = \texttt{solve}(7)+1 = \texttt{solve}(4)+2 = \texttt{solve}(0)+3 = 3.\]
 
-Now we are ready to give a general recursive function
-that calculates the minimum number of
-coins needed to form a sum $x$:
+Una volta compreso il meccanismo è possibile dare una forma
+generale alla funzione ricorsiva che calcola il minimo
+numero di monete necessarie a formare una somma $x$:
 \begin{equation*}
     \texttt{solve}(x) = \begin{cases}
                \infty               & x < 0\\
@@ -145,19 +146,22 @@ coins needed to form a sum $x$:
            \end{cases}
 \end{equation*}
 
-First, if $x<0$, the value is $\infty$,
-because it is impossible to form a negative
-sum of money.
-Then, if $x=0$, the value is $0$,
-because no coins are needed to form an empty sum.
-Finally, if $x>0$, the variable $c$ goes through
-all possibilities how to choose the first coin
-of the sum.
+Se $x<0$, il valore è $\infty$,
+poichè è impossibile creare una somma negativa
+a partire da monete di valore positivo.
+Se invece $x=0$, il valore è $0$,
+poichè, come detto in precedenza,
+non sono necessarie monete per formare
+una somma vuota.
+Infine, se $x>0$,
+la variabile $c$, che rappresenta la prima moneta scelta,
+assume tutti i valori possibili 
+delle monete e verrà poi scelta ricorsivamente 
+quella che minimizza il numero di monete.
 
-Once a recursive function that solves the problem
-has been found,
-we can directly implement a solution in C++
-(the constant \texttt{INF} denotes infinity):
+Una volta definita la funzione ricorsiva che risolve il problema,
+può essere direttamente implementata in C++
+(la costante \texttt{INF} rappresenta l'infinito):
 
 \begin{lstlisting}
 int solve(int x) {
@@ -171,40 +175,49 @@ int solve(int x) {
 }
 \end{lstlisting}
 
-Still, this function is not efficient,
-because there may be an exponential number of ways
-to construct the sum.
-However, next we will see how to make the
-function efficient using a technique called memoization.
+Comunque, implementata in questo modo,
+la funzione non è efficiente,
+poichè c'è un numero esponenziale
+di modi di costruire questa somma.
+Si vedrà adesso come renderla efficiente
+utilizzando una tecnica chiamata \emph{memoizzazione}\footnote{Per il lettore italiano: 
+il termine memoizzazione non va confuso con memorizzazione. Nell'originale inglese non c'è
+questo pericolo perchè i due termini vengono resi con \emph{memoization} e \emph{store}, nella 
+traduzione italiana è stata usata \emph{memoizzazione} per 
+riferirsi alla tecnica e \emph{memorizzazione} quando un
+valore viene memorizzato in memoria.}.
 
-\subsubsection{Using memoization}
+\subsubsection{Usare la memoizzazione}
 
-\index{memoization}
+\index{memoizzazione}
 
-The idea of dynamic programming is to use
-\key{memoization} to efficiently calculate
-values of a recursive function.
-This means that the values of the function
-are stored in an array after calculating them.
-For each parameter, the value of the function
-is calculated recursively only once, and after this,
-the value can be directly retrieved from the array.
+L'idea base della programmazione dinamica è quella
+di usare la \key{memoizzazione} 
+per calcolare i valori di una funzione ricorsiva
+in maniera efficiente.
+Questo si ottiene memorizzando i valori della funzione
+in un array (eventualmente multidimensionale) dopo che sono stati calcolati la prima volta.
+In questo modo, per ogni parametro, il valore della funzione viene calcolato
+ricorsivamente una sola volta, dopodichè può essere
+recuperato dall'array.
 
-In this problem, we use arrays
+Nel problema delle monete si potrebbero utilizzare
+questi due array:
+
 \begin{lstlisting}
 bool ready[N];
 int value[N];
 \end{lstlisting}
 
-where $\texttt{ready}[x]$ indicates
-whether the value of $\texttt{solve}(x)$ has been calculated,
-and if it is, $\texttt{value}[x]$
-contains this value.
-The constant $N$ has been chosen so
-that all required values fit in the arrays.
+dove $\texttt{ready}[x]$ indica se il valore di
+$\texttt{solve}(x)$ è stato calcolato,
+e se lo è $\texttt{value}[x]$
+ne contiene il valore.
+La costante $N$ deve essere scelta in modo tale
+che gli array possano contenere tutti i valori necessari.
 
-Now the function can be efficiently
-implemented as follows:
+A questo punto un'implementazione efficiente
+può essere scritta in questo modo:
 
 \begin{lstlisting}
 int solve(int x) {
@@ -221,30 +234,28 @@ int solve(int x) {
 }
 \end{lstlisting}
 
-The function handles the base cases
-$x<0$ and $x=0$ as previously.
-Then the function checks from
-$\texttt{ready}[x]$ if
-$\texttt{solve}(x)$ has already been stored
-in $\texttt{value}[x]$,
-and if it is, the function directly returns it.
-Otherwise the function calculates the value
-of $\texttt{solve}(x)$
-recursively and stores it in $\texttt{value}[x]$.
+I casi base $x<0$ e $x=0$ sono gestiti come prima,
+poi la funzione controlla attraverso il valore di 
+$\texttt{ready}[x]$ se
+$\texttt{solve}(x)$ già stato calcolato in precedenza
+e memorizzato in $\texttt{value}[x]$ e se lo è
+viene direttamente ritornato.
+Altrimenti la funzione calcola il valore
+$\texttt{solve}(x)$ ricorsivamente e lo memorizza 
+in $\texttt{value}[x]$.
 
-This function works efficiently,
-because the answer for each parameter $x$
-is calculated recursively only once.
-After a value of $\texttt{solve}(x)$ has been stored in $\texttt{value}[x]$,
-it can be efficiently retrieved whenever the
-function will be called again with the parameter $x$.
-The time complexity of the algorithm is $O(nk)$,
-where $n$ is the target sum and $k$ is the number of coins.
+In questo modo la funzione diventa efficiente,
+poichè la risposta per ogni valore del parametro $x$
+è calcolata ricorsivamente una volta soltanto e successivamente
+quel valore può essere recuperato in $O(1)$ attraverso
+l'utilizzo dell'array $\texttt{value}$.
+La complessità computazionale dell'algoritmo diventa quindi $O(nk)$,
+dove $n$ è la somma da ottenere e $k$ è il numero di monete.
 
-Note that we can also \emph{iteratively}
-construct the array \texttt{value} using
-a loop that simply calculates all the values
-of $\texttt{solve}$ for parameters $0 \ldots n$:
+Si può notare che sarebbe possibile 
+costruire l'array \texttt{value} \emph{iterativamente}
+usando un ciclo che semplicemente calcola tutti i 
+valori di $\texttt{solve}$ per i parametri $0 \ldots n$:
 \begin{lstlisting}
 value[0] = 0;
 for (int x = 1; x <= n; x++) {
@@ -257,15 +268,15 @@ for (int x = 1; x <= n; x++) {
 }
 \end{lstlisting}
 
-In fact, most competitive programmers prefer this
-implementation, because it is shorter and has
-lower constant factors.
-From now on, we also use iterative implementations
-in our examples.
-Still, it is often easier to think about
-dynamic programming solutions
-in terms of recursive functions.
-
+Nelle competizioni di alto livello, i programmatori
+più abili preferiscono questa seconda implementazione,
+poichè è più corta da scrivere e ha dei costi costanti più bassi
+(pur avendo la stessa complessità computazionale),
+quindi nei prossimi esempi verrà usata
+questa tipo di implementazione ricorsiva.
+Comunque è spesso più semplice applicare
+la programmazione dinamica partendo 
+da una funzione ricorsiva.
 
 \subsubsection{Constructing a solution}
 
