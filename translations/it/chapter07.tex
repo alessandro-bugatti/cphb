@@ -306,7 +306,7 @@ for (int x = 1; x <= n; x++) {
 \end{lstlisting}
 Facendo così e utilizzando il vettore \textit{first}, è
 possibile stampare le monete che appaiono in una soluzione ottima
-per la somma $n$:
+per la somma $x$:
 \begin{lstlisting}
 while (n > 0) {
     cout << first[n] << "\n";
@@ -314,14 +314,14 @@ while (n > 0) {
 }
 \end{lstlisting}
 
-\subsubsection{Counting the number of solutions}
+\subsubsection{Contare il numero di soluzioni}
 
-Let us now consider another version
-of the coin problem where our task is to
-calculate the total number of ways
-to produce a sum $x$ using the coins.
-For example, if $\texttt{coins}=\{1,3,4\}$ and
-$x=5$, there are a total of 6 ways:
+Si consideri un'altra versione del problema delle monete,
+nella quale lo scopo sia quello di calcolare
+il numero totale di modi in cui possa essere 
+ottenuta la somma $n$ usando le monete date.
+Per esempio, se $\texttt{coins}=\{1,3,4\}$ e
+$x=5$, ci sono in totale 6 differenti modi per ottenere la somma richiesta:
 
 \begin{multicols}{2}
 \begin{itemize}
@@ -334,11 +334,11 @@ $x=5$, there are a total of 6 ways:
 \end{itemize}
 \end{multicols}
 
-Again, we can solve the problem recursively.
-Let $\texttt{solve}(x)$ denote the number of ways
-we can form the sum $x$.
-For example, if $\texttt{coins}=\{1,3,4\}$,
-then $\texttt{solve}(5)=6$ and the recursive formula is
+Anche in questo caso il problema può essere risolto ricorsivamente.
+Sia $\texttt{solve}(x)$ il numero di modi differenti in cui può
+essere formata la somma $x$.
+Nell'esempio precedente in cui $\texttt{coins}=\{1,3,4\}$,
+allora $\texttt{solve}(5)=6$ e la formula ricorsiva risulta essere:
 \begin{equation*}
 \begin{split}
 \texttt{solve}(x) = & \texttt{solve}(x-1) + \\
@@ -347,7 +347,7 @@ then $\texttt{solve}(5)=6$ and the recursive formula is
 \end{split}
 \end{equation*}
 
-Then, the general recursive function is as follows:
+Quindi la versione generale di questa formula diventa:
 \begin{equation*}
     \texttt{solve}(x) = \begin{cases}
                0               & x < 0\\
@@ -356,17 +356,16 @@ Then, the general recursive function is as follows:
            \end{cases}
 \end{equation*}
 
-If $x<0$, the value is 0, because there are no solutions.
-If $x=0$, the value is 1, because there is only one way
-to form an empty sum.
-Otherwise we calculate the sum of all values
-of the form $\texttt{solve}(x-c)$ where $c$ is in \texttt{coins}.
+Se $x<0$, allora il valore è 0, perchè non ci sono soluzioni.
+Se $x=0$, il valore è 1 perchè esiste un solo modo 
+per creare la somma vuota.
+Altrimenti bisogna calcolare la somma di tutti i valori
+della forma $\texttt{solve}(x-c)$ con $c$ contenuto in \texttt{coins}.
 
-The following code constructs an array
-$\texttt{count}$ such that
-$\texttt{count}[x]$ equals
-the value of $\texttt{solve}(x)$
-for $0 \le x \le n$:
+Il seguente codice costruisce un array
+$\texttt{count}$ tale che
+$\texttt{count}[x]$ sia uguale al valore di $\texttt{solve}(x)$
+per $0 \le x \le n$:
 
 \begin{lstlisting}
 count[0] = 1;
@@ -379,28 +378,27 @@ for (int x = 1; x <= n; x++) {
 }
 \end{lstlisting}
 
-Often the number of solutions is so large
-that it is not required to calculate the exact number
-but it is enough to give the answer modulo $m$
-where, for example, $m=10^9+7$.
-This can be done by changing the code so that
-all calculations are done modulo $m$.
-In the above code, it suffices to add the line
+Spesso il numero di soluzioni è talmente grande
+che non viene richiesto di calcolare il numero esatto, 
+ma semplicemente di dare la risposta modulo $m$,
+con $m$ ad esempio uguale a $10^9+7$.
+Per ottenere questo risultato è sufficiente 
+cambiare il codice in modo che tutti i calcoli siano fatti modulo $m$.
+Quindi basta aggiungere la linea
 \begin{lstlisting}
         count[x] %= m;
 \end{lstlisting}
-after the line
+dopo la linea
 \begin{lstlisting}
         count[x] += count[x-c];
 \end{lstlisting}
 
-Now we have discussed all basic
-ideas of dynamic programming.
-Since dynamic programming can be used
-in many different situations,
-we will now go through a set of problems
-that show further examples about the
-possibilities of dynamic programming.
+Fino a questo punto sono state discusse tutte 
+le idee base della programmazione dinamica.
+Siccome la programmazione dinamica può essere
+usata in un range molto ampio di problemi,
+verranno adesso mostrati degli esempi classici,
+in modo da comprenderne meglio il funzionamento.
 
 \section{Longest increasing subsequence}
 
