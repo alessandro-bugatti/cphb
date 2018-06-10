@@ -278,20 +278,20 @@ Comunque è spesso più semplice applicare
 la programmazione dinamica partendo 
 da una funzione ricorsiva.
 
-\subsubsection{Constructing a solution}
+\subsubsection{Costruzione di una soluzione}
 
-Sometimes we are asked both to find the value
-of an optimal solution and to give
-an example how such a solution can be constructed.
-In the coin problem, for example,
-we can declare another array
-that indicates for
-each sum of money the first coin 
-in an optimal solution:
+In alcuni problemi può essere richiesto sia
+di trovare il valore della soluzione ottima
+che di mostrare un modo per ottenere quella soluzione.
+
+Nel problema delle monete, ad esempio, è possibile
+dichiarare un altro array che indica per ogni
+somma di monete la prima moneta che appartiene a 
+una soluzione ottimale:
 \begin{lstlisting}
 int first[N];
 \end{lstlisting}
-Then, we can modify the algorithm as follows:
+L'algoritmo può quindi essere modificato nel seguente modo:
 \begin{lstlisting}
 value[0] = 0;
 for (int x = 1; x <= n; x++) {
@@ -304,9 +304,9 @@ for (int x = 1; x <= n; x++) {
     }
 }
 \end{lstlisting}
-After this, the following code can be used to
-print the coins that appear in an optimal solution for
-the sum $n$:
+Facendo così e utilizzando il vettore \textit{first}, è
+possibile stampare le monete che appaiono in una soluzione ottima
+per la somma $n$:
 \begin{lstlisting}
 while (n > 0) {
     cout << first[n] << "\n";
