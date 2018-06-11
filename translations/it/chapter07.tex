@@ -535,20 +535,20 @@ implementarlo in modo più efficiente,
 riducendolo a un algoritmo di complessità $O(n \log n)$.
 Viene lasciato al lettore come esercizio di trovare il modo di farlo.
 
-\section{Paths in a grid}
+\section{Percorsi in una griglia}
 
-Our next problem is to find a path
-from the upper-left corner to
-the lower-right corner
-of an $n \times n$ grid, such that
-we only move down and right.
-Each square contains a positive integer,
-and the path should be constructed so
-that the sum of the values along
-the path is as large as possible.
+Il prossimo problema è di trovare un percorso
+in una griglia $n \times n$, che parta dall'angolo in alto 
+a sinistra e si concluda nell'angolo in basso 
+a destra, avendo la possibilità di muoversi solo
+verso il basso e verso destra.
+Ogni quadrato della griglia contiene un intero positivo,
+e il percorso deve essere costruito in modo
+che la somma dei valori dei quadrati che lo 
+compongono sia la più grande possibile.
 
-The following picture shows an optimal
-path in a grid:
+Questa figura mostra un percorso ottimale:
+
 \begin{center}
 \begin{tikzpicture}[scale=.65]
   \begin{scope}
@@ -590,34 +590,29 @@ path in a grid:
   \end{scope}
 \end{tikzpicture}
 \end{center}
-The sum of the values on the path is 67,
-and this is the largest possible sum on a path
-from the
-upper-left corner to the lower-right corner.
-
-Assume that the rows and columns of the
-grid are numbered from 1 to $n$,
-and $\texttt{value}[y][x]$ equals the value
-of square $(y,x)$.
-Let $\texttt{sum}(y,x)$ denote the maximum
-sum on a path from the upper-left corner
-to square $(y,x)$.
-Now $\texttt{sum}(n,n)$ tells us
-the maximum sum
-from the upper-left corner to
-the lower-right corner.
-For example, in the above grid,
+La somma dei valori di questo percorso è 67,
+che il valore più grande che si può ottenere
+costruendo un percorso dall'angolo in alto a sinistra
+all'angolo in basso a destra.
+Si assuma che le righe e le colonne siano numerate
+da 1 a $n$, e $\texttt{value}[y][x]$ sia il valore del quadrato in 
+posizione $(y,x)$.
+Sia inoltre $\texttt{sum}(y,x)$ la somma massima
+di un percorso dall'angolo in alto a destra
+fino al quadrato in posizione $(y,x)$.
+Allora $\texttt{sum}(n,n)$ sarà la somma 
+massima cercata.
+Per esempio, nella griglia mostrata sopra,
 $\texttt{sum}(5,5)=67$.
 
-We can recursively calculate the sums
-as follows:
+La somma può essere ricorsivamente calcolata in questo modo:
+
 \[ \texttt{sum}(y,x) = \max(\texttt{sum}(y,x-1),\texttt{sum}(y-1,x))+\texttt{value}[y][x]\]
 
-
-The recursive formula is based on the observation
-that a path that ends at square $(y,x)$
-can come either from square $(y,x-1)$
-or square $(y-1,x)$:
+Questa formulazione ricorsiva è basata sull'osservazione 
+che un percorso che finisce al quadrato $(y,x)$
+può arrivare o dal quadrato $(y,x-1)$
+o da quello $(y-1,x)$:
 \begin{center}
 \begin{tikzpicture}[scale=.65]
   \begin{scope}
@@ -631,19 +626,21 @@ or square $(y-1,x)$:
 \end{tikzpicture}
 \end{center}
 
-Thus, we select the direction that maximizes
-the sum.
-We assume that $\texttt{sum}(y,x)=0$
-if $y=0$ or $x=0$ (because no such paths exist),
-so the recursive formula also works when $y=1$ or $x=1$.
+Quindi deve essere selezionata la direzione che massimizza
+la somma.
+Assumendo che $\texttt{sum}(y,x)=0$
+se $y=0$ oppure $x=0$ (poichè in tal caso non esiste un percorso),
+la formula ricorsiva può essere calcolata per tutte le 
+coordinate in cui $y=1$ oppure $x=1$.
 
-Since the function \texttt{sum} has two parameters,
-the dynamic programming array also has two dimensions.
-For example, we can use an array
+Dal momento che la funzione \texttt{sum} ha due parametri,
+l'array di supporto alla programmazione dinamica avrà due
+dimensioni.
+Per esempio, usando la matrice
 \begin{lstlisting}
 int sum[N][N];
 \end{lstlisting}
-and calculate the sums as follows:
+il calcolo della somma sarà il seguente:
 \begin{lstlisting}
 for (int y = 1; y <= n; y++) {
     for (int x = 1; x <= n; x++) {
@@ -651,7 +648,7 @@ for (int y = 1; y <= n; y++) {
     }
 }
 \end{lstlisting}
-The time complexity of the algorithm is $O(n^2)$.
+La complessità computazionale di questo algoritmo sarà quindi $O(n^2)$.
 
 \section{Knapsack problems}
 
