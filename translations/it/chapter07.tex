@@ -400,19 +400,17 @@ usata in un range molto ampio di problemi,
 verranno adesso mostrati degli esempi classici,
 in modo da comprenderne meglio il funzionamento.
 
-\section{Longest increasing subsequence}
+\section{La più lunga sottosequenza crescente}
 
-\index{longest increasing subsequence}
+\index{più lunga sottosequenza crescente}
 
-Our first problem is to find the
-\key{longest increasing subsequence}
-in an array of $n$ elements.
-This is a maximum-length
-sequence of array elements
-that goes from left to right,
-and each element in the sequence is larger
-than the previous element.
-For example, in the array
+Il primo problema che verrà esposto è 
+quello di trovare la \key{più lunga sottosequenza crescente}
+all'interno di un array di $n$ elementi.
+Tale sottosequenza è quella con più
+elementi, non necessariamente consecutivi, da sinistra a destra,
+in cui ogni elemento è più grande del precedente.
+Per esempio, nell'array
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -437,8 +435,8 @@ For example, in the array
 \node at (7.5,1.4) {$7$};
 \end{tikzpicture}
 \end{center}
-the longest increasing subsequence
-contains 4 elements:
+la più lunga sottosequenza crescente 
+contiene 4 elementi:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (1,0) rectangle (2,1);
@@ -471,16 +469,14 @@ contains 4 elements:
 \end{tikzpicture}
 \end{center}
 
-Let $\texttt{length}(k)$ denote
-the length of the
-longest increasing subsequence
-that ends at position $k$.
-Thus, if we calculate all values of
-$\texttt{length}(k)$ where $0 \le k \le n-1$,
-we will find out the length of the
-longest increasing subsequence.
-For example, the values of the function
-for the above array are as follows:
+Sia $\texttt{length}(k)$ la lunghezza della
+più lunga sottosequenza che termina in posizione $k$.
+Quindi calcolando tutti i valori di
+$\texttt{length}(k)$ con $0 \le k \le n-1$,
+si troverà la lunghezza della più lunga sottosequenza
+per il vettore di lunghezza $n$.
+Ad esempio, i valori di questa funzione 
+per l'array visto in precedenza sono i seguenti:
 \[
 \begin{array}{lcl}
 \texttt{length}(0) & = & 1 \\
@@ -494,28 +490,31 @@ for the above array are as follows:
 \end{array}
 \]
 
-For example, $\texttt{length}(6)=4$,
-because the longest increasing subsequence
-that ends at position 6 consists of 4 elements.
+Considerando ad esempio il caso $\texttt{length}(6)=4$,
+il valore risulta 4 poichè la più lunga sottosequenza che
+finisce alla posizione 6 consiste di 4 elementi. Invece per il caso $k=5$
+è 2 perchè la più lunga sottosequenza che finisce in posizione 5 può essere
+solo {2, 4} oppure {1, 4}, che sono entrambe di lunghezza 2.
 
-To calculate a value of $\texttt{length}(k)$,
-we should find a position $i<k$
-for which $\texttt{array}[i]<\texttt{array}[k]$
-and $\texttt{length}(i)$ is as large as possible.
-Then we know that
-$\texttt{length}(k)=\texttt{length}(i)+1$,
-because this is an optimal way to add
-$\texttt{array}[k]$ to a subsequence.
-However, if there is no such position $i$,
-then $\texttt{length}(k)=1$,
-which means that the subsequence only contains
+Per calcolare il valore di $\texttt{length}(k)$,
+è necessario trovare una posizione $i<k$
+per la quale $\texttt{array}[i]<\texttt{array}[k]$
+e $\texttt{length}(i)$ abbia il maggior valore possibile.
+A questo punto il valore di $\texttt{length}(k)$ 
+sarà $\texttt{length}(k)=\texttt{length}(i)+1$,
+poichè questo è il modo ottimale di aggiungere
+$\texttt{array}[k]$ alla sottosequenza.
+Se invece non fosse possibile trovare una posizione $i$
+per cui valgano le condizioni descritte in precedenza,
+allora sarà $\texttt{length}(k)=1$,
+il che significa che la sequenza contiene solo
 $\texttt{array}[k]$.
 
-Since all values of the function can be calculated
-from its smaller values,
-we can use dynamic programming.
-In the following code, the values
-of the function will be stored in an array
+Dal momento che tutti i valori della funzione possono essere
+calcolati a partire da valori più piccoli,
+è possibile usare la programmazione dinamica.
+Nel codice seguente i valori della funzione
+vengono memorizzati nell'array
 $\texttt{length}$.
 
 \begin{lstlisting}
@@ -529,12 +528,12 @@ for (int k = 0; k < n; k++) {
 }
 \end{lstlisting}
 
-This code works in $O(n^2)$ time,
-because it consists of two nested loops.
-However, it is also possible to implement
-the dynamic programming calculation
-more efficiently in $O(n \log n)$ time.
-Can you find a way to do this?
+Questo algoritmo è di classe $O(n^2)$,
+poichè è composto da due cicli annidati.
+Si può comunque verificare che è possibile 
+implementarlo in modo più efficiente, 
+riducendolo a un algoritmo di complessità $O(n \log n)$.
+Viene lasciato al lettore come esercizio di trovare il modo di farlo.
 
 \section{Paths in a grid}
 
