@@ -650,24 +650,26 @@ for (int y = 1; y <= n; y++) {
 \end{lstlisting}
 La complessità computazionale di questo algoritmo sarà quindi $O(n^2)$.
 
-\section{Knapsack problems}
+\section{I problemi dello zaino}
 
 \index{knapsack}
+\index{zaino}
 
-The term \key{knapsack} refers to problems where
-a set of objects is given, and 
-subsets with some properties
-have to be found.
-Knapsack problems can often be solved
-using dynamic programming.
+Il termine \key{knapsack}(zaino in italiano, come verrà chiamato nel seguito)
+fa riferimento a una varietà di problemi
+nei quali viene dato un insieme di oggetti
+e bisogna trovare un sottoinsieme
+che soddisfi certe proprietà.
+I "problemi dello zaino" possono essere
+spesso risolti usando la programmazione dinamica.
 
-In this section, we focus on the following
-problem: Given a list of weights
+In questa sezione il problema analizzato
+è il seguente: data una lista di pesi
 $[w_1,w_2,\ldots,w_n]$,
-determine all
-sums that can be constructed using the weights.
-For example, if the weights are
-$[1,3,3,5]$, the following sums are possible:
+determinare tutte le somme che possono essere 
+costruite usando quei pesi.
+Per esempio, se i pesi fossero
+$[1,3,3,5]$, si otterrebbero le seguenti somme:
 
 \begin{center}
 \begin{tabular}{rrrrrrrrrrrrr}
@@ -677,41 +679,39 @@ $[1,3,3,5]$, the following sums are possible:
 \end{tabular}
 \end{center}
 
-In this case, all sums between $0 \ldots 12$
-are possible, except 2 and 10.
-For example, the sum 7 is possible because we
-can select the weights $[1,3,3]$.
+Come si può vedere è possibile costruire tutte le somme
+tra $0 \ldots 12$ tranne 2 e 10.
+Ad esempio, la somma 7 si può ottenere selezionando
+i pesi $[1,3,3]$.
 
-To solve the problem, we focus on subproblems
-where we only use the first $k$ weights
-to construct sums.
-Let $\texttt{possible}(x,k)=\textrm{true}$ if
-we can construct a sum $x$
-using the first $k$ weights,
-and otherwise $\texttt{possible}(x,k)=\textrm{false}$.
-The values of the function can be recursively
-calculated as follows:
+Per risolvere questo problema, è sufficiente
+risolvere i sottoproblemi in cui vengono usati solo i primi
+$k$ pesi per costruire le somme.
+Sia $\texttt{possible}(x,k)=\textrm{true}$ se è
+possibile costruire la somma $x$ usando i primi $k$ pesi,
+altrimenti $\texttt{possible}(x,k)=\textrm{false}$.
+I valori di questa funzione possono essere calcolati 
+ricorsivamente in questo modo:
 \[ \texttt{possible}(x,k) = \texttt{possible}(x-w_k,k-1) \lor \texttt{possible}(x,k-1) \]
-The formula is based on the fact that we can
-either use or not use the weight $w_k$ in the sum.
-If we use $w_k$, the remaining task is to
-form the sum $x-w_k$ using the first $k-1$ weights,
-and if we do not use $w_k$,
-the remaining task is to form the sum $x$
-using the first $k-1$ weights.
-As the base cases,
+La formula si basa sul fatto che è possibile 
+usare o meno il peso $w_k$ per costruire una somma.
+Se viene usato il peso $w_k$, il problema si riduce a formare 
+la somma $x-w_k$ usando i primi $k-1$ pesi,
+se invece non viene usato, allora bisogna formare la somma $x$
+sempre con i primi $k-1$ pesi.
+I casi base sono i seguenti,
 \begin{equation*}
     \texttt{possible}(x,0) = \begin{cases}
                \textrm{true}    & x = 0\\
                \textrm{false}   & x \neq 0 \\
            \end{cases}
 \end{equation*}
-because if no weights are used,
-we can only form the sum 0.
+poichè, se non viene usato nessun peso,
+è possibile formare solo la somma di valore 0.
 
-The following table shows all values of the function
-for the weights $[1,3,3,5]$ (the symbol ''X''
-indicates the true values):
+La seguente tabella mostra tutti i valori della funzione
+per i pesi $[1,3,3,5]$, dove il simbolo ''X'' indica 
+i valori per i quali la funzione è true:
 
 \begin{center}
 \begin{tabular}{r|rrrrrrrrrrrrr}
@@ -725,14 +725,14 @@ $k \backslash x$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 \\
 \end{tabular}
 \end{center}
 
-After calculating those values, $\texttt{possible}(x,n)$
-tells us whether we can construct a
-sum $x$ using \emph{all} weights.
+Dopo aver calcolato questi valori, $\texttt{possible}(x,n)$
+indica quali somme possono essere costruite usando tutti gli \emph{n} pesi.
 
-Let $W$ denote the total sum of the weights.
-The following $O(nW)$ time
-dynamic programming solution
-corresponds to the recursive function:
+Sia $W$ la somma totale dei pesi.
+Allora la seguente soluzione
+che sfrutta la programmazione dinamica per
+implementare la funzione ricorsiva in maniera
+efficiente, avrà un costo di tipo $O(nW)$:
 \begin{lstlisting}
 possible[0][0] = true;
 for (int k = 1; k <= n; k++) {
@@ -743,11 +743,11 @@ for (int k = 1; k <= n; k++) {
 }
 \end{lstlisting}
 
-However, here is a better implementation that only uses
-a one-dimensional array $\texttt{possible}[x]$
-that indicates whether we can construct a subset with sum $x$.
-The trick is to update the array from right to left for
-each new weight:
+Comunque è anche possibile scrivere un'implementazione
+che usa solo un array monodimensionale $\texttt{possible}[x]$
+che indica se è possibile costruire un sottoinsieme di somma $x$.
+Il trucco consiste nell'aggiornare l'array da destra verso sinistra
+per ogni nuovo peso:
 \begin{lstlisting}
 possible[0] = true;
 for (int k = 1; k <= n; k++) {
@@ -757,52 +757,53 @@ for (int k = 1; k <= n; k++) {
 }
 \end{lstlisting}
 
-Note that the general idea presented here can be used
-in many knapsack problems.
-For example, if we are given objects with weights and values,
-we can determine for each weight sum the maximum value
-sum of a subset.
+Va notato che l'idea generale presentata qui può
+essere applicata a molti problemi dello zaino.
+Per esempio, se ogni oggetto è contraddistinto da un peso e da un valore,
+è possibile determinare per ogni somma dei pesi la massima
+somma dei valori.
 
-\section{Edit distance}
+\section{Distanza di edit (edit distance)}
 
 \index{edit distance}
 \index{Levenshtein distance}
+\index{distanza di edit}
+\index{Distanza di Levenshtein}
 
-The \key{edit distance} or \key{Levenshtein distance}\footnote{The distance
-is named after V. I. Levenshtein who studied it in connection with binary codes \cite{lev66}.}
-is the minimum number of editing operations
-needed to transform a string
-into another string.
-The allowed editing operations are as follows:
+
+La \key{distanza di edit}(edit distance) o \key{Distanza di Levenshtein}\footnote{Questa distanza prende il 
+nome da V. I. Levenshtein, che ne studio la relazione con i codici binari\cite{lev66}.}
+è il numero minimo di operazioni di editing
+che sono necessarie per trasformare una stringa in un'altra stringa.
+Le operazioni di editing permesse sono le seguenti:
 \begin{itemize}
-\item insert a character (e.g. \texttt{ABC} $\rightarrow$ \texttt{ABCA})
-\item remove a character (e.g. \texttt{ABC} $\rightarrow$ \texttt{AC})
-\item modify a character (e.g. \texttt{ABC} $\rightarrow$ \texttt{ADC})
+\item inserimento di un carattere (e.g. \texttt{ABC} $\rightarrow$ \texttt{ABCA})
+\item rimozione di un carattere (e.g. \texttt{ABC} $\rightarrow$ \texttt{AC})
+\item modifica di un carattere (e.g. \texttt{ABC} $\rightarrow$ \texttt{ADC})
 \end{itemize}
 
-For example, the edit distance between
-\texttt{LOVE} and \texttt{MOVIE} is 2,
-because we can first perform the operation
+Per esempio la distanza di edit tra
+\texttt{LOVE} e \texttt{MOVIE} è 2,
+perchè basta prima fare
  \texttt{LOVE} $\rightarrow$ \texttt{MOVE}
-(modify) and then the operation
+(modifica) e poi
 \texttt{MOVE} $\rightarrow$ \texttt{MOVIE}
-(insert).
-This is the smallest possible number of operations,
-because it is clear that only one operation is not enough.
+(inserimento).
+Questo è il più piccolo numero possibile di operazioni,
+perchè è evidente che una sola operazione non è sufficiente.
 
-Suppose that we are given a string \texttt{x}
-of length $n$ and a string \texttt{y} of length $m$,
-and we want to calculate the edit distance between
-\texttt{x} and \texttt{y}.
-To solve the problem, we define a function
-$\texttt{distance}(a,b)$ that gives the
-edit distance between prefixes
-$\texttt{x}[0 \ldots a]$ and $\texttt{y}[0 \ldots b]$.
-Thus, using this function, the edit distance
-between \texttt{x} and \texttt{y} equals $\texttt{distance}(n-1,m-1)$.
+Sia data la stringa \texttt{x}
+di lunghezza $n$ e una stringa \texttt{y} di lunghezza $m$,
+e si voglia calcolare la distanza di edit tra
+\texttt{x} e \texttt{y}.
+Per risolvere il problema si definisca la funzione
+$\texttt{distance}(a,b)$ che calcola la distanza di edit
+tra i prefissi
+$\texttt{x}[0 \ldots a]$ e $\texttt{y}[0 \ldots b]$.
+Utilizzando questa funzione la distanza di edit
+tra \texttt{x} e \texttt{y} risulterà uguale a $\texttt{distance}(n-1,m-1)$.
 
-We can calculate values of \texttt{distance}
-as follows:
+I valori di \texttt{distance} possono essere calcolati nel seguente modo:
 \begin{equation*}
 \begin{split}
 \texttt{distance}(a,b) = \min(& \texttt{distance}(a,b-1)+1, \\
@@ -810,23 +811,24 @@ as follows:
                            & \texttt{distance}(a-1,b-1)+\texttt{cost}(a,b)).
 \end{split}
 \end{equation*}
-Here $\texttt{cost}(a,b)=0$ if $\texttt{x}[a]=\texttt{y}[b]$,
-and otherwise $\texttt{cost}(a,b)=1$.
-The formula considers the following ways to
-edit the string \texttt{x}:
+dove $\texttt{cost}(a,b)=0$ se $\texttt{x}[a]=\texttt{y}[b]$,
+altrimenti $\texttt{cost}(a,b)=1$.
+Questa formula considera che la stringa \texttt{x} possa
+esse editata nei seguenti modi:
 \begin{itemize}
-\item $\texttt{distance}(a,b-1)$: insert a character at the end of \texttt{x}
-\item $\texttt{distance}(a-1,b)$: remove the last character from \texttt{x}
-\item $\texttt{distance}(a-1,b-1)$: match or modify the last character of \texttt{x}
+\item $\texttt{distance}(a,b-1)$: inserisce un carattere alla fine di \texttt{x}
+\item $\texttt{distance}(a-1,b)$: rimuove l'ultimo carattere da \texttt{x}
+\item $\texttt{distance}(a-1,b-1)$: verifica se l'ultimo carattere di \texttt{x} è uguale all'ultimo di \texttt{x},
+altrimenti lo modifica per renderlo uguale 
 \end{itemize}
-In the two first cases, one editing operation is needed
-(insert or remove).
-In the last case, if $\texttt{x}[a]=\texttt{y}[b]$,
-we can match the last characters without editing,
-and otherwise one editing operation is needed (modify).
+Nei primi due casi è necessaria un'operazione di editing
+(inserimento o rimozione).
+Nell'ultimo caso, se $\texttt{x}[a]=\texttt{y}[b]$,
+non serve nessuna operazione di editing, 
+altrimenti sarà necessaria un'operazione di editing (modifica).
 
-The following table shows the values of \texttt{distance}
-in the example case:
+La seguente tabella mostra i valori di \texttt{distance}
+per il caso di esempio:
 \begin{center}
 \begin{tikzpicture}[scale=.65]
   \begin{scope}
@@ -878,12 +880,12 @@ in the example case:
 \end{tikzpicture}
 \end{center}
 
-The lower-right corner of the table
-tells us that the edit distance between
-\texttt{LOVE} and \texttt{MOVIE} is 2.
-The table also shows how to construct
-the shortest sequence of editing operations.
-In this case the path is as follows:
+Nell'angolo in basso a destra delle tabella
+si trova il valore della distanza di edit tra
+\texttt{LOVE} e \texttt{MOVIE}, che, come detto in precedenza, è 2.
+Questa tabella mostra anche come costruire
+la più corta sequenza di operazioni di editing.
+In questo caso il percorso è il seguente:
 
 \begin{center}
 \begin{tikzpicture}[scale=.65]
@@ -939,13 +941,14 @@ In this case the path is as follows:
 \end{tikzpicture}
 \end{center}
 
-The last characters of \texttt{LOVE} and \texttt{MOVIE}
-are equal, so the edit distance between them
-equals the edit distance between \texttt{LOV} and \texttt{MOVI}.
-We can use one editing operation to remove the
-character \texttt{I} from \texttt{MOVI}.
-Thus, the edit distance is one larger than
-the edit distance between \texttt{LOV} and \texttt{MOV}, etc.
+Gli ultimi caratteri di \texttt{LOVE} e \texttt{MOVIE}
+sono uguali, quindi la distanza di edit tra di loro 
+è uguale alla distanza di edit tra \texttt{LOV} e \texttt{MOVI}.
+Usando un operazione di editing è possibile 
+rimuovere il carattere \texttt{I} da \texttt{MOVI}.
+A questo punto la distanza è maggiore di un'unità rispetto alla
+distanza di edit tra \texttt{LOV} e \texttt{MOV}, e proseguendo in questo modo si arriva
+all'angolo in alto a sinistra.
 
 \section{Counting tilings}
 
