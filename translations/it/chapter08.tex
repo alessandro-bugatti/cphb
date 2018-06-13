@@ -1,46 +1,44 @@
-\chapter{Amortized analysis}
+\chapter{Analisi ammortizzata}
 
-\index{amortized analysis}
+\index{analisi ammortizzata}
 
-The time complexity of an algorithm
-is often easy to analyze
-just by examining the structure
-of the algorithm:
-what loops does the algorithm contain
-and how many times the loops are performed.
-However, sometimes a straightforward analysis
-does not give a true picture of the efficiency of the algorithm.
+La complessità computazionale di un algoritmo
+è spesso facile da analizzare, 
+esaminando la struttura dell'algoritmo:
+quanti cicli contiene e quante volte 
+questi cicli sono eseguiti.
+Comunque non sempre un'analisi diretta
+da una stima significativa dell'efficienza di un algoritmo.
 
-\key{Amortized analysis} can be used to analyze
-algorithms that contain operations whose
-time complexity varies.
-The idea is to estimate the total time used to
-all such operations during the
-execution of the algorithm, instead of focusing
-on individual operations.
+L'\key{analisi ammortizzata} può essere usata per analizzare
+algoritmi che contengono operazioni la 
+cui complessità varia nelle varie esecuzioni.
+L'idea è di stimare il tempo totale usato
+da tutte le operazioni eseguite dall'algoritmo,
+al posto di concentrarsi sulle singole operazioni.
 
-\section{Two pointers method}
+\section{Metodo dei due puntatori}
 
-\index{two pointers method}
+\index{metodo dei due puntatori}
 
-In the \key{two pointers method},
-two pointers are used to
-iterate through the array values.
-Both pointers can move to one direction only,
-which ensures that the algorithm works efficiently.
-Next we discuss two problems that can be solved
-using the two pointers method.
+Nel \key{metodo dei due puntatori},
+vengono utilizzati due puntatori, o indici, 
+per iterare attraverso i valori di un array.
+Entrambi i puntatori possono muoversi in una direzione soltanto,
+il chè assicura che l'algoritmo sarà molto efficiente.
+Adesso si discuteranno due problemi in cui
+può essere utilizzato questo metodo.
 
-\subsubsection{Subarray sum}
+\subsubsection{Somma di un sottovettore}
 
-As the first example,
-consider a problem where we are
-given an array of $n$ positive integers
-and a target sum $x$,
-and we want to find a subarray whose sum is $x$
-or report that there is no such subarray.
+Come primo esempio,
+si consideri un problema dove,
+dato un vettore composto da $n$ interi positivi
+e una somma obiettivo $x$,
+si voglia trovare un sottovettore la cui somma sia
+esattamente $x$, oppure comunicare che questa cosa non è possibile.
 
-For example, the array
+Per esempio, l'array
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -55,7 +53,7 @@ For example, the array
 \node at (7.5,0.5) {$3$};
 \end{tikzpicture}
 \end{center}
-contains a subarray whose sum is 8:
+contiene un sottovettore la cui somma è 8:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (2,0) rectangle (5,1);
@@ -72,18 +70,18 @@ contains a subarray whose sum is 8:
 \end{tikzpicture}
 \end{center}
 
-This problem can be solved in
-$O(n)$ time by using the two pointers method.
-The idea is to maintain pointers that point to the
-first and last value of a subarray.
-On each turn, the left pointer moves one step
-to the right, and the right pointer moves to the right
-as long as the resulting subarray sum is at most $x$.
-If the sum becomes exactly $x$,
-a solution has been found.
+Questo problema può essere risolto in tempo
+$O(n)$ usando il metodo dei due puntatori.
+L'idea è quella di avere un puntatore al primo e 
+l'altro all'ultimo elemento del sottovettore cercato.
+A ogni passaggio, il puntatore di sinistra si muoverà 
+di un passo a destra e il puntatore destro si muoverà a destra
+fino a quando la somma del sottovettore risultante sia al massimo $x$.
+Se la somma diventa esattamente $x$,
+allora è stata trovata una soluzione.
 
-As an example, consider the following array
-and a target sum $x=8$:
+Come esempio si consideri questo array e 
+la somma obiettivo sia $x=8$:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -99,8 +97,9 @@ and a target sum $x=8$:
 \end{tikzpicture}
 \end{center}
 
-The initial subarray contains the values
-1, 3 and 2 whose sum is 6:
+All'inizio il sottovettore contiene i valori
+1, 3 e 3, la cui somma è 6 (il 5 non viene incluso adesso
+perchè porterebbe la somma a un valore maggiore di 8):
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -121,9 +120,9 @@ The initial subarray contains the values
 \end{tikzpicture}
 \end{center}
 
-Then, the left pointer moves one step to the right.
-The right pointer does not move, because otherwise
-the subarray sum would exceed $x$.
+Poi il puntatore di sinistra si muove di una posizione a destra
+e ancora il puntatore destro sta fermo, altrimenti la somma
+eccederebbe il valore di $x$.
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -144,11 +143,11 @@ the subarray sum would exceed $x$.
 \end{tikzpicture}
 \end{center}
 
-Again, the left pointer moves one step to the right,
-and this time the right pointer moves three
-steps to the right.
-The subarray sum is $2+5+1=8$, so a subarray
-whose sum is $x$ has been found.
+Il puntatore di sinistra si muove ancora di un passo, 
+e questa volta il puntatore di destra si muove di 3 passi
+a destra.
+Siccome adesso la somma è esattamente 8 ($2+5+1$),
+la soluzione cercata è stata trovata.
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -169,17 +168,19 @@ whose sum is $x$ has been found.
 \end{tikzpicture}
 \end{center}
 
-The running time of the algorithm depends on
-the number of steps the right pointer moves.
-While there is no useful upper bound on how many steps the
-pointer can move on a \emph{single} turn.
-we know that the pointer moves \emph{a total of}
-$O(n)$ steps during the algorithm,
-because it only moves to the right.
+Il tempo di esecuzione di questo algoritmo dipende
+dal numero di spostamenti che compie il puntatore
+di destra a ogni passaggio.
+Nonostante non ci sia un limite superiore significativo 
+al numero di spostamenti che può compiere a ogni singolo
+passaggio, si può comunque vedere che il puntatore farà al 
+massimo \emph{un totale di }
+$O(n)$ passaggi durante l'algoritmo,
+poichè si muove sempre solo a destra.
 
-Since both the left and right pointer
-move $O(n)$ steps during the algorithm,
-the algorithm works in $O(n)$ time.
+Poichè sia il puntatore di sinistra che quello di destra
+si muovono di $O(n)$ passi durante l'esecuzione dell'algoritmo,
+la complessità computazionale è di tipo $O(n)$.
 
 \subsubsection{2SUM problem}
 
