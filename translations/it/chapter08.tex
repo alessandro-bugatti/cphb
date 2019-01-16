@@ -176,7 +176,7 @@ al numero di spostamenti che può compiere a ogni singolo
 passaggio, si può comunque vedere che il puntatore farà al 
 massimo \emph{un totale di }
 $O(n)$ passaggi durante l'algoritmo,
-poichè si muove sempre solo a destra.
+poichè si muove sempre e solo a destra.
 
 Poichè sia il puntatore di sinistra che quello di destra
 si muovono di $O(n)$ passi durante l'esecuzione dell'algoritmo,
@@ -186,28 +186,29 @@ la complessità computazionale è di tipo $O(n)$.
 
 \index{2SUM problem}
 
-Another problem that can be solved using
-the two pointers method is the following problem,
-also known as the \key{2SUM problem}:
-given an array of $n$ numbers and
-a target sum $x$, find
-two array values such that their sum is $x$,
-or report that no such values exist.
+Un altro problema che può essere risolto con 
+il metodo dei due puntatori è il seguente, 
+conosciuto anche con il nome di  \key{2SUM problem}:
+dato un array di $n$ numeri e una somma obiettivo $x$,
+trovare due elementi dell'array tali che la loro
+somma sia esattamente $x$ oppure indicare
+che non è possibile.
+Per risolvere questo problema è prima
+necessario ordinare l'array in modo crescente.
+Successivamente si potrà iterare attraverso l'array
+usando sempre due puntatori.
+Il puntatore di sinistra partirà alla prima posizione
+e si muoverà di una posizione verso destra ad ogni
+passaggio dell'algoritmo.
+Il puntatore di destra partirà invece in ultima posizione
+e si muoverà verso sinistra fino a quando la somma degli 
+elementi indicati dai due puntatori non
+sarà al massimo $x$.
+Se la somma dovesse diventare esattamente $x$
+è stata trovata la soluzione.
 
-To solve the problem, we first
-sort the array values in increasing order.
-After that, we iterate through the array using
-two pointers.
-The left pointer starts at the first value
-and moves one step to the right on each turn.
-The right pointer begins at the last value
-and always moves to the left until the sum of the
-left and right value is at most $x$.
-If the sum is exactly $x$,
-a solution has been found.
-
-For example, consider the following array
-and a target sum $x=12$:
+Si consideri ad esempio il seguente array e 
+che la somma obiettivo sia $x=12$:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \draw (0,0) grid (8,1);
@@ -223,10 +224,9 @@ and a target sum $x=12$:
 \end{tikzpicture}
 \end{center}
 
-The initial positions of the pointers
-are as follows.
-The sum of the values is $1+10=11$
-that is smaller than $x$.
+Le posizioni iniziali dei puntatori sono 
+come descritto sopra e la somma è $1+10=11$
+che è più piccolo di $x$.
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -248,9 +248,9 @@ that is smaller than $x$.
 \end{tikzpicture}
 \end{center}
 
-Then the left pointer moves one step to the right.
-The right pointer moves three steps to the left,
-and the sum becomes $4+7=11$.
+Il puntatore di sinistra si muove di una posizione a destra,
+mentre quello di destra si muove di tre passi a sinistra,
+e la somma diventa $4+7=11$.
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -272,9 +272,9 @@ and the sum becomes $4+7=11$.
 \end{tikzpicture}
 \end{center}
 
-After this, the left pointer moves one step to the right again.
-The right pointer does not move, and a solution
-$5+7=12$ has been found.
+Al passaggio successivo il puntatore di sinistra si muove di un ulteriore
+passo verso destra e il puntatore di destra non si muove poichè 
+$5+7=12$ e quindi è stata trovata la soluzione.
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -296,32 +296,27 @@ $5+7=12$ has been found.
 \end{tikzpicture}
 \end{center}
 
-The running time of the algorithm is
-$O(n \log n)$, because it first sorts
-the array in $O(n \log n)$ time,
-and then both pointers move $O(n)$ steps.
+Il tempo di esecuzione di questo algoritmo è quindi
+$O(n \log n)$, poichè l'ordinamento iniziale costa $O(n \log n)$ e
+poi i due puntatori si muovono di $O(n)$ posizioni.
 
-Note that it is possible to solve the problem
-in another way in $O(n \log n)$ time using binary search.
-In such a solution, we iterate through the array
-and for each array value, we try to find another
-value that yields the sum $x$.
-This can be done by performing $n$ binary searches,
-each of which takes $O(\log n)$ time.
+Si può notare che è possibile risolvere il problema in un altro
+modo, sempre a un costo di $O(n \log n)$ usando la ricerca binaria.
+Seguendo quest'idea, si itera attraverso il vettore ordinato e, per ogni elemento, si cerca
+un altro valore che sommato a quello corrente dia somma $x$.
+Questo può essere fatto effettuando $n$ ricerche binarie,
+ognuna delle quali costa $O(\log n)$.
 
 \index{3SUM problem}
-A more difficult problem is 
-the \key{3SUM problem} that asks to
-find \emph{three} array values
-whose sum is $x$.
-Using the idea of the above algorithm,
-this problem can be solved in $O(n^2)$ time\footnote{For a long time,
-it was thought that solving
-the 3SUM problem more efficiently than in $O(n^2)$ time
-would not be possible.
-However, in 2014, it turned out \cite{gro14}
-that this is not the case.}.
-Can you see how?
+Un problema più complesso è quello chiamato
+\key{3SUM problem}, che chiede di trovare \emph{tre} elementi del vettore la 
+cui somma sia esattamente $x$.
+Usando l'idea risolutiva dell'algoritmo precedente,
+questo problema può essere risolto con costo $O(n^2)$\footnote{
+Per molto tempo si è pensato che risolvere questo problema
+con un costo inferiore a $O(n^2)$ non fosse possibile.
+Invece nel 2014 si è scoperto \cite{gro14}
+che si può fare di meglio.}. Sei in grado di vedere come?
 
 \section{Nearest smaller elements}
 
