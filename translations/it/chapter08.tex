@@ -98,7 +98,7 @@ la somma obiettivo sia $x=8$:
 \end{center}
 
 All'inizio il sottovettore contiene i valori
-1, 3 e 3, la cui somma è 6 (il 5 non viene incluso adesso
+1, 3 e 2, la cui somma è 6 (il 5 non viene incluso adesso
 perchè porterebbe la somma a un valore maggiore di 8):
 
 \begin{center}
@@ -144,7 +144,7 @@ eccederebbe il valore di $x$.
 \end{center}
 
 Il puntatore di sinistra si muove ancora di un passo, 
-e questa volta il puntatore di destra si muove di 3 passi
+e questa volta il puntatore di destra si muove di 2 passi
 a destra.
 Siccome adesso la somma è esattamente 8 ($2+5+1$),
 la soluzione cercata è stata trovata.
@@ -174,7 +174,7 @@ di destra a ogni passaggio.
 Nonostante non ci sia un limite superiore significativo 
 al numero di spostamenti che può compiere a ogni singolo
 passaggio, si può comunque vedere che il puntatore farà al 
-massimo \emph{un totale di }
+massimo \emph{un totale di}
 $O(n)$ passaggi durante l'algoritmo,
 poichè si muove sempre e solo a destra.
 
@@ -319,6 +319,7 @@ Invece nel 2014 si è scoperto \cite{gro14}
 che si può fare di meglio.}. Sei in grado di vedere come?
 
 \section{Nearest smaller elements}
+\label{sec:nearest_smaller_elements}
 
 \index{nearest smaller elements}
 
@@ -537,35 +538,36 @@ $O(n)$.
 \index{sliding window}
 \index{sliding window minimum}
 
-A \key{sliding window} is a constant-size subarray
-that moves from left to right through the array.
-At each window position,
-we want to calculate some information
-about the elements inside the window.
-In this section, we focus on the problem
-of maintaining the \key{sliding window minimum},
-which means that
-we should report the smallest value inside each window.
+Una \key{sliding window} (finestra mobile) è un sottovettore di lunghezza costante
+che si muove da sinistra a destra all'interno di un vettore.
+Per ogni posizione della finestra mobile
+si vuole calcolare un qualche genere di informazione
+che riguarda gli elementi contenuti.
+In questa sezione ci si focalizzerà
+sul problema di trovare il minimo contenuto
+in ogni finestra mobile, detto anche problema
+\key{sliding window minimum}.
 
-The sliding window minimum can be calculated
-using a similar idea that we used to calculate
-the nearest smaller elements.
-We maintain a queue
-where each element is larger than
-the previous element,
-and the first element
-always corresponds to the minimum element inside the window.
-After each window move,
-we remove elements from the end of the queue
-until the last queue element
-is smaller than the new window element,
-or the queue becomes empty.
-We also remove the first queue element
-if it is not inside the window anymore.
-Finally, we add the new window element
-to the end of the queue.
+Questo problema può essere risolto usando
+un'idea simile a quella utilizzata per risolvere il 
+problema del paragrafo \ref{sec:nearest_smaller_elements}.
 
-As an example, consider the following array:
+Stavolta si utilizzerà una coda,
+dove ogni elemento è più grande dell'elemento che lo precede,
+in modo che il primo elemento sia sempre il più piccolo
+tra quelli presenti nella finestra mobile.
+A ogni movimento successivo della finestra mobile,
+verranno rimossi tutti gli elementi in fondo alla coda 
+fino a quando non se ne troverà uno minore di quello
+nuovo presente nella finestra mobile o fino a quando 
+la coda diventerà vuota.
+
+Verrà anche rimosso il primo elemento della coda,
+poichè sarà "slittato" fuori dalla finestra mobile.
+Infine il nuovo elemento verrà aggiunto alla fine 
+della coda.
+
+Si consideri ad esempio il seguente vettore:
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -582,8 +584,9 @@ As an example, consider the following array:
 \end{tikzpicture}
 \end{center}
 
-Suppose that the size of the sliding window is 4.
-At the first window position, the smallest value is 1:
+Si supponga che la dimensione della finestra mobile sia 4.
+Alla posizione di partenza della finestra, l'elemento 
+più piccolo vale 1:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (0,0) rectangle (4,1);
@@ -611,12 +614,11 @@ At the first window position, the smallest value is 1:
 \end{tikzpicture}
 \end{center}
 
-Then the window moves one step right.
-The new element 3 is smaller than the elements
-4 and 5 in the queue, so the elements 4 and 5
-are removed from the queue
-and the element 3 is added to the queue.
-The smallest value is still 1.
+Poi la finestra si sposta di un passo a destra.
+Il nuovo elemento 3 è più piccolo degli elementi
+4 e 5 che si trovano nella cosa, quindi vengono rimossi
+e l'elemento 3 viene aggiunto.
+Il valore più piccolo rimane comunque 1.
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (1,0) rectangle (5,1);
@@ -641,12 +643,11 @@ The smallest value is still 1.
 \end{tikzpicture}
 \end{center}
 
-After this, the window moves again,
-and the smallest element 1
-does not belong to the window anymore.
-Thus, it is removed from the queue and the smallest
-value is now 3. Also the new element 4
-is added to the queue.
+Successivamente la finestra si muove ancora,
+e l'elemento 1 non si trova più al suo interno.
+Quindi, dopo che viene rimosso dalla coda,
+il valore più piccolo diventa il 3,
+inoltre viene aggiunto il nuovo valore 4.
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (2,0) rectangle (6,1);
@@ -671,10 +672,11 @@ is added to the queue.
 \end{tikzpicture}
 \end{center}
 
-The next new element 1 is smaller than all elements
-in the queue.
-Thus, all elements are removed from the queue
-and it will only contain the element 1:
+Il nuovo elemento che a questo punto entrerà nella 
+finestra è 1, che è più piccolo di tutti gli elementi
+già presenti nella coda.
+Verranno quindi rimossi tutti e solo l'1 rimarrà all'interno della
+coda.
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (3,0) rectangle (7,1);
@@ -695,10 +697,9 @@ and it will only contain the element 1:
 \end{tikzpicture}
 \end{center}
 
-Finally the window reaches its last position.
-The element 2 is added to the queue,
-but the smallest value inside the window
-is still 1.
+Infine la finestra raggiungerà l'ultima posizione.
+L'elemento 2 verrà aggiunto alla coda, 
+ma il valore più piccolo rimarrà l'1.
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (4,0) rectangle (8,1);
@@ -723,10 +724,10 @@ is still 1.
 \end{tikzpicture}
 \end{center}
 
-Since each array element
-is added to the queue exactly once and
-removed from the queue at most once,
-the algorithm works in $O(n)$ time.
+Dal momento che ogni elemento dell'array
+viene aggiunto alla coda esattamente una volta
+e rimosso dalla coda al massimo una volta,
+l'algoritmo ha una complessità di $O(n)$.
 
 
 
