@@ -76,28 +76,33 @@ Si potrà vedere nel seguito che esistono
 modi molto più efficienti per effettuare
 delle range queries.
 
-\section{Static array queries}
+\section{Queries su un array statico}
 
-We first focus on a situation where
-the array is \emph{static}, i.e.,
-the array values are never updated between the queries.
-In this case, it suffices to construct
-a static data structure that tells us
-the answer for any possible query.
+La prima situazione che verrà analizzata
+è quella relativa a un array statico,
+cioè un array in cui i valori contenuti
+non sono mai modificati tra una query e un'altra.
+In questo caso è sufficiente construire
+una struttura dati statica che quando interrogata
+fornirà immediatamente la risposta per ogni possibile query.
 
-\subsubsection{Sum queries}
+\subsubsection{Queries per la somma}
 
 \index{prefix sum array}
+\index{array a somma prefissa}
 
-We can easily process
-sum queries on a static array
-by constructing a \key{prefix sum array}.
-Each value in the prefix sum array equals
-the sum of values in the original array up to that position,
-i.e., the value at position $k$ is $\texttt{sum}_q(0,k)$.
-The prefix sum array can be constructed in $O(n)$ time.
+Si può facilmente risolvere il problema
+delle queries sulle somme costruendo
+un \key{array a somma prefissa}(\key{prefix sum array}).
 
-For example, consider the following array:
+Ogni valore di un array a somma prefissa è uguale
+alla somma dei valori dell'array originale 
+fino a quella posizione,
+cioè il valore alla posizione $k$ è $\texttt{sum}_q(0,k)$.
+Un array a somma prefissa può essere costruito in $O(n)$.
+
+Si consideri ad esempio il seguente array:
+
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 %\fill[color=lightgray] (3,0) rectangle (7,1);
@@ -123,7 +128,8 @@ For example, consider the following array:
 \node at (7.5,1.4) {$7$};
 \end{tikzpicture}
 \end{center}
-The corresponding prefix sum array is as follows:
+
+Il corrispondente array a somma prefissa è il seguente:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 %\fill[color=lightgray] (3,0) rectangle (7,1);
@@ -150,15 +156,15 @@ The corresponding prefix sum array is as follows:
 \node at (7.5,1.4) {$7$};
 \end{tikzpicture}
 \end{center}
-Since the prefix sum array contains all values
-of $\texttt{sum}_q(0,k)$,
-we can calculate any value of
-$\texttt{sum}_q(a,b)$ in $O(1)$ time as follows:
+Dal momento che l'array a somma prefissa contiene tutti i valori
+di $\texttt{sum}_q(0,k)$,
+è possibile calcolare qualsiasi valore di 
+$\texttt{sum}_q(a,b)$ in $O(1)$ in questo modo:
 \[ \texttt{sum}_q(a,b) = \texttt{sum}_q(0,b) - \texttt{sum}_q(0,a-1)\]
-By defining $\texttt{sum}_q(0,-1)=0$,
-the above formula also holds when $a=0$.
+Per definizione $\texttt{sum}_q(0,-1)=0$,
+quindi la formaula mostrata è corretta anche quando $a=0$.
 
-For example, consider the range $[3,6]$:
+Si consideri ad esempio il range $[3,6]$:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (3,0) rectangle (7,1);
@@ -184,9 +190,10 @@ For example, consider the range $[3,6]$:
 \node at (7.5,1.4) {$7$};
 \end{tikzpicture}
 \end{center}
-In this case $\texttt{sum}_q(3,6)=8+6+1+4=19$.
-This sum can be calculated from
-two values of the prefix sum array:
+
+Si può facilmente vedere che $\texttt{sum}_q(3,6)=8+6+1+4=19$.
+La stessa somma può essere calcolata a partire 
+dai due valori presi dall'array a somma prefissa:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (2,0) rectangle (3,1);
@@ -213,19 +220,19 @@ two values of the prefix sum array:
 \node at (7.5,1.4) {$7$};
 \end{tikzpicture}
 \end{center}
-Thus, $\texttt{sum}_q(3,6)=\texttt{sum}_q(0,6)-\texttt{sum}_q(0,2)=27-8=19$.
+Quindi $\texttt{sum}_q(3,6)=\texttt{sum}_q(0,6)-\texttt{sum}_q(0,2)=27-8=19$.
 
-It is also possible to generalize this idea
-to higher dimensions.
-For example, we can construct a two-dimensional
-prefix sum array that can be used to calculate
-the sum of any rectangular subarray in $O(1)$ time.
-Each sum in such an array corresponds to
-a subarray
-that begins at the upper-left corner of the array.
+È inoltre possibile generalizzare questa idea a un 
+numero maggiore di dimensioni.
+Per esempio, si costruisca un array bidimensionale (matrice)
+la cui somma prefissa può essere usata per calcolare 
+la somma di ogni sotto-array rettangolare in tempo $O(1)$.
+In questo array bidimensionale a somma prefissa,
+ogni somma corrisponde al sotto-array che inizia
+nell'angolo in alto a sinistra della matrice originale.
 
 \begin{samepage}
-The following picture illustrates the idea:
+La seguente figura illustra l'idea:
 \begin{center}
 \begin{tikzpicture}[scale=0.54]
 \draw[fill=lightgray] (3,2) rectangle (7,5);
@@ -238,13 +245,13 @@ The following picture illustrates the idea:
 \end{center}
 \end{samepage}
 
-The sum of the gray subarray can be calculated
-using the formula
+La somma del sotto-array grigio può essere calcolata
+usando la formula:
 \[S(A) - S(B) - S(C) + S(D),\]
-where $S(X)$ denotes the sum of values
-in a rectangular
-subarray from the upper-left corner
-to the position of $X$.
+dove $S(X)$ indica la somma dei valori 
+di una sottomatrice rettangolare
+dall'angolo in alto a sinistra 
+fino alla posizione $X$.
 
 \subsubsection{Minimum queries}
 
