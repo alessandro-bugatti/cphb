@@ -257,25 +257,29 @@ fino alla posizione $X$.
 
 \index{sparse table}
 
-Minimum queries are more difficult to process
-than sum queries.
-Still, there is a quite simple 
-$O(n \log n)$ time preprocessing
-method after which we can answer any minimum
-query in $O(1)$ time\footnote{This technique
-was introduced in \cite{ben00} and sometimes
-called the \key{sparse table} method.
-There are also more sophisticated techniques \cite{fis06} where
-the preprocessing time is only $O(n)$, but such algorithms
-are not needed in competitive programming.}.
-Note that since minimum and maximum queries can
-be processed similarly,
-we can focus on minimum queries.
+Le \textit{minimum queries} 
+sono molto più difficili da processare rispetto 
+a quelle di somma.
+C'è comunque un metodo piuttosto semplice
+che ha un costo 
+$O(n \log n)$ di preprocessing,
+applicato il quale ogni \textit{minumum query} successiva
+risulta avere costo $O(1)$
+\footnote{Questa tecnica è stata introdotta in
+\cite{ben00} e qualche volta viene anche chiamata
+metodo \key{sparse table}.
+Ci sono anche tecniche più sofisticate \cite{fis06} 
+dove il tempo di preprocessing è di tipo $O(n)$, 
+ma questi algoritmi non sono necessari nella programmazione
+competitiva.}.
+Siccome sia le minimum che le maximum queries possono
+essere trattate in modo simile, 
+ci si focalizzerà solo sulle minimum queries.
 
-The idea is to precalculate all values of
-$\textrm{min}_q(a,b)$ where
-$b-a+1$ (the length of the range) is a power of two.
-For example, for the array
+L'idea è di precalcolare tutti i valori di
+$\textrm{min}_q(a,b)$ dove
+$b-a+1$ (la lunghezza del range) è una potenza di due.
+Per esempio, per l'array
 
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
@@ -301,7 +305,7 @@ For example, for the array
 \node at (7.5,1.4) {$7$};
 \end{tikzpicture}
 \end{center}
-the following values are calculated:
+vengono calcolati i seguenti valori:
 
 \begin{center}
 \begin{tabular}{ccc}
@@ -352,24 +356,26 @@ $a$ & $b$ & $\texttt{min}_q(a,b)$ \\
 \end{tabular}
 \end{center}
 
-The number of precalculated values is $O(n \log n)$,
-because there are $O(\log n)$ range lengths
-that are powers of two.
-The values can be calculated efficiently
-using the recursive formula
+Il numero di valori precalcolati è $O(n \log n)$,
+perchè ci sono $O(\log n)$ range la cui lunghezza è una potenza
+del due.
+I valori possono essere calcolati in maniera efficiente 
+usando la formula ricorsiva
 \[\texttt{min}_q(a,b) = \min(\texttt{min}_q(a,a+w-1),\texttt{min}_q(a+w,b)),\]
-where $b-a+1$ is a power of two and $w=(b-a+1)/2$.
-Calculating all those values takes $O(n \log n)$ time.
+dove $b-a+1$ è una potenza di due e $w=(b-a+1)/2$.
+Il tempo richiesto per calcolare tutti questi valori è $O(n \log n)$.
 
-After this, any value of $\texttt{min}_q(a,b)$ can be calculated
-in $O(1)$ time as a minimum of two precalculated values.
-Let $k$ be the largest power of two that does not exceed $b-a+1$.
-We can calculate the value of $\texttt{min}_q(a,b)$ using the formula
+Fatto questo, qualsiasi valore di $\texttt{min}_q(a,b)$ 
+può essere calcolato in $O(1)$ come il minimo fra due valori precalcolati.
+Sia $k$ la più grande potenza del due che non eccede $b-a+1$.
+A questo punto è possibile calcolare il valore di $\texttt{min}_q(a,b)$ 
+usando la formula
 \[\texttt{min}_q(a,b) = \min(\texttt{min}_q(a,a+k-1),\texttt{min}_q(b-k+1,b)).\]
-In the above formula, the range $[a,b]$ is represented
-as the union of the ranges $[a,a+k-1]$ and $[b-k+1,b]$, both of length $k$.
+In questa formula il range $[a,b]$ 
+è rappresentato come l'unione dei range 
+$[a,a+k-1]$ e $[b-k+1,b]$, entrambi di lunghezza $k$.
 
-As an example, consider the range $[1,6]$:
+Si consideri come esempio il range $[1,6]$:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (1,0) rectangle (7,1);
@@ -395,11 +401,9 @@ As an example, consider the range $[1,6]$:
 \node at (7.5,1.4) {$7$};
 \end{tikzpicture}
 \end{center}
-The length of the range is 6,
-and the largest power of two that does
-not exceed 6 is 4.
-Thus the range $[1,6]$ is
-the union of the ranges $[1,4]$ and $[3,6]$:
+La lunghezza di questo range è 6, 
+e la più grande potenza del due che non eccede 6 è 4.
+Quindi il range $[1,6]$ è l'unione dei range $[1,4]$ e $[3,6]$:
 \begin{center}
 \begin{tikzpicture}[scale=0.7]
 \fill[color=lightgray] (1,0) rectangle (5,1);
@@ -451,8 +455,8 @@ the union of the ranges $[1,4]$ and $[3,6]$:
 \node at (7.5,1.4) {$7$};
 \end{tikzpicture}
 \end{center}
-Since $\texttt{min}_q(1,4)=3$ and $\texttt{min}_q(3,6)=1$,
-we conclude that $\texttt{min}_q(1,6)=1$.
+Poichè $\texttt{min}_q(1,4)=3$ e $\texttt{min}_q(3,6)=1$,
+ne consegue che $\texttt{min}_q(1,6)=1$.
 
 \section{Binary indexed tree}
 
